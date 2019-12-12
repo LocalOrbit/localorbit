@@ -10,11 +10,11 @@ class ProcessPackingLabelsPrintable
     user = delivery_printable.user
 
     if user.buyer_only? || user.market_manager?
-      d_scope = "DATE(deliveries.buyer_deliver_on) = '#{delivery_date}'"
+      d_scope = {deliveries: {buyer_deliver_on: delivery_date.beginning_of_day..delivery_date.end_of_day}}
       d_group = "deliveries.buyer_deliver_on, orders.id"
       d_select = "deliveries.buyer_deliver_on, orders.*"
     else
-      d_scope = "DATE(deliveries.deliver_on) = '#{delivery_date}'"
+      d_scope = {deliveries: {deliver_on: delivery_date.beginning_of_day..delivery_date.end_of_day}}
       d_group = "deliveries.deliver_on, orders.id"
       d_select = "deliveries.deliver_on, orders.*"
     end

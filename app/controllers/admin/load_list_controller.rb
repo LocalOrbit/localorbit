@@ -1,7 +1,6 @@
 class Admin::LoadListController < AdminController
   def show
     dt = params[:deliver_on].to_date
-    dte = dt.strftime("%Y-%m-%d")
 
     if params[:market_id].nil?
       market_id = current_market.id
@@ -9,7 +8,7 @@ class Admin::LoadListController < AdminController
       market_id = params[:market_id]
     end
 
-    d_scope = "DATE(deliveries.buyer_deliver_on) = '#{dte}'"
+    d_scope = {deliveries: {buyer_deliver_on: dt.beginning_of_day..dt.end_of_day}}
 
     @delivery = Delivery.joins(:delivery_schedule)
                     .where(d_scope)

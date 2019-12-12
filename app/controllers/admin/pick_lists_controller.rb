@@ -15,7 +15,6 @@ class Admin::PickListsController < AdminController
     else
 
       dt = params[:deliver_on].to_date
-      dte = dt.strftime("%Y-%m-%d")
 
       if params[:market_id].nil?
         market_id = current_market.id
@@ -24,9 +23,9 @@ class Admin::PickListsController < AdminController
       end
 
       if current_user.buyer_only? || current_user.market_manager?
-        d_scope = "DATE(deliveries.buyer_deliver_on) = '#{dte}'"
+        d_scope = {deliveries: {buyer_deliver_on: dt.beginning_of_day..dt.end_of_day}}
       else
-        d_scope = "DATE(deliveries.deliver_on) = '#{dte}'"
+        d_scope = {deliveries: {deliver_on: dt.beginning_of_day..dt.end_of_day}}
       end
 
       @delivery = Delivery.joins(:delivery_schedule)
@@ -41,6 +40,7 @@ class Admin::PickListsController < AdminController
                         .eager_load(:order, order: [:delivery], product: :organization)
                         .order("organizations.name, products.name")
                         .preload(order: :organization)
+
       @delivery_notes = DeliveryNote.joins(:order).where(order: order_items.map(&:order_id))
       @very_important_person = current_user.admin? || current_user.managed_market_ids.include?(@delivery.delivery_schedule.market_id)
       unless @very_important_person
