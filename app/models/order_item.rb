@@ -47,13 +47,14 @@ class OrderItem < ActiveRecord::Base
   end
 
   def self.for_delivery_date(delivery_date, current_user, market_id)
+    dt = delivery_date.to_date
     if current_user.buyer_only? || current_user.market_manager?
       joins(order: :delivery)
-        .where(deliveries: {buyer_deliver_on: delivery_date.beginning_of_day..delivery_date.end_of_day})
+        .where(deliveries: {buyer_deliver_on: dt.beginning_of_day..dt.end_of_day})
         .where("orders.market_id = #{market_id}")
     else
       joins(order: :delivery)
-        .where(deliveries: {deliver_on: delivery_date.beginning_of_day..delivery_date.end_of_day})
+        .where(deliveries: {deliver_on: dt.beginning_of_day..dt.end_of_day})
         .where("orders.market_id = #{market_id}")
     end
   end
