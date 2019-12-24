@@ -15,7 +15,7 @@ describe ApplyDiscountToCart do
   let!(:seller2_product_price) { create(:price, product: seller2_product, sale_price: 2.00) }
   let!(:seller2_product_lot)   { create(:lot, product: seller2_product) }
 
-  let(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10) }
+  let(:discount)         { create(:discount, code: "10percent", type: "percentage", discount: 10) }
 
   let!(:cart_item1) { create(:cart_item, product: seller1_product, quantity: 10) }
   let!(:cart_item2) { create(:cart_item, product: seller2_product, quantity: 20) }
@@ -34,6 +34,18 @@ describe ApplyDiscountToCart do
     expect(result.context).to be_failure
     expect(result.message).to eql("Invalid discount code")
   end
+
+  context 'using a deleted discount code' do
+    let(:discount) { create(:discount, code: "deleted", type: "percentage", discount: 10, deleted_at: 1.day.ago) }
+
+    it 'rejects as invalid' do
+      result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
+
+      expect(result.context).to be_failure
+      expect(result.message).to eql("Invalid discount code")
+    end
+  end
+
 
   it "clears a discount code" do
     result = ApplyDiscountToCart.perform(cart: cart, code: "")
