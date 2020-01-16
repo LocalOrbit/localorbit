@@ -166,7 +166,7 @@ describe PaymentProvider::Stripe do
               source: credit_card.stripe_id,
               customer: buyer_organization.stripe_customer_id,
               destination: mini_market.stripe_account_id,
-              statement_descriptor: mini_market.on_statement_as,
+              statement_descriptor_suffix: mini_market.on_statement_as,
               application_fee: 320, # mocked
               description: "Charge for #{order.order_number}"
             },
@@ -208,7 +208,7 @@ describe PaymentProvider::Stripe do
               source: credit_card.stripe_id,
               customer: buyer_organization.stripe_customer_id,
               destination: mini_market.stripe_account_id,
-              statement_descriptor: mini_market.on_statement_as,
+              statement_descriptor_suffix: mini_market.on_statement_as,
               application_fee: 320, # mocked
               description: "Charge for #{order.order_number}"
             },

@@ -101,12 +101,6 @@ module PaymentProvider
 
         fee_in_cents = PaymentProvider::FeeEstimator.estimate_payment_fee CreditCardFeeStructure, amount_in_cents
 
-        # TODO: once we support ACH via Stripe, this branch will be needed for an alternate estimate of ACH fees:
-        # fee_in_cents = if bank_account.credit_card?
-        #                  estimate_credit_card_processing_fee_in_cents(amount_in_cents)
-        #                else
-        #                  estimate_ach_processing_fee_in_cents(amount_in_cents)
-        #                end
         metadata = {
           market: market.name,
           market_id: market.id,
@@ -124,7 +118,7 @@ module PaymentProvider
           source: source,
           customer: customer,
           destination: destination,
-          statement_descriptor: descriptor,
+          statement_descriptor_suffix: descriptor,
           application_fee: fee_in_cents,
           description: "Charge for #{order.order_number}"
         }

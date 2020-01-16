@@ -35,7 +35,7 @@ describe UpdatePurchase do
           source: credit_card.stripe_id, 
           customer: stripe_customer.id,
           destination: mini_market.stripe_account_id, 
-          statement_descriptor: mini_market.on_statement_as)
+          statement_descriptor_suffix: mini_market.on_statement_as)
         payment.update stripe_id: charge.id
         charge
       end

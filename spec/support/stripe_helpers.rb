@@ -46,7 +46,8 @@ module StripeSpecHelpers
     "dispute": null,
     "metadata": {
     },
-    "statement_descriptor": "Farm Link Hawaii",
+    "statement_descriptor": null,
+    "statement_descriptor_suffix": "Farm Link Hawaii",
     "fraud_details": {
     },
     "transfer": "tr_15xlYA2VpjOYk6TmpYnQeiwt",
