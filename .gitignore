@@ -44,6 +44,7 @@ cleansed.prod.dump
 
 node_modules/
 
+.vscode/
 *.sublime-project
 *.sublime-workspace
 

@@ -53,8 +53,8 @@
 
 <% if @orders.any? %>
   <div class="table-wrapper">
-    <table class="sortable">
-      <thead class="stickable">
+    <table>
+      <thead>
         <tr>
           <th> <%= sort_link(@q, :order_number, "Invoice #") %></th>
           <th> <%= sort_link(@q, :organization_name, "Buyer (Name)") %></th>

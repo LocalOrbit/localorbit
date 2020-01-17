@@ -1,7 +1,7 @@
 csv << ["Supplier Delivery", "Supplier Name", "Supplier Address",
         "Product Code", "Product Name",
-        "Total Sold", "Units", "Buyer", "Breakdown",
-        "Notes"]
+        "Total Sold", "Units", "Buyer", "Buyer Subtotal",
+        "Lots"]
 
 supplier_delivery = "#{@delivery.seller_display_date} #{@delivery.seller_time_range}"
 
@@ -19,15 +19,16 @@ supplier_delivery = "#{@delivery.seller_display_date} #{@delivery.seller_time_ra
       product.total_sold,
       product.unit,
       product.first_buyer.name,
-      product.breakdown(product.first_buyer, "\n"),
-      ""
+      product.breakdown(product.first_buyer),
+      product.lots(product.first_buyer, ", ")
     ]
     csv << first_row
 
     product.remaining_buyers.each do |buyer|
       additional_row = first_row.dup
       additional_row[-3] = buyer.name
-      additional_row[-2] = product.breakdown(buyer, "\n")
+      additional_row[-2] = product.breakdown(buyer)
+      additional_row[-1] = product.lots(buyer, ", ")
       csv << additional_row
     end
   end

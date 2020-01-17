@@ -92,11 +92,6 @@ class Payment < ActiveRecord::Base
     amount - refunded_amount
   end
 
-  def balanced_transaction
-    # Will return the appropriate transaction type for any transaction
-    Balanced::Transaction.find(balanced_uri) if balanced_uri.present?
-  end
-
   def refund?
     ["order refund", "service refund"].include? payment_type
   end

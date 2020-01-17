@@ -361,9 +361,6 @@ describe "Managing Markets" do
         end
 
         click_button "Update Market"
-
-        #expect(page).to have_content("At least one payment method is required for the market")
-        ## Above commented out because in process of removing Balanced-reliant tests, this also causes failure. - JZC
       end
     end
 

@@ -22,6 +22,7 @@ module CSVExport
             "Order Date",
             "Delivery Date",
             "Buyer",
+            "Buyer Type",
             "PO Number",
             "Delivery Status",
             "Supplier",
@@ -39,6 +40,7 @@ module CSVExport
               order_item.order.placed_at.strftime("%m/%d/%Y"),
               order_item.order.delivery && order_item.order.delivery.deliver_on.strftime("%m/%d/%Y"),
               order_item.order.organization.name,
+              buyer_type(order_item),
               order_item.order.payment_note,
               order_item.delivery_status.titleize,
               order_item.product.organization.name,
@@ -56,5 +58,16 @@ module CSVExport
       ExportMailer.delay(priority: 30).export_success(user.email, 'order', csv)
     end
 
+    private
+
+    def buyer_type(order_item)
+      if order_item.order.organization.supplier?
+        'Supplier'
+      elsif order_item.order.organization.buyer_org_type.nil?
+        ''
+      else
+        order_item.order.organization.buyer_org_type
+      end
+    end
   end
 end

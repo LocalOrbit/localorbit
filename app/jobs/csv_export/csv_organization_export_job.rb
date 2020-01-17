@@ -17,7 +17,7 @@ module CSVExport
     def perform
       organizations = Organization.where(id: ids).order(:name)
       csv = CSV.generate do |f|
-        f << ["Name", "Market", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
+        f << ["Name", "Market", "Registered On", "Role", "Type", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
 
         def full_address(address)
           if address.present?
@@ -38,12 +38,17 @@ module CSVExport
           org.users.map{|u| u.email.nil? ? "None" : u.email}.join(", ")
         end
 
+        def buyer_type(org)
+          org.can_sell? || org.buyer_org_type.nil? ? "" : org.buyer_org_type
+        end
+
         organizations.each do |organization|
           f << [
               organization.name,
               organization.markets.first.name,
               organization.created_at.strftime("%d-%B-%y"),
               (organization.can_sell? ? "Supplier" : "Buyer"),
+              buyer_type(organization),
               full_address(organization.shipping_location),
               organization.shipping_location.try(:phone),
               full_address(organization.billing_location),

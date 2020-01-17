@@ -1,0 +1,63 @@
+<div class="no-print">
+  <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
+  <span class="pull-right">
+    <% if @very_important_person %>
+      <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv, market_id: @delivery.delivery_schedule.market_id), class: 'export' %>
+
+    <% end %>
+    <button class="btn btn--primary btn--small print-button" id="print-button">Print</button>
+  </span>
+</div>
+
+<div class="print-page">
+  <div class="load-list">
+    <h1>Load List</h1>
+    <div class="upcoming-delivery">
+
+      <h2 class="heading heading-delivery-tool">Deliveries and pickups for</h2>
+      <div class="upcoming-delivery-date"><%= @buyer_deliver_on %></div>
+      <hr/>
+
+      <% @load_lists.each_with_index do |load_list, index| %>
+
+      <% if index != 0 %>
+      <div class="pdf-page-break"></div>
+      <% end %>
+
+      <div class="upcoming-delivery">
+        <h2 class="heading heading-delivery-tool"><%= load_list.buyer_delivery_method %></h2>
+        <div class="vcard vcard--seller">
+          <h3 class="fn org"><%= load_list.buyer_delivery_location_label %></h3>
+      <% if load_list.buyer_pickup? %>
+          <%= load_list.buyer_pickup_location.address %><br/><%= load_list.buyer_pickup_location.city %>, <%= load_list.buyer_pickup_location.state %> <%= load_list.buyer_pickup_location.zip %>
+      <% end %>
+      <% if @delivery.available_to_order? %>
+          <p class="note">Ordering has not yet closed for this delivery</p>
+      <% end %>
+        </div>
+        <div class="table-wrapper">
+          <table class="delivery-tools">
+            <tr>
+              <th>Buyer</th>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Units</th>
+              <th>Supplier</th>
+            </tr>
+
+          <% load_list.order_items.each do |order_item| %>
+            <tr class="load-list-item">
+              <td class="buyer"><%= order_item.order.organization.name %></td>
+              <td class="product"><%= order_item.name %></td>
+              <td class="quantity"><%= order_item.quantity %></td>
+              <td class="units"><%= order_item.unit %></td>
+              <td class="supplier"><%= order_item.product.organization.name %></td>
+            </tr>
+          <% end %>
+          </table>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

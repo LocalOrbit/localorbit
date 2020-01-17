@@ -199,7 +199,6 @@ FactoryBot.define do
     product_label_format 4
     print_multiple_labels_per_item false
     alternative_order_page         false
-    stripe_standalone              false
     allow_product_fee              false
     allow_signups                  true
     number_format_numeric 0
@@ -313,7 +312,7 @@ FactoryBot.define do
     organization
     market
     delivery
-    payment_provider 'balanced'
+    payment_provider 'stripe'
 
     sequence(:order_number) {|n| "LO-%s-%s-%07d" % [Time.now.strftime("%y"), market.try(:subdomain).to_s.upcase, n] }
     placed_at        { Time.current }
@@ -448,7 +447,7 @@ FactoryBot.define do
     payment_method "purchase order"
     amount         199.99
     status         "paid"
-    payment_provider 'balanced'
+    payment_provider 'stripe'
 
     trait :checking do
       payment_type   "order"

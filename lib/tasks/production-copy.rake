@@ -42,7 +42,7 @@ namespace :production_copy do
     copy_production_to_local
   end
 
-  desc "Clean up BalancedPayments refs and user email and passwords"
+  desc "Clean up refs and user email and passwords"
   task cleanse: :environment do
     include CloneProductionHelper
     connect_production_copy
@@ -257,17 +257,6 @@ module CloneProductionHelper
     ActiveRecord::Base.establish_connection(production_copy_params)
   end
 
-  def balanced_payments_refs_to_clear
-    if ENV["KEEP_BALANCED_URIS"] =~ /^(y|on|true)/i
-      [ { model: ::Payment,     fields: [ :balanced_uri ] } ]
-    else
-      [ { model: ::BankAccount, fields: [ :balanced_uri, :balanced_verification_uri ] },
-        { model: ::Market     , fields: [ :balanced_customer_uri ] },
-        { model: ::Organization,fields: [ :balanced_customer_uri ] },
-        { model: ::Payment,     fields: [ :balanced_uri ] } ]
-    end
-  end
-
   def stripe_refs_to_clear
     if ENV["KEEP_STRIPE_IDS"] =~ /^(y|on|true)/i
       [ { model: ::Payment,     fields: [ :stripe_id ] } ]
@@ -281,7 +270,6 @@ module CloneProductionHelper
 
   def clear_all_payment_provider_refs
     refs_to_clear = []
-    refs_to_clear += balanced_payments_refs_to_clear
     refs_to_clear += stripe_refs_to_clear
 
     refs_to_clear.each do |hash|

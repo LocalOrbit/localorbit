@@ -872,6 +872,17 @@ module Dom
       attribute :total_sold
       attribute :buyer
       attribute :breakdown
+      attribute :lots
+    end
+
+    class LoadListItem < Domino
+      selector ".load-list-item"
+
+      attribute :buyer
+      attribute :product
+      attribute :quantity
+      attribute :units
+      attribute :supplier
     end
 
     class PackList < Domino

@@ -101,35 +101,30 @@ module PaymentProvider
 
         fee_in_cents = PaymentProvider::FeeEstimator.estimate_payment_fee CreditCardFeeStructure, amount_in_cents
 
-        # TODO: once we support ACH via Stripe, this branch will be needed for an alternate estimate of ACH fees:
-        # fee_in_cents = if bank_account.credit_card?
-        #                  estimate_credit_card_processing_fee_in_cents(amount_in_cents)
-        #                else
-        #                  estimate_ach_processing_fee_in_cents(amount_in_cents)
-        #                end
-        metadata = {
-          market: market.name,
-          market_id: market.id,
-          order_number: order.order_number,
-          order_id: order.id,
-          buyer_organization: buyer_organization.name,
-          buyer_organization_id: buyer_organization.id,
-          bank_account_id: bank_account.id,
-          market_stripe_account: market.stripe_account_id,
-        }
-
         charge_params = {
           amount: amount_in_cents,
           currency: self.default_currency_for_country(market.country).downcase,
           source: source,
           customer: customer,
-          destination: destination,
-          statement_descriptor: descriptor,
-          application_fee: fee_in_cents,
+          transfer_data: { 
+            destination: destination 
+          },
+          on_behalf_of: destination,
+          application_fee_amount: fee_in_cents,
           description: "Charge for #{order.order_number}"
         }
 
         if destination.nil?
+          metadata = {
+            market: market.name,
+            market_id: market.id,
+            order_number: order.order_number,
+            order_id: order.id,
+            buyer_organization: buyer_organization.name,
+            buyer_organization_id: buyer_organization.id,
+            bank_account_id: bank_account.id,
+            market_stripe_account: market.stripe_account_id,
+          }
           data = { charge_params: charge_params, metadata: metadata }
           message = "Can't create a Stripe charge! Market '#{market.name}' (#{market.id}) has no Stripe Account.  #{data.to_json}"
           raise message

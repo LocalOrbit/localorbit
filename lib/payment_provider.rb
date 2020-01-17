@@ -1,16 +1,11 @@
 module PaymentProvider
   Implementations = {
     stripe: PaymentProvider::Stripe,
-    balanced: PaymentProvider::Balanced
   }
 
   class << self
     def for_new_markets
-      if ENV['USE_BALANCED_FOR_NEW_MARKETS'] == 'YES'
-        PaymentProvider::Balanced
-      else
-        PaymentProvider::Stripe
-      end
+      PaymentProvider::Stripe
     end
 
     def for(payment_provider)
@@ -18,11 +13,6 @@ module PaymentProvider
       impl = Implementations[payment_provider.to_sym]
       return impl if impl
       raise "No PaymentProvider for #{payment_provider.inspect}"
-    end
-
-    def is_balanced?(payment_provider)
-      return false if payment_provider.nil?
-      PaymentProvider::Balanced.id == payment_provider.to_sym
     end
 
     def supports_payment_method?(payment_provider, payment_method)
@@ -138,13 +128,6 @@ module PaymentProvider
         type: type,
         bank_account_params: bank_account_params,
         representative_params: representative_params)
-    end
-
-    def add_deposit_account(payment_provider, entity:, type:, bank_account_params:)
-      PaymentProvider.for(payment_provider).add_deposit_account(
-        entity: entity,
-        type: type,
-        bank_account_params: bank_account_params)
     end
 
     def select_usable_bank_accounts(payment_provider, bank_accounts)

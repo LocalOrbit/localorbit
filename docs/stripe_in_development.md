@@ -1,15 +1,24 @@
 # Setting up Stripe on your local development environment
+You'll need to create two Stripe accounts. One to act as the Local Orbit "Platform" and one as the food hub market's "Connect" account.
+
+## First, create the Platform account
 
 1. Sign up at stripe.com
 1. Click the 'Viewing test data' slider to on in the sidebar
-1. Go to the API link in the side bar
+1. Go to the Developers > API keys in the side bar
 1. Copy the `Publishable key` into your application.yml as `STRIPE_PUBLISHABLE_KEY`
 1. Copy the `Secret key` into your applicaiton .yml as `STRIPE_SECRET_KEY`
 
+## Then, create the Connect account
+Repeat the same steps as you did for the Platform account.
+
 ## To get your local market setup via the OAuth flow
 
-1. Go to Stripe Dashboard > Connect > Settings
+*Note, these steps may be out of date or wrong*
+
+1. Go to your Platform account on stripe.com
 1. Ensure _Viewing test data_ is turned on
+1. Go to Settings > Connect settings
 1. Ensure that you see _No redirect URIs set_ (we'll do that later)
 1. Click the _Test OAuth_ button and follow the prompt
 1. On the page that shows how a user would sign up, instead click the link in the caution strip at the top of the page that says _Skip this account form_

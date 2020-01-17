@@ -20,7 +20,7 @@ class SellersController < ApplicationController
   end
 
   def show
-    @current_seller = @sellers.find(params[:id]).decorate
+    @current_seller = current_market.organizations.active.selling.find(params[:id]).decorate
     load_products(@current_seller)
   end
 
