@@ -4,7 +4,6 @@ Rails.configuration.stripe = {
 }
 
 Stripe.api_key = Rails.configuration.stripe[:secret_key]
-# Stripe.api_version = '2015-04-07'
 Stripe.api_version = '2019-12-03'
 
 StripeEvent.configure do |events|
@@ -12,7 +11,7 @@ StripeEvent.configure do |events|
 end
 
 StripeEvent.event_retriever = lambda do |params|
-  if params[:type] == 'transfer.paid' then
+  if params[:type] == 'transfer.paid' || params[:type] == 'payout.paid' then
     managed_account_id = params[:user_id]
     # TODO: branch on presence of managed_account_id in case we're receiving a platform event,
     #        in which case retrieve without second arg
