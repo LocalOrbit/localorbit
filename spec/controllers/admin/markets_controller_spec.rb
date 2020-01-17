@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe Admin::MarketsController do
   let(:admin)  { create(:user, :admin) }
-  let(:market) { create(:market, stripe_standalone: false) }
-  let(:market2) { create(:market, stripe_standalone: true) }
+  let(:market) { create(:market) }
+  let(:market2) { create(:market) }
 
   describe "#index" do
     it_behaves_like "admin only action", lambda { get :index }

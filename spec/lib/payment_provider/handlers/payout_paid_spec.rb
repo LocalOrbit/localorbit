@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PaymentProvider::Handlers::TransferPaid do
+describe PaymentProvider::Handlers::PayoutPaid do
   subject { described_class }
 
   describe '.extract_job_params' do

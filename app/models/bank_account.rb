@@ -16,13 +16,6 @@ class BankAccount < ActiveRecord::Base
   scope :deposit_accounts, -> { visible.where(account_role: 'deposit') }
   scope :chrono, -> { order :created_at }
 
-  def balanced_verification
-    return nil if verified? || balanced_verification_uri.nil?
-    @balanced_verification ||= Balanced::Verification.find(balanced_verification_uri)
-  rescue Balanced::NotFound # Probably bad account info
-    nil
-  end
-
   def bank_account?
     account_type == "checking" || account_type == "savings"
   end
@@ -53,9 +46,7 @@ class BankAccount < ActiveRecord::Base
   end
 
   def verification_failed?
-    return false if verified?
-    return true if balanced_verification.nil?
-    balanced_verification.try(:state) == "failed"
+    !verified?
   end
 
   def primary_payment_provider

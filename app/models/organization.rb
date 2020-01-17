@@ -152,10 +152,6 @@ class Organization < ActiveRecord::Base
     update_product_delivery_schedules
   end
 
-  def balanced_customer
-    Balanced::Customer.find(balanced_customer_uri)
-  end
-
   def original_market
     (markets.includes(:markets).empty? ? cross_sells : markets).order("market_organizations.id ASC").first
   end

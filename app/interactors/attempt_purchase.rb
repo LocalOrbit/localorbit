@@ -1,7 +1,3 @@
-# NOTE: Though this is essentially a generified version of AttemptBalancedPurchase, we never
-# swithced PlaceOrder over to using this, so essentially we're only using this interactor for PlaceStripeOrder.
-# crosby 5/5/2015
-#
 class AttemptPurchase
   include Interactor
 
@@ -60,13 +56,6 @@ class AttemptPurchase
                                                      status:         status,
                                                      order:          order)
 
-
-      #
-      # Record metadata on the charge
-      #   (NOTE: This is NOT generic, but accidentally tilted toward Stripe's metadata structure.
-      #   Which is ok since we're not actually pushing Balanced processing through this interactor.
-      #   crosby 5/5/2015)
-      #
       if charge
         charge.metadata['lo.payment_id'] = payment.id
         charge.metadata['lo.order_id'] = order.id

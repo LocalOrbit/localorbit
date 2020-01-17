@@ -160,7 +160,6 @@ class OrdersController < ApplicationController
         :expiration_year,
         :bank_name,
         :account_type,
-        :balanced_uri,
         :stripe_tok,
         :save_for_future,
         :notes

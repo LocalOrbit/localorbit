@@ -18,7 +18,7 @@ describe "Editing an order" do
   let!(:order_item_lot)  { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
   let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items: [order_item], total_cost: 15.00, payment_provider: PaymentProvider::Stripe.id, payment_method: "credit card") }
   let!(:bank_account)    { create(:bank_account, :checking, :verified, bankable: buyer) }
-  let!(:payment)         { create(:payment, :checking, bank_account: bank_account, balanced_uri: "/debit-1", orders: [order], amount: 15.00) }
+  let!(:payment)         { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 15.00) }
 
   def long_name(item)
     "#{item.product.name} from #{item.product.organization.name}"
