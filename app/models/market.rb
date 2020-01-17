@@ -137,10 +137,6 @@ class Market < ActiveRecord::Base
     self.update(payment_fees)
   end
 
-  def balanced_customer
-    Balanced::Customer.find(balanced_customer_uri)
-  end
-
   def stripe_customer
     Stripe::Customer.retrieve(stripe_customer_id) if stripe_customer_id
   end

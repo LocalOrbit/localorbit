@@ -112,8 +112,6 @@ describe BankAccount do
     end
 
     it "is true if we can't find a bank account verification" do
-      expect(subject).to receive(:balanced_verification).and_return(nil)
-
       expect(subject).to be_verification_failed
     end
   end

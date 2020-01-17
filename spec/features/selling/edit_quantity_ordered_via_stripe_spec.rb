@@ -384,7 +384,7 @@ describe "Edit quantity ordered" do
     end
 
     context "payment processor error" do
-      let!(:payment) { create(:payment, :checking, bank_account: bank_account, balanced_uri: "/debit-1", orders: [order], amount: 15.00) }
+      let!(:payment) { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 15.00) }
 
       before do
         expect(Stripe::Charge).to receive(:retrieve).and_raise(/FAIL TO FIND CHARGE/)

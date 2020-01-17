@@ -33,17 +33,12 @@ class Admin::MarketsController < AdminController
   end
 
   def create
-    if ENV["USE_STRIPE_STANDALONE_ACCOUNTS"] || market_params['stripe_standalone']
-      results = RegisterStripeStandaloneMarket.perform(market_params: market_params)
-    else
-      results = RegisterStripeMarket.perform(market_params: market_params)
-    end
+    results = RegisterStripeStandaloneMarket.perform(market_params: market_params)
     if results.success?
       redirect_to [:admin, results.market]
     else
       flash.now.alert = "Could not create market"
       @market = Market.new(payment_provider: PaymentProvider.for_new_markets.id)
-      #@market = results.market
       render :new
     end
   end
@@ -139,7 +134,6 @@ class Admin::MarketsController < AdminController
     if current_user.admin?
       columns.concat([
         :active,
-        :stripe_standalone,
         :demo
       ])
     end

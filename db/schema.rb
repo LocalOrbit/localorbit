@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208004303) do
+ActiveRecord::Schema.define(version: 20200116192428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.string   "masquerader_username"
   end
 
+  add_index "audits", ["action", "associated_type"], name: "action_associated_type", using: :btree
   add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
   add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
@@ -47,12 +48,10 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.string   "bank_name"
     t.string   "last_four"
     t.string   "account_type"
-    t.string   "balanced_uri"
     t.integer  "bankable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "balanced_verification_uri"
-    t.boolean  "verified",                  default: false, null: false
+    t.boolean  "verified",         default: false, null: false
     t.string   "bankable_type"
     t.integer  "expiration_month"
     t.integer  "expiration_year"
@@ -337,7 +336,7 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0,            null: false
     t.string   "delivery_cycle"
     t.integer  "day_of_month"
-    t.integer  "week_interval"
+    t.integer  "week_interval",                                           default: 1
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -420,6 +419,9 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "general_products", ["name"], name: "gp_index_on_name", using: :btree
+  add_index "general_products", ["organization_id"], name: "gp_index_on_organization", using: :btree
 
   create_table "geocodes", force: true do |t|
     t.decimal "latitude",    precision: 15, scale: 12
@@ -570,8 +572,6 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.string   "logo_uid"
     t.string   "tagline"
     t.string   "background_image"
-    t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",                                  default: false,     null: false
     t.decimal  "local_orbit_seller_fee",         precision: 5, scale: 3, default: 0.0,       null: false
     t.decimal  "local_orbit_market_fee",         precision: 5, scale: 3, default: 0.0,       null: false
     t.decimal  "market_seller_fee",              precision: 5, scale: 3, default: 0.0,       null: false
@@ -589,8 +589,8 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.boolean  "default_allow_credit_cards",                             default: true
     t.boolean  "default_allow_ach",                                      default: true
     t.integer  "legacy_id"
-    t.string   "background_color",                                       default: "#ffffff"
-    t.string   "text_color",                                             default: "#46639c"
+    t.string   "background_color",                                       default: "#FFFFFF"
+    t.string   "text_color",                                             default: "#46639C"
     t.boolean  "allow_cross_sell",                                       default: false
     t.boolean  "auto_activate_organizations",                            default: false
     t.integer  "plan_id"
@@ -611,18 +611,17 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.boolean  "pending",                                                default: false
-    t.integer  "organization_id"
     t.text     "zpl_logo"
     t.string   "zpl_printer"
-    t.boolean  "stripe_standalone",                                      default: true
-    t.string   "legacy_stripe_account_id"
     t.boolean  "self_directed_creation",                                 default: false
+    t.string   "legacy_stripe_account_id"
     t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "allow_product_fee"
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
-    t.boolean  "self_enabled_cross_sell",                                default: false
+    t.integer  "organization_id"
     t.boolean  "add_item_pricing",                                       default: true
+    t.boolean  "self_enabled_cross_sell",                                default: false
     t.string   "background_img_uid"
     t.boolean  "allow_signups",                                          default: true
     t.string   "qb_integration_type"
@@ -706,6 +705,8 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.integer  "po_ct_id"
   end
 
+  add_index "order_items", ["delivery_status"], name: "index_order_items_dlv_status", using: :btree
+  add_index "order_items", ["order_id", "product_id", "delivery_status"], name: "index_order_items_o_p_d", using: :btree
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
   add_index "order_items", ["product_id"], name: "index_order_items_on_product_id", using: :btree
@@ -741,8 +742,8 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.decimal  "sale_price",        precision: 10, scale: 2, default: 0.0
     t.decimal  "net_price",         precision: 10, scale: 2, default: 0.0
     t.integer  "lot_id"
-    t.integer  "ct_id"
     t.integer  "fee"
+    t.integer  "ct_id"
   end
 
   create_table "order_templates", force: true do |t|
@@ -814,8 +815,6 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.text     "who_story"
     t.text     "how_story"
     t.string   "photo_uid"
-    t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",                                default: false,     null: false
     t.string   "facebook"
     t.string   "twitter"
     t.boolean  "display_facebook",                                     default: false
@@ -828,16 +827,16 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.boolean  "active",                                               default: false
     t.boolean  "needs_activated_notification",                         default: true
     t.string   "stripe_customer_id"
+    t.string   "buyer_org_type"
+    t.string   "ownership_type"
+    t.boolean  "non_profit"
+    t.string   "professional_organizations"
     t.string   "org_type"
     t.integer  "plan_id"
     t.datetime "plan_start_at"
     t.integer  "plan_interval",                                        default: 1,         null: false
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,       null: false
     t.integer  "plan_bank_account_id"
-    t.string   "buyer_org_type"
-    t.string   "ownership_type"
-    t.boolean  "non_profit"
-    t.string   "professional_organizations"
     t.boolean  "subscribed",                                           default: false
     t.string   "subscription_id"
     t.string   "payment_provider"
@@ -874,7 +873,6 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"
-    t.string   "balanced_uri"
     t.integer  "legacy_id"
     t.integer  "payer_id"
     t.string   "payer_type"
@@ -931,7 +929,9 @@ ActiveRecord::Schema.define(version: 20171208004303) do
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
+  add_index "prices", ["organization_id", "min_quantity"], name: "index_prices_on_qty_org", using: :btree
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
+  add_index "prices", ["product_id", "market_id", "organization_id", "updated_at", "deleted_at"], name: "index_prices_on_product_market_organization_updated_deleted", using: :btree
   add_index "prices", ["product_id", "market_id", "organization_id"], name: "index_prices_on_product_id_and_market_id_and_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
@@ -966,8 +966,8 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
     t.string   "code"
-    t.integer  "general_product_id"
     t.integer  "external_product_id"
+    t.integer  "general_product_id"
     t.string   "aws_image_url"
     t.integer  "qb_item_id"
     t.integer  "parent_product_id"
@@ -978,6 +978,7 @@ ActiveRecord::Schema.define(version: 20171208004303) do
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["general_product_id"], name: "index_products_on_general_product_id", using: :btree
   add_index "products", ["location_id"], name: "index_products_on_location_id", using: :btree
+  add_index "products", ["name"], name: "index_products_on_name", using: :btree
   add_index "products", ["organization_id"], name: "index_products_on_organization_id", using: :btree
   add_index "products", ["second_level_category_id"], name: "index_products_on_second_level_category_id", using: :btree
   add_index "products", ["top_level_category_id"], name: "index_products_on_top_level_category_id", using: :btree
@@ -1035,6 +1036,15 @@ ActiveRecord::Schema.define(version: 20171208004303) do
     t.string   "encrypted_realm_id_iv"
   end
 
+  create_table "qlik_user_attributes", primary_key: "userid", force: true do |t|
+    t.string "type",  null: false
+    t.string "value"
+  end
+
+  create_table "qlik_users", primary_key: "userid", force: true do |t|
+    t.string "name"
+  end
+
   create_table "role_actions", force: true do |t|
     t.string  "description"
     t.string  "org_types",   default: [],   array: true
@@ -1048,9 +1058,9 @@ ActiveRecord::Schema.define(version: 20171208004303) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "org_type"
+    t.string   "org_type",        default: "M"
     t.integer  "organization_id"
-    t.string   "activities",      default: [], array: true
+    t.string   "activities",      default: [],  array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -1158,5 +1168,13 @@ ActiveRecord::Schema.define(version: 20171208004303) do
 
   add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id", using: :btree
   add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id", using: :btree
+
+  create_table "zipcodes", primary_key: "zip", force: true do |t|
+    t.decimal "latitude",             precision: 9, scale: 6
+    t.decimal "longitude",            precision: 9, scale: 6
+    t.string  "city"
+    t.string  "state",     limit: 2
+    t.string  "county",    limit: 64
+  end
 
 end

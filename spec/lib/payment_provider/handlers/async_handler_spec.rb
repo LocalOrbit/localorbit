@@ -25,12 +25,12 @@ describe PaymentProvider::Handlers::AsyncHandler do
     end
 
     context 'for event with subscription' do
-      let(:event) { double(type: 'transfer.paid', id: 'evt_1234567', livemode: false) }
+      let(:event) { double(type: 'payout.paid', id: 'evt_1234567', livemode: false) }
       let(:delay) { double }
 
       it 'delegates to configured handler' do
-        expect(PaymentProvider::Handlers::TransferPaid).to receive(:extract_job_params).with(event).and_return('the params')
-        expect(PaymentProvider::Handlers::TransferPaid).to receive(:delay).and_return(delay)
+        expect(PaymentProvider::Handlers::PayoutPaid).to receive(:extract_job_params).with(event).and_return('the params')
+        expect(PaymentProvider::Handlers::PayoutPaid).to receive(:delay).and_return(delay)
         expect(delay).to receive(:handle).with('the params')
         call
       end

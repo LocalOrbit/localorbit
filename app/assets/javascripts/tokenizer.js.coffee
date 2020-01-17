@@ -44,7 +44,6 @@ class @PaymentSourceTokenizer
         value: value
       ).appendTo(@$form)
 
-    # PaymentProvider is defined by either stripe.js.coffee or balanced.js.coffee
     PaymentProvider.tokenize(data, type, @$container)
       .done (params) =>
         addField key, value for key, value of params

@@ -210,9 +210,6 @@ describe "A Market Manager", :vcr do
       uncheck "Allow credit cards"
 
       click_button "Save Organization"
-
-      #expect(page).to have_content("At least one payment method is required for the organization")
-      # Fails when removing Balanced-specific tests, commenting out for now. - JZC
     end
 
     it "deactivates an organization" do

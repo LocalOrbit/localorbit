@@ -45,7 +45,6 @@ class Admin::BankAccountsController < AdminController
       :bank_name,
       :name,
       :last_four,
-      :balanced_uri,
       :stripe_tok,
       :account_type,
       :expiration_month,

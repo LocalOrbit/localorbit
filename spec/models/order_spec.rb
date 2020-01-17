@@ -679,46 +679,24 @@ describe Order do
           less_orders = expected_order_ids[0..-2] # we associated a market payment with m1[:orders].last, so let's not expect the last order id
           expect(payable_automate_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*less_orders)
         end
-
-
       end
     end
   end
 
   describe "payment provider scopes" do
-    let!(:balanced_orders) { create_list(:order, 3, payment_provider: PaymentProvider::Balanced.id.to_s) }
     let!(:stripe_orders) { create_list(:order, 2, payment_provider: PaymentProvider::Stripe.id.to_s) }
     let!(:other_orders) { create_list(:order, 2, payment_provider: "something else") }
-
-    it ".balanced keeps only Balanced orders" do
-      expect(Order.balanced.to_set).to eq balanced_orders.to_set
-    end
-
-    it ".not_balanced keeps any NON-Balanced orders" do
-      expect(Order.not_balanced.to_set).to eq (stripe_orders.to_set + other_orders.to_set)
-    end
 
     it ".stripe keeps only Stripe orders" do
       expect(Order.stripe.to_set).to eq stripe_orders.to_set
     end
 
     it ".not_stripe keeps any NON-Stripe orders" do
-      expect(Order.not_stripe.to_set).to eq (balanced_orders.to_set + other_orders.to_set)
+      expect(Order.not_stripe.to_set).to eq (other_orders.to_set)
     end
   end
 
   describe ".stripe and .not_stripe scopes" do
-    let!(:balanced_orders) { create_list(:order, 3, payment_provider: PaymentProvider::Balanced.id.to_s) }
     let!(:stripe_orders) { create_list(:order, 2, payment_provider: PaymentProvider::Stripe.id.to_s) }
-    # let!(:other_orders) { create_list(:order, 2, payment_provider: nil) }
-
-    it "only returns orders orders whose payment_provider is set to balanced" do
-      expect(Order.balanced.to_set).to eq balanced_orders.to_set
-    end
-
-    it "can be negated" do
-      expect(Order.not_balanced.to_set).to eq stripe_orders.to_set
-    end
   end
-
 end

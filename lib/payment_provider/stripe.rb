@@ -130,7 +130,6 @@ module PaymentProvider
           raise message
         end
 
-        ::Stripe.api_version = '2019-12-03'
         charge = ::Stripe::Charge.create(charge_params)
 
         # Pin some order metadata on the Stripe::Payment object that appears in the managed account:

@@ -7,27 +7,15 @@ describe PaymentProvider do
     it "returns Stripe" do
       expect(PaymentProvider.for_new_markets).to be PaymentProvider::Stripe
     end
-
-    context "when env var is set for Balanced override" do
-      let(:magic_word) { 'USE_BALANCED_FOR_NEW_MARKETS' }
-      before { ENV[magic_word] = 'YES' }
-      after { ENV.delete(magic_word) }
-
-      it "returns Balanced" do
-        expect(PaymentProvider.for_new_markets).to be PaymentProvider::Balanced
-      end
-    end
   end
 
   describe ".for" do
     it "returns the mapped provider object" do
       expect(PaymentProvider.for(:stripe)).to be(PaymentProvider::Stripe)
-      expect(PaymentProvider.for(:balanced)).to be(PaymentProvider::Balanced)
     end
 
     it "accepts string identifiers as well as symbols" do
       expect(PaymentProvider.for('stripe')).to be(PaymentProvider::Stripe)
-      expect(PaymentProvider.for('balanced')).to be(PaymentProvider::Balanced)
     end
 
     it "raises for unknown providers" do
@@ -35,22 +23,8 @@ describe PaymentProvider do
     end
   end
 
-  describe ".is_balanced?" do
-    it "returns true if the given identifier corresponds to Balanced, false otherwise" do
-      expect(PaymentProvider.is_balanced?(PaymentProvider::Balanced.id)).to be true
-      expect(PaymentProvider.is_balanced?(:balanced)).to be true
-      expect(PaymentProvider.is_balanced?('balanced')).to be true
-      expect(PaymentProvider.is_balanced?(PaymentProvider::Stripe.id)).to be false
-      expect(PaymentProvider.is_balanced?(:other)).to be false
-      expect(PaymentProvider.is_balanced?(nil)).to be false
-    end
-  end
-
-
   [
-    PaymentProvider::Balanced.id,
     PaymentProvider::Stripe.id,
-
   ].each do |provider_name|
     provider_object = PaymentProvider.for(provider_name)
 

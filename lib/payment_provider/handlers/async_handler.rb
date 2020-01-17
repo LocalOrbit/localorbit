@@ -2,13 +2,13 @@ module PaymentProvider
   module Handlers
     class AsyncHandler
       HANDLER_IMPLS = {
+        # TODO: Remove transfer.paid once Stripe API version upgrade is complete
         'transfer.paid' => PaymentProvider::Handlers::TransferPaid,
+        'payout.paid' => PaymentProvider::Handlers::PayoutPaid,
         'plan.created' => PaymentProvider::Handlers::PlanHandler,
         'invoice.payment_succeeded' => PaymentProvider::Handlers::InvoiceHandler,
         'invoice.payment_failed' => PaymentProvider::Handlers::InvoiceHandler
       }
-      # 'charge.failed' => PaymentProvider::Handlers::ChargeHandler
-      # 'customer.subscription.created' => PaymentProvider::Handlers::SubscriptionHandler,
 
       def call(event)
         raise RuntimeError if event.livemode && !Rails.env.production?
