@@ -18,8 +18,8 @@ describe 'Checking Out', :js, :vcr do
            managers: [market_manager],
            sellers_edit_orders: true)
   end
-  let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, day:1, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: '8:00 AM', seller_delivery_end: '5:00 PM', buyer_pickup_location_id: 0, buyer_pickup_start: '12:00 AM', buyer_pickup_end: '12:00 AM', market_pickup: false) }
-  let!(:delivery_schedule2) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, day:2, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: '8:00 AM', seller_delivery_end: '5:00 PM', buyer_pickup_location_id: 0, buyer_pickup_start: '12:00 AM', buyer_pickup_end: '12:00 AM', market_pickup: false) }
+  let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: '8:00 AM', seller_delivery_end: '5:00 PM', buyer_pickup_location_id: 0, buyer_pickup_start: '12:00 AM', buyer_pickup_end: '12:00 AM', market_pickup: false) }
+  let!(:delivery_schedule2) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: '8:00 AM', seller_delivery_end: '5:00 PM', buyer_pickup_location_id: 0, buyer_pickup_start: '12:00 AM', buyer_pickup_end: '12:00 AM', market_pickup: false) }
 
   # Fulton St. Farms
   let!(:bananas) { create(:product, :sellable, name: 'Bananas', organization: fulton_farms) }

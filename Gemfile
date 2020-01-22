@@ -32,7 +32,6 @@ gem 'acts_as_geocodable'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
 gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
-gem 'stripe'
 gem 'color'
 gem 'countries'
 gem 'csv_builder'
@@ -60,7 +59,8 @@ gem 'postgres_ext'
 gem 'rack-canonical-host'
 gem 'ransack'
 gem 'simpleidn'
-gem 'stripe_event'
+gem 'stripe', '5.14.0'       
+gem 'stripe_event', '2.3.0'
 gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
 gem 'kiba'                      # ETL Tool
@@ -138,8 +138,8 @@ end
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.0'
-  gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
+  gem 'rspec-collection_matchers'
   gem 'pry-rails'
   gem 'pry-remote'
   gem 'byebug'
@@ -166,6 +166,7 @@ group :test do
   gem 'vcr'
   gem 'fire_poll', '1.2.0'
   gem 'capybara-screenshot'
+  gem 'stripe-ruby-mock', '~> 2.5.8', :require => 'stripe_mock'
 end
 
 group :staging do

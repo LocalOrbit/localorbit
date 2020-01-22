@@ -3,12 +3,24 @@ require 'spec_helper'
 describe PaymentProvider::Handlers::AsyncHandler do
   let(:call) { described_class.new.call(event) }
 
+  before(:all) {
+    VCR.turn_off!
+    StripeMock.start
+  }
+  after(:all) {
+    StripeMock.stop
+    VCR.turn_on!
+  }
+
   describe '#call' do
     context 'livemode outside production env' do
-      let(:event) { double(livemode: true) }
+      let(:event) { StripeMock.mock_webhook_event('payout.paid.livemode') }
 
       it 'raises RuntimeError' do
-        expect { call }.to raise_error(RuntimeError)
+        expect { call }.to raise_error {|e|
+          expect(e).to be_a RuntimeError
+          expect(e.message).to eq('Cannot run in Stripe livemode if not in production')
+        }
       end
     end
 
@@ -25,7 +37,7 @@ describe PaymentProvider::Handlers::AsyncHandler do
     end
 
     context 'for event with subscription' do
-      let(:event) { double(type: 'payout.paid', id: 'evt_1234567', livemode: false) }
+      let(:event) { StripeMock.mock_webhook_event('payout.paid', { livemode: false }) }
       let(:delay) { double }
 
       it 'delegates to configured handler' do
