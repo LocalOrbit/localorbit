@@ -20,6 +20,7 @@ jobs:
           POSTGRES_USER: localorbit
           POSTGRES_DB: localorbit_test
           POSTGRES_PASSWORD: ""
+      - image: stripemock/stripe-mock:latest
     steps:
       - add_ssh_keys
 
