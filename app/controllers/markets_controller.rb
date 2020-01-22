@@ -57,9 +57,6 @@ class MarketsController < ApplicationController
       @market = results.market
       @subscription_params = results.subscription_params
 
-      # Email us about their request
-      ZendeskMailer.delay.request_market(@market)
-
       # Email them confirmation of their request
       UserMailer.delay.market_request_confirmation(@market)
 
@@ -68,9 +65,6 @@ class MarketsController < ApplicationController
       flash.alert = error_msg = results.context[:error] || "Could not create market"
 
       @market = results.market
-
-      # Email us about their request
-      ZendeskMailer.delay.failed_market_request(@market, error_msg) unless @market.blank?
 
       redirect_to :action => 'new', :id => @market
     end

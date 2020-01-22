@@ -29,7 +29,7 @@
   <tr class="unverified">
     <td colspan="7">
       <% if bank_account.verification_failed? %>
-      We could not verify your bank account. Please contact <%= link_to 'Local Orbit Support', help_path %>.
+      We could not verify your bank account. Please <%= link_to 'contact your Market Manager', help_path %>.
       <% else %>
       <%= link_to "Verify Account", [:admin, @entity, bank_account, :bank_account_verification], class: "btn btn--blue btn--small" %>
       <span class="please-verify">This account needs to be verified. Please click the button and follow the instructions.</span>

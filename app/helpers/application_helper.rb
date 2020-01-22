@@ -3,10 +3,6 @@ require 'tempfile'
 require 'uri'
 
 module ApplicationHelper
-  def help_path
-    "https://localorbit.zendesk.com/home"
-  end
-
   def can_access?(flag)
     current_user.admin? || current_user.managed_markets.any? {|m| m.organization.plan[flag.to_sym] }
   end
@@ -55,7 +51,7 @@ module ApplicationHelper
   def can_reset?(params)
     params.any? {|key, _| key != "sort" && key != "page"  && key != "q"}
   end
-  
+
   def deep_hash( obj, key )
     if obj.respond_to?(:key?) && obj.key?(key)
       obj[key]
@@ -65,33 +61,33 @@ module ApplicationHelper
       r
     end
   end
-  
+
   def append_sticky_class(search_key, class_string = '', defaults = {})
     # Start and end dates (among others) are in q, but also (and incorrectly) higher up...
     # limit the initial scope to account for this duality
     # request.path provides the initial context
     search_result = deep_hash(session[:sticky_parameters][request.path]['q'], search_key)
-    
-    if search_result == nil 
+
+    if search_result == nil
       search_result = deep_hash(session[:sticky_parameters][request.path], search_key)
     end
-    
+
     # Having searched, check if a filter is set...
     if search_result != '' && !!search_result
       # ...and further filter any defaults
       if !defaults.empty?
         defaults.each do |default|
-          # This currently only applies to dates, and this code makes 
+          # This currently only applies to dates, and this code makes
           # the comparison more robust
           if search_result.to_date.to_s == default.to_date.to_s
-            # Explicit return here short circuits the call as soon as 
+            # Explicit return here short circuits the call as soon as
             # a fail condition is met.  That's what we want.
             return class_string
           end
         end
       end
       class_string = class_string == '' ? 'set_filter' : class_string += ' set_filter'
-    else 
+    else
       class_string
     end
   end

@@ -47,7 +47,7 @@ section{margin:60px 0;}
       column--fourth
     </div>
   </div>
-  
+
   <hr>
   <div class="row">
     <div class="column column--third " style="background:#9bc6d4; border-radius:3px;">
@@ -73,7 +73,7 @@ section{margin:60px 0;}
   .row--squash
   <br>
   .l-constraint
-  
+
 </section>
 
 <section>
@@ -96,18 +96,18 @@ section{margin:60px 0;}
 <section>
    <h1>Gradients</h1>
    <hr class="styleguide">
-   
+
    <small><strong>EXAMPLE:</strong> (left with current gradient, right with no-gradient)</small>
    <br>
    <div style="clear:both;"></div>
-   
+
     <div class="l-app-header" style="float:left;width:50%;height:200px; background-color: <%= current_market.text_color -%>;"></div>
     <div style="float:left;width:50%;height:200px; background-color:<%= current_market.text_color -%>;"></div>
 
 
     <div style="clear:both;"></div>
 
-    
+
     <div class="nav nav--main">
       <span class="current">Order</span>
       <a class="" href="/sellers" >Sellers</a>
@@ -121,11 +121,11 @@ section{margin:60px 0;}
   <button class="btn btn--secondary">Secondary Button</button>
   <button class="btn btn--primary btn--small">Small Button</button>
   <br><br><br>
-  
+
   <small>Actual buttons:</small><br>
   <div class="row row--partial">
     <div class="column column--two-thirds">
-  
+
       <input type="submit" value="Save Price" name="commit">
       <a class="btn btn--add btn--small" href="/admin/organizations/new">Add Organization</a>
       <a class="btn btn--small btn--save" rel="nofollow" href="/admin/organizations/2/update_active?organization%5Bactive%5D=false" data-method="patch">Deactivate</a>
@@ -154,13 +154,13 @@ section{margin:60px 0;}
       <button type="button" class="ui-datepicker-trigger"><img src="https://d3q270946t1v4b.cloudfront.net/assets/icons/calendar@2x-ff5c35352afb1b255af06f08f6a9c2ce.png" alt="..." title="..."></button>
     </div>
   </div>
-  
+
 </section>
 <section>
    <h1>Navigation</h1>
    <hr class="styleguide">
-   
-   
+
+
    <header id="top" class="l-app-header" data-height="44" data-offset="0">
          <div class="l-constraint">
            <p class="header header--welcome">
@@ -184,12 +184,12 @@ section{margin:60px 0;}
      </div>
    </div>
    </li>
-   <li><a href="https://localorbit.zendesk.com/home">Help</a></li><li><a rel="nofollow" href="/users/sign_out" data-method="delete">Sign Out</a></li>
+   <li><a href="/help">Help</a></li><li><a rel="nofollow" href="/users/sign_out" data-method="delete">Sign Out</a></li>
            </ul>
            <div class="clearfix"></div>
          </div>
        </header>
-       
+
    <div class="nav nav--main pull-right">
      <span class="current">Order</span>
      <a href="/sellers" class="">Sellers</a>
@@ -252,9 +252,9 @@ section{margin:60px 0;}
        <li class="mobile-only"><a href="/sellers" class="">Sellers</a></li>
        <li class="mobile-only"><a href="/market" class="">About</a></li>
      </ul>
-     
+
      <p><strong>NOTE:</strong> think about changing the navigation layouts.</p>
-     
+
 </section>
 
 <section>
@@ -288,7 +288,7 @@ section{margin:60px 0;}
           <li id="product-pricing-nav" class="tab"><span class="current">Pricing</span></li>
       </ul>
     </div>
-    
+
     <p>SOURCE: /market</p>
     <ul class="tabs tabs--small unguttered">
       <li class="tab">
@@ -308,19 +308,19 @@ section{margin:60px 0;}
     This table is empty, either because there is no data, or because the filter you've applied is hiding it.
   </div>
   <p><strong>NOTE:</strong> Doesnt seem to match the rest of the application color/feel</p>
-  
+
   <p>SOURCE: admin/products/2/prices</p>
   <div class="product-status-alert">Your product will not appear in the Shop until you add&nbsp;pricing</div>
-  
+
   <p>SOURCE: sessions/organizations/new?redirect_back_to=%2Fproducts</p>
   <div class="info-note">You manage multiple organizations. For which organization would you like to place an order?</div>
-  
+
   <p>SOURCE: /products</p>
   <p class="table-summary">
     Please complete your order by September 9 at&nbsp; 1AM.<br>
     Pick up date is Tuesday September  9, 2014 between 12:00PM and&nbsp;3:00PM.
   </p>
-  
+
   <p>SOURCE: /admin/markets/1/bank_accounts</p>
   <div class="add-bank-warning">
     <small><strong>Important:</strong> If you've recently added a bank account as a payment method, please don't add the same account to another organization or market until it is verified where it was originally added.</small>
@@ -378,7 +378,7 @@ section{margin:60px 0;}
   .error-page > p > a:hover {
     text-decoration: underline;
   }
-  
+
   </style>
   <div class="error-page">
       <div class="dialog">
@@ -388,14 +388,12 @@ section{margin:60px 0;}
           The market Fulton Market has been deactivated.
         </p>
       </div>
-      <p>If you continue having trouble, please contact <a href="https://localorbit.zendesk.com/anonymous_requests/new">Local Orbit support</a>.</p>
     </div>
     <div class="error-page">
         <div class="dialog">
           <h1>We can't find that page.</h1>
           <p>The page you were looking for is not available at this address. You may have mistyped it <i>or</i> the page may have moved. Please check the link and try again.</p>
         </div>
-        <p>If you continue having trouble, please contact <a href="https://localorbit.zendesk.com/anonymous_requests/new">Local Orbit support</a>.</p>
       </div>
 </section>
 <section>
@@ -405,9 +403,9 @@ section{margin:60px 0;}
     <option value="/admin/reports/total-sales?per_page=50" selected="selected">Show 50 rows</option>
     <option value="/admin/reports/total-sales?per_page=100">Show 100 rows</option>
     <option value="/admin/reports/total-sales?per_page=250">Show 250 rows</option>
-    <option value="/admin/reports/total-sales?per_page=500">Show 500 rows</option></select>  
+    <option value="/admin/reports/total-sales?per_page=500">Show 500 rows</option></select>
   <p><strong>NOTE:</strong> Font seems large.  Should standardize the font-sizes</p>
-  
+
   <p>SOURCE: /admin/products/new</p>
   <div class="chosen-container chosen-container-single" style="width: 100%;" title="" id="product_category_id_chosen"><a tabindex="-1" class="chosen-single chosen-default"><span>Click and type to search for a Category</span><div><b></b></div></a><div class="chosen-drop"><div class="chosen-search"><input type="text" autocomplete="off"></div><ul class="chosen-results"><li class="group-result">Fruits</li><li class="active-result group-option" style="" data-option-array-index="2">Apples / Akane Apples</li><li class="active-result group-option" style="" data-option-array-index="3">Apples / Apples</li><li class="active-result group-option" style="" data-option-array-index="4">Apples / Cortland Apples</li><li class="active-result group-option" style="" data-option-array-index="5">Apples / Empire Apples</li><li class="active-result group-option" style="" data-option-array-index="6">Apples / Fuji</li><li class="active-result group-option" style="" data-option-array-index="7">Apples / Gala Apples</li><li class="active-result group-option" style="" data-option-array-index="8">Apples / Gingergold Apples</li><li class="active-result group-option" style="" data-option-array-index="9">Apples / Gold Rush Apples</li><li class="active-result group-option" style="" data-option-array-index="10">Apples / Golden Delicious Apples</li><li class="active-result group-option" style="" data-option-array-index="11">Apples / IDA</li><li class="active-result group-option" style="" data-option-array-index="12">Apples / Jonagold Apples</li><li class="active-result group-option" style="" data-option-array-index="13">Apples / Jonamac Apples</li><li class="active-result group-option" style="" data-option-array-index="14">Apples / Jonathan Apples</li><li class="active-result group-option" style="" data-option-array-index="15">Apples / Macintosh Apples</li><li class="active-result group-option" style="" data-option-array-index="16">Apples / Mutsu</li><li class="active-result group-option" style="" data-option-array-index="17">Apples / Pinova</li><li class="active-result group-option" style="" data-option-array-index="18">Apples / Red Delicious</li><li class="active-result group-option" style="" data-option-array-index="19">Apples / Red Gravenstein Apples</li><li class="active-result group-option" style="" data-option-array-index="20">Apples / Rome</li><li class="active-result group-option" style="" data-option-array-index="21">Apples / Staymen</li><li class="active-result group-option" style="" data-option-array-index="22">Apples / Summer Apples</li><li class="active-result group-option" style="" data-option-array-index="23">Bananas</li><li class="active-result group-option" style="" data-option-array-index="24">Berries &amp; Cherries / Black Currants</li><li class="group-result">Clothing</li><li class="active-result group-option" style="" data-option-array-index="1092">T-Shirt</li><li class="group-result">Art, Crafts &amp; Pottery</li><li class="active-result group-option" style="" data-option-array-index="1094">Art</li><li class="active-result group-option" style="" data-option-array-index="1095">Crafts</li><li class="active-result group-option" style="" data-option-array-index="1096">Pottery</li></ul></div></div>
 </section>
@@ -445,7 +443,7 @@ section{margin:60px 0;}
     <div><small>Drag and drop your logo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
   </div>
   <p><strong>NOTE:</strong> check border radius consistency</p>
-  
+
 </section>
 
 <section>
@@ -468,7 +466,7 @@ section{margin:60px 0;}
       <ul id="product-filter-category" data-count="0" class="filter-list"></ul>
     </div>
   </div>
-  
+
   <p>SOURCE: /admin/reports/total-sales</p>
   <form method="get" id="order_item_search" class="payment_search clear-after" action="/admin/reports/total-sales" accept-charset="UTF-8"><div style="display:none"><input type="hidden" value="✓" name="utf8"></div>
     <div class="reports-filters">
@@ -498,7 +496,7 @@ section{margin:60px 0;}
     </div>
   </form>
   <p><strong>To Do:</strong> Use the filter button convention for the filter to activate. button use 'apply filter'</p>
-  
+
 </section>
 
 
@@ -509,7 +507,7 @@ section{margin:60px 0;}
         <label for="q_id_or_order_number_or_payment_note_cont">Search Label</label><br>
         <input type="search" placeholder="Order # or PO #" name="q[id_or_order_number_or_payment_note_cont]" id="q_id_or_order_number_or_payment_note_cont"><input type="submit" value="Search" name="commit" class="btn--end">
       </span>
-      
+
   <p><strong>To Do:</strong> Switch out the image to vector icon</p>
 </section>
 <section>
@@ -594,9 +592,9 @@ section{margin:60px 0;}
         </tr>
     </tbody>
   </table>
-  
+
   <br><br>
-  
+
   <table class="sortable market-addresses">
     <thead>
       <tr>
@@ -612,7 +610,7 @@ section{margin:60px 0;}
           <div>89 Niles Rd., Rockford, Michigan 48836</div>
         </td>
         <td>
-        
+
         </td>
         <td class="delete">
           <a class="delete-address" data-method="delete" href="/admin/markets/1/addresses/2"><i class="font-icon icon-delete"></i></a>
@@ -624,7 +622,7 @@ section{margin:60px 0;}
           <div>1238f First St., Rockford, MI 93228</div>
         </td>
         <td>
-        
+
         </td>
         <td class="delete">
           <a class="delete-address" data-method="delete" href="/admin/markets/1/addresses/1"><i class="font-icon icon-delete"></i></a>
@@ -632,9 +630,9 @@ section{margin:60px 0;}
       </tr>
     </tbody>
   </table>
-  
+
   <br><br>
-  
+
   <table class="sortable">
     <thead>
       <tr><th>Schedule</th>
@@ -659,7 +657,7 @@ section{margin:60px 0;}
         </tr>
     </tbody>
   </table>
-  
+
   <br><br>
   <p>SOURCE: /admin</p>
   <table class="sortable market-org-list">
@@ -679,9 +677,9 @@ section{margin:60px 0;}
       </tr>
     </tbody>
   </table>
-  
+
   <br><br>
-  
+
   <p>SOURCE: /organizations</p>
   <table class="sortable organization-table market-org-list">
     <thead class="" data-height="27" data-offset="455.066650390625">
@@ -716,9 +714,9 @@ section{margin:60px 0;}
       </tr>
     </tbody>
   </table>
-  
+
   <br><br>
-  
+
   <p>SOURCE: /user</p>
   <table class="product-table product-table--admin user-table sortable">
     <thead class="" data-height="27" data-offset="414">
@@ -771,8 +769,8 @@ section{margin:60px 0;}
     </tbody>
   </table>
   <p><strong>NOTE:</strong> verticle align the td</p>
-  
-  
+
+
   <p>SOURCE: admin/products/2/prices</p>
   <table border="0" class="sortable pricing-table">
     <thead>
@@ -792,7 +790,7 @@ section{margin:60px 0;}
         </th>
         <th></th>
       </tr>
-      <tr id="add-row" class="add-price price even open-row">  
+      <tr id="add-row" class="add-price price even open-row">
         <td><select name="price[organization_id]" id="price_organization_id" class="price_buyer_id">
           <option value="">All Buyers</option>
           <option value="2">Alto Valley Farms</option>
@@ -805,10 +803,10 @@ section{margin:60px 0;}
       </tr>
     </thead>
   </table>
-  
+
   <br><br>
   <p><strong>To Do:</strong> change hover state to background:none repeat scroll 0 0 rgba(0, 0, 0, 0.05)</p>
-  
+
   <p>SOURCE: /cart</p>
   <table class="cart">
     <tbody class="item-group">
@@ -855,8 +853,8 @@ section{margin:60px 0;}
       </tr>
     </tbody>
   </table>
-  
-  
+
+
 </section>
 <section>
   <h1>Forms</h1>
@@ -910,13 +908,13 @@ section{margin:60px 0;}
         <input type="submit" value="Save Changes" name="commit">
       </div>
   </form>
-  
+
   <p></p>
   <div class="form-actions">
     <a href="/admin/markets" class="btn cancel">Cancel</a>
     <input type="submit" value="Update Market" name="commit">
   </div>
-  
+
   <form accept-charset="UTF-8" action="/admin/markets/10/managers" class="form-actions" method="post"><div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="LSPp6YKcnHmEQMq8inC21HtkA+OZ9zvCqfXasYc3FS4="></div>
     <input class="email-field" id="email" name="email" placeholder="Email address" type="email">
     <button type="submit" class="btn--add btn--small">Add Market Manager</button>
@@ -926,26 +924,26 @@ section{margin:60px 0;}
 <section>
   <h1>Help Text Examples</h1>
   <hr class="styleguide">
-  
-  
+
+
   <fieldset class="conditional">
     <input type="hidden" value="0" name="user[remember_me]"><input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">
     <label for="user_remember_me">Remember Me</label>
    <span data-tooltip="User sessions are automatically timed-out after 30 minutes. This option will keep you logged in for two weeks." class="tooltip"></span><br>
   </fieldset>
-  
+
   <br><br>
-  
+
   <div class="field">
     <label for="product_image">Photo</label><br>
-  
+
     <input type="file" name="product[image]" id="product_image" class="column column--full photo-button">
     <div><small>Drag and drop your photo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
   </div>
   <p><strong>Note: </strong>Well should go across the column esp. for 2-colforms.  look at lineheight seems too large.</p>
-  
+
   <br><br>
-  
+
   <div>
       <p>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
   </div>
@@ -953,9 +951,9 @@ vs.
   <div>
       <p style="font-style:italic"><strong>Tip: </strong>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
   </div>
-  
+
   <br><br>
-  
+
   <div class="field column column--half column--guttered">
     <label for="account_name">Name</label>
     <span class="hint">Full name as it appears on the account</span>
@@ -1025,8 +1023,8 @@ vs.
   <h1>Pagination</h1>
   <hr class="styleguide">
   <nav class="pagination">
-    
-    
+
+
           <span class="page current">
     1
   </span>
@@ -1059,10 +1057,10 @@ vs.
   <hr class="styleguide">
 
 </section>
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+

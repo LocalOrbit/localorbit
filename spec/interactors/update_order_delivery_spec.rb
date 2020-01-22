@@ -20,11 +20,10 @@ describe UpdateOrderDelivery do
   end
 
   context "saving is unsuccessful" do
-    it "notifies Rollbar and Zendesk" do
+    it "notifies Rollbar" do
       expect(order).to receive(:valid?).and_return(false)
       expect(order).not_to receive(:save)
       expect(Rollbar).to receive(:log)
-      expect(ZendeskMailer).to receive(:error_intervention).and_return(double(:user_mailer, deliver: true))
       UpdateOrderDelivery.perform(user: user, order: order, delivery_id: delivery.id)
     end
   end
@@ -40,10 +39,9 @@ describe UpdateOrderDelivery do
       2.times { create(:location, organization: order.organization) }
     end
 
-    it "fails and notifies Rollbar and Zendesk" do
+    it "fails and notifies Rollbar" do
       expect(order).not_to receive(:save)
       expect(Rollbar).to receive(:log)
-      expect(ZendeskMailer).to receive(:error_intervention).and_return(double(:user_mailer, deliver: true))
       UpdateOrderDelivery.perform(user: user, order: order, delivery_id: delivery2.id)
     end
   end

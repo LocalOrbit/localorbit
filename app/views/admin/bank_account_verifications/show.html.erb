@@ -10,7 +10,7 @@
       <% else %>
       <span class="warning"><strong>You have <%= pluralize(@verification.remaining_attempts, 'try') %> remaining to enter the correct values. Please be very careful that they are accurate when entering them.</strong></span>
       <% end %>
-      If you have any questions or need help please contact <%= link_to 'Local Orbit Support', help_path %>.
+      If you have any questions or need help please <%= link_to 'contact your Market Manager', help_path %>.
     </p>
 
     <ul class="bank-info">
