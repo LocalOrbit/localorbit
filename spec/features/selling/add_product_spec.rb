@@ -561,19 +561,5 @@ describe "Adding a product", chosen_js: true do
 
       visit "/admin/products/new"
     end
-
-    it "a user can request a new category" do
-      click_link "Request a New Category"
-
-      expect(ZendeskMailer).to receive(:request_category).with(
-        user,
-        "Goop"
-      ).and_return(double(:mailer, deliver: true))
-
-      fill_in "Product Category", with: "Goop"
-      click_button "Request Category"
-
-      expect(page).to have_content("Add Product")
-    end
   end
 end

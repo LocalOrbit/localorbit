@@ -2,7 +2,7 @@
 <div class="tabs-wrapper">
   <ul class="tabs wrapping-tabs">
     <%= content_tag(:li, link_to_or_span("Products",   [@upload, :admin_upload]), class: 'tab') %>
- 
+
   </ul>
 </div>
 
@@ -20,9 +20,6 @@ To download <strong>a template</strong> for filling in your product information,
 <br/><br/>
 To download <strong>your product listing</strong> for updating actual products, please click here:<br>
 <strong><%= link_to 'Download CSV Export for products', admin_upload_export_products_path(format: :csv) %></strong>
-<br/><br/>
-To download <strong>documentation explaining the Local Orbit product upload</strong>, please click here:<br>
-<strong><a target="_new" href="https://localorbit.zendesk.com/knowledge/articles/114094535073/en-us?brand_id=3230966">Product Upload Documentation</a></strong>
 <br/><br/>
 
 <% recent_uploads = Audit.where(action:"Product upload").where(associated_type:@sd).last(4) %>

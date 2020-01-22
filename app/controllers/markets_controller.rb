@@ -20,6 +20,11 @@ class MarketsController < ApplicationController
     ryo_plans = Plan.ryo_enabled_plans
     @plan_data = PaymentProvider::Stripe.get_stripe_plans.select{|plan| ryo_plans.include?(plan.id)}.sort_by{|p| p.interval == 'month' ? p.amount * 12 : p.amount}.reverse
 
+    if !params.has_key?(:plan)
+      render_404
+      return
+    end
+
     requested_plan = params[:plan] || @plan_data.first.id
     @stripe_plan ||= PaymentProvider::Stripe.get_stripe_plans(requested_plan.upcase)
 
@@ -52,9 +57,6 @@ class MarketsController < ApplicationController
       @market = results.market
       @subscription_params = results.subscription_params
 
-      # Email us about their request
-      ZendeskMailer.delay.request_market(@market)
-
       # Email them confirmation of their request
       UserMailer.delay.market_request_confirmation(@market)
 
@@ -63,9 +65,6 @@ class MarketsController < ApplicationController
       flash.alert = error_msg = results.context[:error] || "Could not create market"
 
       @market = results.market
-
-      # Email us about their request
-      ZendeskMailer.delay.failed_market_request(@market, error_msg) unless @market.blank?
 
       redirect_to :action => 'new', :id => @market
     end

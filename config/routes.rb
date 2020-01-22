@@ -19,8 +19,6 @@ Rails.application.routes.draw do
     put "account" => "devise/registrations#update", as: :user_registration
   end
 
-  get "zendesk/sso" => "zendesk_sso#show"
-
   concern :bank_account do
     resources :bank_accounts, only: [:index, :new, :create, :destroy] do
       resource :bank_account_verification, only: [:show, :update], path: :verify
@@ -294,6 +292,8 @@ Rails.application.routes.draw do
 
   resources :delivery_notes, only: [:new, :update, :edit, :show, :create, :destroy]
   post '/delivery_notes/new' => "delivery_notes#create"
+
+  get 'help' => 'help#show'
 
   get '/products/search' => "products#search"
   get '/products/purchase' => "products#purchase"

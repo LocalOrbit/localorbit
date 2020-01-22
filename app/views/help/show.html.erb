@@ -1,0 +1,9 @@
+<div style="text-align: center">
+  <h2>Contact the <%= current_market.name %> market manager for assistance</h2>
+  <%= mail_to current_market.contact_email, "Email #{current_market.contact_name}", class: "btn btn--primary" %>
+  <% if current_market.contact_phone.present? %>
+    &nbsp;
+    <%= link_to "Call #{current_market.contact_phone}", "tel:#{current_market.contact_phone}", class: "btn btn--secondary" %></span>
+  <% end %>
+</div>
+

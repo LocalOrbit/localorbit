@@ -82,38 +82,6 @@ describe "Editing a product", :js do
       end
       click_link "Canned Pears"
     end
-
-    describe "a user can request a new category" do
-      it "allows the user to request a new category" do
-        click_link "Request a New Category"
-
-        expect(page).to have_css(".popup-body", visible: true)
-        expect(ZendeskMailer).to receive(:request_category).with(
-          user, "Goop"
-        ).and_return(double(:mailer, deliver: true))
-
-        fill_in "Product Category", with: "Goop"
-        click_button "Request Category"
-
-        expect(page).to_not have_css(".popup-body", visible: true)
-        expect(page).to have_content("Update Canned Pears")
-      end
-
-      it "does not refresh the page", js: true do
-        fill_in "Product Name", with: "Canned Peaches"
-        click_link "Request a New Category"
-
-        expect(page).to have_css(".popup-body", visible: true)
-        expect(ZendeskMailer).to receive(:request_category).and_return(double(:mailer, deliver: true))
-
-        fill_in "Product Category", with: "Goop"
-        click_button "Request Category"
-
-        expect(page).to_not have_css(".popup-body", visible: true)
-        expect(page).to have_field("Product Name", with: "Canned Peaches")
-        expect(page).not_to have_field("Product Category")
-      end
-    end
   end
 
   describe "delivery schedules", js: true do
