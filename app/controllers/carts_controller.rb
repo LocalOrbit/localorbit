@@ -35,6 +35,7 @@ class CartsController < ApplicationController
           flash[:error] = errors.map{|r| r[:error_msg]}.join(". ") if errors.count > 0
 
           @grouped_items = current_cart.items.for_checkout
+          @ignore_minimum_order = current_user.market_manager?
 
           if !flash.now[:discount_message] && current_cart.discount.present?
             @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: current_cart.discount.code)
@@ -57,13 +58,9 @@ class CartsController < ApplicationController
       @order_type = order.order_type
     end
     product = Product.includes(:prices).find(params[:product_id])
-    #delivery_date = current_delivery.deliver_on
 
     if current_market.is_consignment_market? && ((!order.nil? && order.sales_order?) || @order_type == 'sales')
-      #existing_product = current_cart.items.where(product_id: product.id)
-      #if existing_product.empty? || !order.nil?
-        @item = current_cart.items.find_or_initialize_by(product_id: product.id, lot_id: params[:lot_id], ct_id: params[:ct_id])
-      #end
+      @item = current_cart.items.find_or_initialize_by(product_id: product.id, lot_id: params[:lot_id], ct_id: params[:ct_id])
     else
       @item = current_cart.items.find_or_initialize_by(product_id: product.id)
     end
@@ -83,14 +80,6 @@ class CartsController < ApplicationController
         @item.quantity = invalid_qty[:actual_count]
       end
 
-      #check_qty = current_market.is_buysell_market? || (@order_type == "sales" && !params[:lot_id].nil? && params[:lot_id] != "NaN" && Integer(params[:lot_id]) > 0)
-      #@item.check_qty = check_qty
-
-      #if check_qty && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
-      #  @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}"
-      #  @item.quantity = product.available_inventory(delivery_date, current_market.id, current_organization.id)
-      #end
-
       @error = @item.errors.full_messages.join(". ") unless @item.save
     elsif @item.persisted?
       @item.update(quantity: 0)
@@ -101,7 +90,6 @@ class CartsController < ApplicationController
     @apply_discount = current_cart.discount ? ApplyDiscountToCart.perform(cart: current_cart, code: current_cart.discount.code) : nil
   end
 
-  # add Delivery Note deletion to cart's destroy
   def destroy
     DeliveryNote.where(cart_id:current_cart.id).each do |dn|
       DeliveryNote.soft_delete(dn.id)

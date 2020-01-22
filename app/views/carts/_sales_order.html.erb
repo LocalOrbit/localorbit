@@ -16,7 +16,7 @@
                 <td class="product-clear"></td>
               </tr>
               <tr>
-                <th colspan="5" supplier="<%= seller_name.gsub(" ","") %>" class="seller"> <%= seller_name %> <%= link_to "Note", new_delivery_note_path(:supplier => Organization.where(name:seller_name).first.id, :current_cart => current_cart, :buyer => current_organization.id) %> </th> 
+                <th colspan="5" supplier="<%= seller_name.gsub(" ","") %>" class="seller"> <%= seller_name %> <%= link_to "Note", new_delivery_note_path(:supplier => Organization.where(name:seller_name).first.id, :current_cart => current_cart, :buyer => current_organization.id) %> </th>
               </tr>
               <% items.each do |item| %>
                 <%= content_tag_for(:tr, item, id: "cart_item_#", supplier: seller_name.gsub(/[^a-zA-Z]/, ''), class: "product supplier-#{seller_name.gsub(/[^a-zA-Z]/, '')}", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
@@ -43,7 +43,7 @@
             <tbody class="math" id="totals">
               <tr class="cart_total">
                 <th scope="row" colspan="<%= current_market.is_consignment_market? ? "5" : "3" %>">Item Subtotal</th>
-                <td class="subtotal" data-order-min="<%= current_delivery.delivery_schedule.order_minimum %>" data-subtotal="<%=current_cart.subtotal %>"><%= current_cart.display_subtotal %></td>
+                <td class="subtotal" data-order-min="<%= @ignore_minimum_order ? 0 : current_delivery.delivery_schedule.order_minimum %>" data-subtotal="<%=current_cart.subtotal %>"><%= current_cart.display_subtotal %></td>
                 <td></td>
               </tr>
 
