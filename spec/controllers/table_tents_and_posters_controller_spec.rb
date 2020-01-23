@@ -1,9 +1,7 @@
 require "spec_helper"
 
 describe TableTentsAndPostersController do
-
   include_context "the mini market"
-  include_context "intercom enabled"
 
   before do
     switch_to_subdomain mini_market.subdomain
@@ -26,7 +24,6 @@ describe TableTentsAndPostersController do
       let(:printable_type) { type_string }
       let(:expected_printable_type) { type_string || "table tent" }
       let(:include_product_names) {[false, true].sample} #wink
-      let(:intercom_event_type) {if type_string == "poster" then EventTracker::DownloadedPosters.name else EventTracker::DownloadedTableTents.name end}
 
       describe "#create" do
         def post_create
@@ -66,20 +63,6 @@ describe TableTentsAndPostersController do
           expect(@delayed_job_args).to be
           expect(@delayed_job_args[:order_printable_id]).to eq order_printable.id
           expect(@delayed_job_args[:request].base_url).to eq request.base_url
-
-          e = EventTracker.previously_captured_events.first
-          expect(e).to be
-          expect(e).to eq({
-            user: barry,
-            event: intercom_event_type,
-            metadata: {
-              order: {
-                url: admin_order_url(order),
-                value: order.order_number
-              }
-            }
-          })
-
         end
       end
     end

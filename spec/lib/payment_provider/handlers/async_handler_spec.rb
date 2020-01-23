@@ -41,8 +41,8 @@ describe PaymentProvider::Handlers::AsyncHandler do
       let(:delay) { double }
 
       it 'delegates to configured handler' do
-        expect(PaymentProvider::Handlers::PayoutPaid).to receive(:extract_job_params).with(event).and_return('the params')
-        expect(PaymentProvider::Handlers::PayoutPaid).to receive(:delay).and_return(delay)
+        expect(PaymentProvider::Handlers::PayoutHandler).to receive(:extract_job_params).with(event).and_return('the params')
+        expect(PaymentProvider::Handlers::PayoutHandler).to receive(:delay).and_return(delay)
         expect(delay).to receive(:handle).with('the params')
         call
       end

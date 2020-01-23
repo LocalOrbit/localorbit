@@ -59,11 +59,6 @@
               <%= f.label :order_payment_status_in, "Buyer Payment Status" %><br>
               <%= f.select :order_payment_status_in, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_payment_status_in, ""),'multiselect'] } %>
             </span>
-
-            <%# <span class="preserve-alignment"> %>
-            <%#   <%= f.label :seller_payment_status_eq, "Seller Payment Status" %1><br> %>
-            <%#   <%= f.select :seller_payment_status_eq, options_from_collection_for_select(["paid", "unpaid"], :to_s, :titleize, @q.seller_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %1> %>
-            <%# </span> %>
           </div>
           <a href="#items-filter" class="is-hidden mobile-only mobile-block mobile-toggle">Hide Filters</a>
           <%= link_to "Reset", admin_order_items_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>

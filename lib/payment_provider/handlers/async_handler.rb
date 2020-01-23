@@ -2,7 +2,7 @@ module PaymentProvider
   module Handlers
     class AsyncHandler
       HANDLER_IMPLS = {
-        'payout.paid' => PaymentProvider::Handlers::PayoutPaid,
+        'payout.paid' => PaymentProvider::Handlers::PayoutHandler,
         'plan.created' => PaymentProvider::Handlers::PlanHandler,
         'invoice.payment_succeeded' => PaymentProvider::Handlers::InvoiceHandler,
         'invoice.payment_failed' => PaymentProvider::Handlers::InvoiceHandler

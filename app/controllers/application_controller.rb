@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include EventTracker
   include DeadCode
 
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -10,7 +9,6 @@ class ApplicationController < ActionController::Base
   before_action :ensure_active_organization
 
   before_action :set_timezone
-  before_action :set_intercom_attributes, if: :intercom_enabled?
 
   helper_method :current_market
   helper_method :current_organization
@@ -48,16 +46,7 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   end
 
-  def track_event(event, metadata={})
-    return unless intercom_enabled?
-    EventTracker.track_event_for_user current_user, event, metadata if current_user
-  end
-
   private
-
-  def intercom_enabled?
-    IntercomRails.config.enabled_environments.include?(Rails.env)
-  end
 
   def signed_in_root_path(user)
     return root_path unless user
@@ -364,11 +353,6 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_url
     params[:redirect_back_to] || [:products]
-  end
-
-  def set_intercom_attributes
-    intercom_custom_data.user[:market] = current_market.name if current_market
-    intercom_custom_data.user[:org] = current_organization.name if current_organization
   end
 end
 

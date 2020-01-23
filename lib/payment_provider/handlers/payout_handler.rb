@@ -1,6 +1,6 @@
 module PaymentProvider
   module Handlers
-    class PayoutPaid
+    class PayoutHandler
 
       def self.extract_job_params(event)
         {

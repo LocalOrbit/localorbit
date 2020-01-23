@@ -163,7 +163,6 @@ class Admin::OrdersController < AdminController
     end
 
     setup_deliveries(@order)
-    track_event EventTracker::ViewedOrder.name, order: { url: admin_order_url(order.id), value: @order.order_number }
   end
 
   def update

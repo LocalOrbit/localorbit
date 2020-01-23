@@ -47,8 +47,6 @@ gem 'graticule'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
 gem 'interactor-rails', '< 3.0'
 gem 'interactor', '< 3.0' # We are not ready for 3 yet
-gem 'intercom-rails', '~> 0.2.26'
-gem 'intercom', '~> 2.3.0'
 gem 'jbuilder'
 gem 'jwt'
 gem 'kaminari'                      # Paginator
@@ -59,7 +57,7 @@ gem 'postgres_ext'
 gem 'rack-canonical-host'
 gem 'ransack'
 gem 'simpleidn'
-gem 'stripe', '5.14.0'       
+gem 'stripe', '5.14.0'
 gem 'stripe_event', '2.3.0'
 gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
@@ -83,12 +81,8 @@ gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
 
-# wkhtmltopdf versions are a mess. 0.12.1 is stable
-# See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
-#  we are waiting for 0.12.5 to land for https://github.com/wkhtmltopdf/wkhtmltopdf/issues/3241
-# The github version is massive and makes the Heroku slug huge
 install_if -> { RUBY_PLATFORM =~ /darwin/ } do
-  gem 'wkhtmltopdf-binary', git: 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
+  gem 'wkhtmltopdf-binary', '0.12.5.1'
 end
 install_if -> { ENV['ON_HEROKU'] == 'true' } do
   gem 'wkhtmltopdf-heroku'
@@ -127,6 +121,7 @@ group :development do
   gem 'rubycritic', require: false
   gem 'mailcatcher'
   gem 'unicorn'
+  gem 'solargraph'
 
   # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
   gem 'rack-mini-profiler'
