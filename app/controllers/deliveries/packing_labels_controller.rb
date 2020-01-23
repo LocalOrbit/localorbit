@@ -37,7 +37,6 @@ class Deliveries::PackingLabelsController < ApplicationController
         delivery_date: dte
       )
     end
-    track_event EventTracker::DownloadedPackingLabels.name
     redirect_to action: :show, deliver_on: dte, id: printable.id
   end
 

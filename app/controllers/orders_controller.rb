@@ -45,8 +45,6 @@ class OrdersController < ApplicationController
       load_consignment_transactions(@order)
       load_open_po
     end
-
-    track_event EventTracker::ViewedOrder.name, order: { url: order_url(id: @order.id), value: @order.order_number }
   end
 
   def create

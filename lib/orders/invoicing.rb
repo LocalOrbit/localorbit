@@ -32,10 +32,10 @@ module Orders
   #
   # Schema for results structures:
   #
- 
+
   ResultStatus = RSchema::DSL.enum([:ok, :failed])
   OrderNumber = String
-  
+
   MarkingResult = RSchema.schema {{
     status: ResultStatus,
     order: Order

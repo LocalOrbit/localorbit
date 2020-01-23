@@ -5,9 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.3.8'
+ruby '2.4.9'
 
-gem 'rails', '~> 4.1.11'
+gem 'rails', '~> 4.2'
 
 gem 'pg', '~> 0.21.0'
 
@@ -28,7 +28,7 @@ gem 'wysihtml5-rails'
 gem 'active_model_serializers'
 gem 'active_record_query_trace'
 gem 'active_record_union'
-gem 'acts_as_geocodable'
+gem 'acts_as_geocodable', '~> 2.1.1'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
 gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
@@ -44,12 +44,10 @@ gem 'dragonfly-s3_data_store'
 gem 'draper'
 gem 'figaro'
 gem 'font_assets'
-gem 'graticule'
-gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
-gem 'interactor-rails', '< 3.0'
+gem 'graticule', '~> 2.4.0' # See https://github.com/twilio/twilio-ruby/issues/315#issuecomment-476160984 if probs installing
+gem 'groupdate', '~> 4.1.2'
+gem 'interactor-rails', '< 2.0'
 gem 'interactor', '< 3.0' # We are not ready for 3 yet
-gem 'intercom-rails', '~> 0.2.26'
-gem 'intercom', '~> 2.3.0'
 gem 'jbuilder'
 gem 'jwt'
 gem 'kaminari'                      # Paginator
@@ -58,11 +56,12 @@ gem 'periscope-activerecord'
 gem 'pg_search'
 gem 'postgres_ext'
 gem 'rack-canonical-host'
-gem 'ransack'
+gem 'ransack', '~> 1.8.10'
+gem 'responders', '~> 2.0'
 gem 'simpleidn'
 gem 'stripe_event'
 gem 'font-awesome-rails'
-gem 'wysiwyg-rails'
+gem 'wysiwyg-rails', '~> 1.2.8'
 gem 'kiba'                      # ETL Tool
 
 gem "browserify-rails"          # Support
@@ -75,20 +74,15 @@ gem "pundit"
 gem 'httparty'
 gem 'omniauth-stripe-connect'
 
-gem 's3_direct_upload', :git => 'https://github.com/waynehoover/s3_direct_upload.git'
+gem 's3_direct_upload'
 
 gem 'constructor'
-gem 'tabulator', :git => 'https://github.com/dcrosby42/tabulator.git'
-gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
+gem 'rschema', '~> 2.4.0'
 
 gem 'turbolinks'
 
-# wkhtmltopdf versions are a mess. 0.12.1 is stable
-# See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
-#  we are waiting for 0.12.5 to land for https://github.com/wkhtmltopdf/wkhtmltopdf/issues/3241
-# The github version is massive and makes the Heroku slug huge
 install_if -> { RUBY_PLATFORM =~ /darwin/ } do
-  gem 'wkhtmltopdf-binary', git: 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
+  gem 'wkhtmltopdf-binary', '0.12.5.1'
 end
 install_if -> { ENV['ON_HEROKU'] == 'true' } do
   gem 'wkhtmltopdf-heroku'
@@ -127,6 +121,7 @@ group :development do
   gem 'rubycritic', require: false
   gem 'mailcatcher'
   gem 'unicorn'
+  gem 'web-console', '~> 2.0'
 
   # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
   gem 'rack-mini-profiler'
@@ -136,7 +131,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 4.11.1'
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
@@ -152,7 +147,7 @@ group :development, :test do
   gem 'capybara-slow_finder_errors'
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers', '~> 4.0'
 end
 
 group :test do
@@ -175,7 +170,6 @@ end
 group :production, :staging do
   gem 'newrelic_rpm'
   gem 'newrelic-dragonfly'
-  #gem 'passenger'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
   gem 'platform-api'

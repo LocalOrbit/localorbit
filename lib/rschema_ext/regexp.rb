@@ -4,7 +4,7 @@ class Regexp
     if value.is_a?(String) && value =~ self
       return value
     else
-      return RSchema::ErrorDetails.new("is not a String matching #{self.inspect}")
+      return RSchema::ErrorDetails.new(value, "is not a String matching #{self.inspect}")
     end
   end
 end
