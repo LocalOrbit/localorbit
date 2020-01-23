@@ -3,7 +3,6 @@ module PaymentProvider
     class PlanHandler < AbstractMasterHandler
 
       def self.plan_created(event_params)
-        puts event_params.inspect
         return if Plan.where(stripe_id: event_params[:id]).any?
 
         Plan.create(name: event_params[:name], stripe_id: event_params[:id], created_at: event_params[:created], ryo_eligible: false)
