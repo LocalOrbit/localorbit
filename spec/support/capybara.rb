@@ -1,6 +1,7 @@
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
+require 'webdrivers/chromedriver'
 
 Capybara.default_max_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 180).to_i
 
@@ -23,4 +24,3 @@ Capybara.register_driver :selenium_chrome_headless do |app|
 end
 
 Capybara.javascript_driver = :selenium_chrome_headless
-Chromedriver.set_version '2.37'

@@ -10,8 +10,8 @@ module RSchema::DSL
           return value_walked
         end
       end
-      message = errors.map(&:details).join(", AND ")
-      return RSchema::ErrorDetails.new(message)
+      message = errors.map(&:reason).join(", AND ")
+      return RSchema::ErrorDetails.new(value, message)
     end
   end
 

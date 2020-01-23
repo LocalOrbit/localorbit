@@ -32,6 +32,8 @@ module LocalOrbit
     config.action_mailer.asset_host = Figaro.env.asset_host
     config.action_mailer.default_url_options = {host: Figaro.env.domain}
 
+    config.active_record.raise_in_transactional_callbacks = true
+
     config.to_prepare do
       Devise::Mailer.layout "email"
       DeviseController.skip_before_action :ensure_market_affiliation

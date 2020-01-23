@@ -2,7 +2,6 @@ require "spec_helper"
 
 describe Deliveries::PackingLabelsController do
   include_context "the mini market"
-  include_context "intercom enabled"
 
   before do
     switch_to_subdomain mini_market.subdomain
@@ -21,16 +20,6 @@ describe Deliveries::PackingLabelsController do
       expect(delayed_job).to receive(:perform) do |args|
         @delayed_job_args = args
       end
-    end
-
-    def verify_packing_labels_event_tracked
-      e = EventTracker.previously_captured_events.first
-      expect(e).to be
-      expect(e).to eq({
-        user: barry,
-        event: EventTracker::DownloadedPackingLabels.name,
-        metadata: { }
-      })
     end
 
     let (:delivery) {create(:delivery, delivery_schedule: create(:delivery_schedule, market: mini_market))}
@@ -55,8 +44,6 @@ describe Deliveries::PackingLabelsController do
       expect(@delayed_job_args).to be
       expect(@delayed_job_args[:packing_labels_printable_id]).to eq delivery_printable.id
       expect(@delayed_job_args[:request].base_url).to eq request.base_url
-
-      verify_packing_labels_event_tracked
     end
   end
 

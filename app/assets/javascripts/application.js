@@ -31,7 +31,7 @@
 
 //= require components
 //= require reflux.min
-//= require froala_editor.min
+//= require froala_editor.min.js
 //= require fSelect
 //= require BpTspSolver
 //= require tsp.js.erb
