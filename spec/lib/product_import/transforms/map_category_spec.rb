@@ -42,7 +42,7 @@ describe ProductImport::Transforms::MapCategory do
     }
 
     it "raises an exception" do
-      expect {subject.transform_enum([])}.to raise_error
+      expect {subject.transform_enum([])}.to raise_error(Errno::ENOENT)
     end
   end
 end
