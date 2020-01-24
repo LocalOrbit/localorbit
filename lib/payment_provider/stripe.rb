@@ -518,9 +518,6 @@ module PaymentProvider
           "0".to_d
         end
       end
-
-
     end
-
   end
 end

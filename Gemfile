@@ -121,7 +121,6 @@ group :development do
   gem 'rubycritic', require: false
   gem 'mailcatcher'
   gem 'unicorn'
-  gem 'solargraph'
 
   # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
   gem 'rack-mini-profiler'

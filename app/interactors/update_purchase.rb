@@ -2,6 +2,8 @@ class UpdatePurchase
   include Interactor
 
   def perform
+    require_in_context(:order)
+
     if PaymentProvider.supports_payment_method?(payment_provider, order.payment_method)
       if !context[:remove_delivery_fees].nil?
         create_refunds(context[:orig_delivery_fees], true)
@@ -91,15 +93,14 @@ class UpdatePurchase
 
   def process_exception(exception, type, amount, account, parent_payment=nil)
 
-    Rollbar.info(exception)
+    Rollbar.error(exception)
     if type == "order"
       record_charge(amount, nil, account)
     else
       record_refund(amount, nil, nil, account, parent_payment)
     end
 
-    context[:status] = "failed"
-    fail!
+    context.fail!(status: 'failed', message: exception.message)
   end
 
   def record_charge(amount, charge, bank_account)
