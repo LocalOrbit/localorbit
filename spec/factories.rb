@@ -316,9 +316,7 @@ FactoryBot.define do
 
     sequence(:order_number) {|n| "LO-%s-%s-%07d" % [Time.now.strftime("%y"), market.try(:subdomain).to_s.upcase, n] }
 
-    # Cheat to work around some larger time zone filtering issues where a spec creates an order
-    # but the default orders filter will exclude it if tests running later in day.
-    placed_at        { DateTime.now.beginning_of_day }
+    placed_at        { Time.current }
 
     billing_organization_name "Collective Idea"
     billing_address  "44 E. 8th St"
