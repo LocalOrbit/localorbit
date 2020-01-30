@@ -3,6 +3,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
     SimpleCov::Formatter::HTMLFormatter
 ]
 
+puts "ENV['CIRCLE_ARTIFACTS'] = '#{ENV['CIRCLE_ARTIFACTS']}'"
 if ENV['CIRCLE_ARTIFACTS']
   dir = File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
   SimpleCov.coverage_dir(dir)
