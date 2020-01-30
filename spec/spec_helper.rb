@@ -3,13 +3,6 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
     SimpleCov::Formatter::HTMLFormatter
 ]
 
-puts "ENV['CIRCLE_ARTIFACTS'] = '#{ENV['CIRCLE_ARTIFACTS']}'"
-if ENV['CIRCLE_ARTIFACTS']
-  dir = File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
-  SimpleCov.coverage_dir(dir)
-  Capybara.save_path = ENV['CIRCLE_ARTIFACTS']
-end
-
 SimpleCov.start do
   add_filter '/vendor/'
   add_filter '/config/'

@@ -95,3 +95,6 @@ jobs:
 
       - store_artifacts:
           path: coverage
+
+      - store_artifacts:
+          path: /tmp/capybara
