@@ -97,4 +97,5 @@ jobs:
           path: coverage
 
       - store_artifacts:
-          path: /tmp/capybara
+          path: tmp/capybara
+          destination: capybara
