@@ -6,6 +6,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
 if ENV['CIRCLE_ARTIFACTS']
   dir = File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
   SimpleCov.coverage_dir(dir)
+  Capybara.save_and_open_page_path = ENV['CIRCLE_ARTIFACTS']
 end
 
 SimpleCov.start do
