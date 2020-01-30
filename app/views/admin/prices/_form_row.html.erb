@@ -1,6 +1,9 @@
 <% if current_user.multi_market_membership? && current_market.is_buysell_market?%>
 <td>
-  <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
+  <%
+  puts "adv pricing: #{policy(:advanced_pricing).index?}, seller: #{current_user.seller?}, org_type: #{@product.organization.org_type}, can: #{organization_can_access?(@product.organization, :advanced_pricing)}"
+  if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing))
+  %>
     <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {id: 'select_market_id', class: "select_market_id chosen"} %>
   <% else %>
       All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
