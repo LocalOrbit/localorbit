@@ -20,7 +20,6 @@ describe "Managing roles" do
         expect(page).to have_content("Roles")
 
         roles = Dom::Admin::RoleRow.all
-        skip 'Fails intermittently, revisit w/ rails 5 transactional rollbacks in specs'
         expect(roles.count).to eql(1)
       end
     end

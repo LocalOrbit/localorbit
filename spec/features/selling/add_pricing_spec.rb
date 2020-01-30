@@ -210,7 +210,7 @@ describe 'Adding advanced pricing' do
 
       it 'shows updated net sale information - product fee' do
         expect(page).to have_content('All Markets')
-        select_option_on_singleselect('#p1_select_market_id_chosen', market.name)
+        select_option_on_singleselect("div[id$='_select_market_id_chosen']", market.name)
 
         find(:field, 'price[fee]', with: '1').click
         fill_in 'price[sale_price]', with: '12.90'
