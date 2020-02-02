@@ -33,7 +33,7 @@ module PaymentProvider
           amount_in_cents: amount_in_cents
         }
         error_info = ErrorReporting.interpret_exception(e, "Error handling payout.paid event from Stripe", {params: params})
-        Rollbar.info(e)
+        Rollbar.error(e)
       end
     end
   end
