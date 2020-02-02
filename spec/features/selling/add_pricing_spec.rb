@@ -209,6 +209,8 @@ describe 'Adding advanced pricing' do
                              allow_product_fee: true) }
 
       it 'shows updated net sale information - product fee' do
+        skip 'Fails intermittently, revisit w/ rails 5 transactional rollbacks in specs'
+
         expect(page).to have_content('All Markets')
         select_option_on_singleselect("div[id$='_select_market_id_chosen']", market.name)
 
