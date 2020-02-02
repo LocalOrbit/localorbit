@@ -45,16 +45,16 @@ feature 'a market manager viewing their dashboard', :js do
     end
   end
 
-  def login
-    Timecop.travel('February 15, 2016')
-    switch_to_subdomain(market.subdomain)
-    sign_in_as(market_manager)
-  end
-
   context 'view various timeframes' do
     before do
-      login
+      Timecop.travel('February 15, 2016')
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(market_manager)
       visit dashboard_path
+    end
+
+    after do
+      Timecop.return
     end
 
     describe 'viewing dashboard' do

@@ -19,12 +19,6 @@ describe Api::V1::DashboardsController do
     let!(:delivery)    { delivery_schedule.next_delivery }
 
     context 'market manager' do
-
-      def login
-        switch_to_subdomain market.subdomain
-        sign_in market_manager
-      end
-
       before do
         Timecop.travel("February 15, 2016") do
           order_item1 = create(:order_item, unit_price: 7, quantity: 1, product: product1)
@@ -55,8 +49,12 @@ describe Api::V1::DashboardsController do
         end
 
         Timecop.travel("February 15, 2016")
+        switch_to_subdomain market.subdomain
+        sign_in market_manager
+      end
 
-        login
+      after do
+        Timecop.return
       end
 
       describe "viewing dashboard" do
