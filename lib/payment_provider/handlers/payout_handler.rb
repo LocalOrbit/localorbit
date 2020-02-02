@@ -4,19 +4,19 @@ module PaymentProvider
 
       def self.extract_job_params(event)
         {
-          transfer_id: event.data.object.id,
+          payout_id: event.data.object.id,
           amount_in_cents: event.data.object.amount,
-          stripe_account_id: event.user_id
+          stripe_account_id: event.account,
         }
       end
 
-      def self.handle(transfer_id:, stripe_account_id:, amount_in_cents:)
+      def self.handle(payout_id:, stripe_account_id:, amount_in_cents:)
         if stripe_account_id and market = Market.where('stripe_account_id=? OR legacy_stripe_account_id=?',stripe_account_id,stripe_account_id).first
           order_ids = PaymentProvider::Stripe.order_ids_for_market_payout_transfer(
-            transfer_id: transfer_id,
+            payout_id: payout_id,
             stripe_account_id: stripe_account_id)
           payment = PaymentProvider::Stripe.create_market_payment(
-            transfer_id: transfer_id,
+            payout_id: payout_id,
             market: market,
             order_ids: order_ids,
             status: 'paid',
@@ -28,7 +28,7 @@ module PaymentProvider
         end
       rescue StandardError => e
         params = {
-          transfer_id: transfer_id,
+          payout_id: payout_id,
           stripe_account_id: stripe_account_id,
           amount_in_cents: amount_in_cents
         }
