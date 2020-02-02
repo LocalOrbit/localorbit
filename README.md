@@ -17,7 +17,7 @@ See the `docs/` directory for more documentation.
 1. `cp config/database.yml{.example,}` and modify if needed (Some modification is probably necessary. Try adding `template: template0`)
 1. `yarn`
 1. `rake db:setup` - runs `db:create`, `db:schema:load` and `db:seed`
-1. `rake db:seed:development`
+1. `rake db:seed:development` - See [Test Accounts](#test-accounts) section for usernames and passwords
 1. `rails server`
 1.  Add `127.0.0.1 localtest.me` to `/etc/hosts`
 1.  Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
@@ -53,6 +53,10 @@ Password: password1
 
 *Market Manager*
 Email: mm@example.com
+Password: password1
+
+*Admin*
+Email: admin@example.com
 Password: password1
 
 ### Javascript Specs
