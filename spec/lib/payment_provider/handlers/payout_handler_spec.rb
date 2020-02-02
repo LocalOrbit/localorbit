@@ -3,13 +3,15 @@ require 'spec_helper'
 describe PaymentProvider::Handlers::PayoutHandler do
   subject { described_class }
 
+  before(:all) { StripeMock.start }
+  after(:all)  { StripeMock.stop }
+
   describe '.extract_job_params' do
-    it 'extracts the account and transfer ids' do
-      event = double(user_id: 'account id')
-      transfer = double(id: 'transfer id', amount: 'the pennies')
-      allow(event).to receive_message_chain('data.object') { transfer }
+    let(:event) { StripeMock.mock_webhook_event('payout.paid') }
+
+    it 'extracts the account and payout ids' do
       expect(subject.extract_job_params(event)).
-        to eq(transfer_id: 'transfer id', stripe_account_id: 'account id', amount_in_cents: 'the pennies')
+        to eq(payout_id: 'po_1G6RXr2VpjOYk6TmdB2bsIow', stripe_account_id: 'acct_1Ey0S0E6YF0s1lCh', amount_in_cents: 11886)
     end
   end
 
@@ -21,7 +23,7 @@ describe PaymentProvider::Handlers::PayoutHandler do
     it 'does nothing if no stripe_account_id is given' do
       expect(PaymentProvider::Stripe).to_not receive(:create_market_payment)
       expect(PaymentMailer).to_not receive(:payment_received)
-      subject.handle(transfer_id: 'transfer id', stripe_account_id: nil, amount_in_cents: '1234')
+      subject.handle(payout_id: 'payout id', stripe_account_id: nil, amount_in_cents: '1234')
       expect(Payment.count).to eq(0)
     end
 
@@ -30,7 +32,7 @@ describe PaymentProvider::Handlers::PayoutHandler do
         market.update(stripe_account_id: 'will not match')
         expect(PaymentProvider::Stripe).to_not receive(:create_market_payment)
         expect(PaymentMailer).to_not receive(:payment_received)
-        subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id', amount_in_cents: '1234')
+        subject.handle(payout_id: 'payout id', stripe_account_id: 'account id', amount_in_cents: '1234')
         expect(Payment.count).to eq(0)
       end
     end
@@ -38,10 +40,10 @@ describe PaymentProvider::Handlers::PayoutHandler do
     it 'creates a market payment for the transfer amount and releated orders' do
       payment = double('the payment', id: 187, payee: market)
       expect(PaymentProvider::Stripe).to receive(:order_ids_for_market_payout_transfer).
-        with(transfer_id: 'transfer id', stripe_account_id: 'account id').
+        with(payout_id: 'payout id', stripe_account_id: 'account id').
         and_return(['123', '456'])
       expect(PaymentProvider::Stripe).to receive(:create_market_payment).
-        with(transfer_id: 'transfer id', market: market, order_ids: ['123', '456'],
+        with(payout_id: 'payout id', market: market, order_ids: ['123', '456'],
              status:'paid', amount: '12.34'.to_d).
         and_return(payment)
 
@@ -49,7 +51,7 @@ describe PaymentProvider::Handlers::PayoutHandler do
         payment: payment,
         async: false
       )
-      subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id',
+      subject.handle(payout_id: 'payout id', stripe_account_id: 'account id',
                      amount_in_cents: '1234')
     end
 
@@ -57,17 +59,17 @@ describe PaymentProvider::Handlers::PayoutHandler do
       it "reports via Rollbar" do
         payment = double('the payment', id: 187, payee: market)
         expect(PaymentProvider::Stripe).to receive(:order_ids_for_market_payout_transfer).
-          with(transfer_id: 'transfer id', stripe_account_id: 'account id').
+          with(payout_id: 'payout id', stripe_account_id: 'account id').
           and_return(['123', '456'])
         expect(PaymentProvider::Stripe).to receive(:create_market_payment).
-          with(transfer_id: 'transfer id', market: market, order_ids: ['123', '456'],
+          with(payout_id: 'payout id', market: market, order_ids: ['123', '456'],
                status:'paid', amount: '12.34'.to_d).
           and_raise("Cain")
 
         expect(Financials::PaymentNotifier).not_to receive(:market_payment_received)
 
-        expect(Rollbar).to receive(:info)
-        subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id',
+        expect(Rollbar).to receive(:error)
+        subject.handle(payout_id: 'payout id', stripe_account_id: 'account id',
                        amount_in_cents: '1234')
 
 
