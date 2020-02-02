@@ -13,20 +13,6 @@ class ProductsController < ApplicationController
   before_action :load_products
   before_action :load_sellers, only: [:search]
 
-  def index
-    if current_market.alternative_order_page
-      render 'alternative_order_page'
-      return
-    end
-  end
-
-  def purchase
-    if current_market.alternative_order_page
-      render 'alternative_order_page'
-      return
-    end
-  end
-
   def show
     @product = @products_for_sale.products.first || raise(ActiveRecord::RecordNotFound)
 
