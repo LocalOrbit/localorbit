@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe BatchInvoice, :type => :model do
   subject { create(:batch_invoice) }
-  
-  it "can be created" do 
+
+  it "can be created" do
     expect(subject).to be
     expect(subject.generation_status).to eq(BatchInvoice::GenerationStatus::NotStarted)
     expect(subject.generation_progress).to eq(0.0)
@@ -59,8 +59,8 @@ describe BatchInvoice, :type => :model do
       found = BatchInvoice.for_user(user2).find(bi3.id)
       expect(found).to eq(bi3)
       # User 1 should NOT be able to access this item:
-      expect { BatchInvoice.for_user(user1).find(bi3.id) }.to raise_error
+      expect { BatchInvoice.for_user(user1).find(bi3.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
-  
+
 end

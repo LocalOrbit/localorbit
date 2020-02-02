@@ -1,7 +1,14 @@
 require 'spec_helper'
 
 describe PaymentProvider do
-  # subject { described_class }
+  before(:all) {
+    VCR.turn_off!
+    StripeMock.start
+  }
+  after(:all) {
+    StripeMock.stop
+    VCR.turn_on!
+  }
 
   describe ".for_new_markets" do
     it "returns Stripe" do
@@ -211,18 +218,6 @@ describe PaymentProvider do
       it "delegates to #{provider_object.name}.add_payment_method" do
         expect(provider_object).to receive(:add_payment_method).with(params)
         PaymentProvider.add_payment_method provider_name, params
-      end
-    end
-
-    describe ".add_deposit_account" do
-      let(:params) {
-        { type: 'the type',
-          entity: 'the entity',
-          bank_account_params: 'the bank acct params'}
-      }
-      it "delegates to #{provider_object.name}.add_deposit_account" do
-        expect(provider_object).to receive(:add_deposit_account).with(params)
-        PaymentProvider.add_deposit_account provider_name, params
       end
     end
 

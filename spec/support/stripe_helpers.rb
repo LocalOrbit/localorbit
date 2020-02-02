@@ -204,11 +204,7 @@ module StripeSpecHelpers
 
 
   def get_or_create_stripe_account_for_market(market)
-    # Don't judge me.
-
-    # See if there's already an Account lurking out there in Test land:
-    acct = Stripe::Account.all(limit:100).detect { |a| a.email == market.contact_email }
-    acct ||= Stripe::Account.create(
+    acct = Stripe::Account.create(
       country: 'US',
       email: market.contact_email,
       type: 'standard'

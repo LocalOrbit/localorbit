@@ -15,12 +15,8 @@ describe Financials::PaymentNotifier do
     let(:market) { m1[:market] }
     let(:market_managers) { market.managers }
 
-
-    # The seller and market notifiers are painfully similar.
-    # Probably need to refactor and abstract.
-    # But for now I've abstracted and parameterized the small test suite for each method:
+    # TODO: Clean up
     [
-      [:seller_payment_received, :seller, :seller_users ],
       [:market_payment_received, :market, :market_managers ]
     ].each do |method_sym, payee_sym, users_sym|
       describe ".#{method_sym}" do

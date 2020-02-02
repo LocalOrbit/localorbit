@@ -3,7 +3,7 @@ class PaymentHistoryPresenter
 
   include Search::DateFormat
 
-  def initialize(user: user, options: options, paginate: true)
+  def initialize(user:, options:, paginate: true)
     @user = user
     page = options[:page]
     per_page = options[:per_page]

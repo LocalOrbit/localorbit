@@ -180,7 +180,7 @@ FactoryBot.define do
     tagline                'Connecting Farm to Market'
     timezone               'US/Eastern'
     contact_name           'Jill Smith'
-    sequence(:contact_email) {|n| "jill@localorbittestdomain#{n}.com"}
+    sequence(:contact_email) {|n| "janice@localorbittestdomain#{n}.com"}
     contact_phone          '616-222-2222'
     policies               'Do no harm...'
     profile                'Market profile...'
@@ -315,6 +315,7 @@ FactoryBot.define do
     payment_provider 'stripe'
 
     sequence(:order_number) {|n| "LO-%s-%s-%07d" % [Time.now.strftime("%y"), market.try(:subdomain).to_s.upcase, n] }
+
     placed_at        { Time.current }
 
     billing_organization_name "Collective Idea"

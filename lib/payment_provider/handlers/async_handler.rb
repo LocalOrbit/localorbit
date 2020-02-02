@@ -2,16 +2,14 @@ module PaymentProvider
   module Handlers
     class AsyncHandler
       HANDLER_IMPLS = {
-        # TODO: Remove transfer.paid once Stripe API version upgrade is complete
-        'transfer.paid' => PaymentProvider::Handlers::TransferPaid,
-        'payout.paid' => PaymentProvider::Handlers::PayoutPaid,
+        'payout.paid' => PaymentProvider::Handlers::PayoutHandler,
         'plan.created' => PaymentProvider::Handlers::PlanHandler,
         'invoice.payment_succeeded' => PaymentProvider::Handlers::InvoiceHandler,
         'invoice.payment_failed' => PaymentProvider::Handlers::InvoiceHandler
       }
 
       def call(event)
-        raise RuntimeError if event.livemode && !Rails.env.production?
+        raise RuntimeError.new 'Cannot run in Stripe livemode if not in production' if event.livemode && !Rails.env.production?
         ::Rails::logger.info("WEBHOOK: #{event.type} CONNECT: #{event.try(:account)} LIVEMODE: #{event.livemode}")
         handler = HANDLER_IMPLS[event.type]
         return unless handler

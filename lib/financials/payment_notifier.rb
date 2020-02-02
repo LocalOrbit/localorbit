@@ -1,12 +1,6 @@
 module Financials
   class PaymentNotifier
     class << self
-      def seller_payment_received(payment:, async:true)
-        if payment and (seller_organization = payment.payee)
-          _notify_payment_received(payment, seller_organization.users, async)
-        end
-      end
-
       def market_payment_received(payment:, async:true)
         if payment and (market = payment.payee)
           _notify_payment_received(payment, market.managers, async)

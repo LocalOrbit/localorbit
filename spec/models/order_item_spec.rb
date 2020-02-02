@@ -251,10 +251,10 @@ describe OrderItem do
                 [
                   create(:lot, quantity: 3,
                          good_from: delivery.deliver_on - 3.days,
-                         expires_at: delivery.deliver_on - 1.day),
+                         expires_at: delivery.deliver_on - 1.minute),
                   create(:lot, quantity: 5,
                          good_from: delivery.deliver_on - 3.days,
-                         expires_at: delivery.deliver_on - 1.day)
+                         expires_at: delivery.deliver_on - 1.minute)
                 ]
               end
 

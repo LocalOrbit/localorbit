@@ -612,16 +612,6 @@ describe Order do
     end
   end
 
-  describe ".on_automate_plan scope" do
-    let(:m1) { Generate.market_with_orders(plan: :grow) }
-    let(:m2) { Generate.market_with_orders(plan: :automate) }
-
-    it "returns orders only for markets on the Automate plan" do
-      expect(Order.on_automate_plan).to contain_exactly(*m2[:orders])
-    end
-
-  end
-
   describe ".payable and .payable_to_sellers" do
     let(:order_time) { Time.zone.parse("May 20, 2014 2:00 PM") }
     let(:deliver_time) { Time.zone.parse("May 25, 2014 3:30 PM") }
@@ -637,13 +627,9 @@ describe Order do
 
     let(:expected_order_ids) { m1[:orders].map(&:id) }
 
-    describe ".payable_to_sellers and .payable_to_automate_sellers" do
+    describe ".payable_to_sellers" do
       def payable_order_ids(*args)
         Order.payable_to_sellers(*args).map(&:id)
-      end
-
-      def payable_automate_order_ids(*args)
-        Order.payable_to_automate_sellers(*args).map(&:id)
       end
 
       it "filters results based on optional seller id" do
@@ -654,12 +640,10 @@ describe Order do
         seller_id = m1[:seller_organizations].first # the first seller ...
         seller_order_ids = [ m1[:orders].first.id ] # ...will correspond to the first order
         expect(payable_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
-        expect(payable_automate_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
 
         seller_id = m1[:seller_organizations].last # the last seller...
         seller_order_ids = [ m1[:orders].last.id ] # ...will correspond to the last order
         expect(payable_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
-        expect(payable_automate_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
       end
 
       describe "when some orders have market payments" do
@@ -673,11 +657,6 @@ describe Order do
 
         it ".payable_to_sellers still includes orders w market payments" do
           expect(payable_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
-        end
-
-        it ".payable_to_automate_sellers EXCLUDES orders which have market orders" do
-          less_orders = expected_order_ids[0..-2] # we associated a market payment with m1[:orders].last, so let's not expect the last order id
-          expect(payable_automate_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*less_orders)
         end
       end
     end

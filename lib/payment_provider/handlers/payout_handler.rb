@@ -1,7 +1,6 @@
 module PaymentProvider
   module Handlers
-    class TransferPaid
-      extend DeadCode
+    class PayoutHandler
 
       def self.extract_job_params(event)
         {
@@ -12,7 +11,6 @@ module PaymentProvider
       end
 
       def self.handle(transfer_id:, stripe_account_id:, amount_in_cents:)
-        dead_code!
         if stripe_account_id and market = Market.where('stripe_account_id=? OR legacy_stripe_account_id=?',stripe_account_id,stripe_account_id).first
           order_ids = PaymentProvider::Stripe.order_ids_for_market_payout_transfer(
             transfer_id: transfer_id,
@@ -34,7 +32,7 @@ module PaymentProvider
           stripe_account_id: stripe_account_id,
           amount_in_cents: amount_in_cents
         }
-        error_info = ErrorReporting.interpret_exception(e, "Error handling transfer.paid event from Stripe", {params: params})
+        error_info = ErrorReporting.interpret_exception(e, "Error handling payout.paid event from Stripe", {params: params})
         Rollbar.info(e)
       end
     end

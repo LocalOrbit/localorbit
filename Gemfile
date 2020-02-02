@@ -32,7 +32,6 @@ gem 'acts_as_geocodable'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
 gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
-gem 'stripe'
 gem 'color'
 gem 'countries'
 gem 'csv_builder'
@@ -48,8 +47,6 @@ gem 'graticule'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
 gem 'interactor-rails', '< 3.0'
 gem 'interactor', '< 3.0' # We are not ready for 3 yet
-gem 'intercom-rails', '~> 0.2.26'
-gem 'intercom', '~> 2.3.0'
 gem 'jbuilder'
 gem 'jwt'
 gem 'kaminari'                      # Paginator
@@ -60,7 +57,8 @@ gem 'postgres_ext'
 gem 'rack-canonical-host'
 gem 'ransack'
 gem 'simpleidn'
-gem 'stripe_event'
+gem 'stripe', '5.14.0'
+gem 'stripe_event', '2.3.0'
 gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
 gem 'kiba'                      # ETL Tool
@@ -83,12 +81,8 @@ gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
 
-# wkhtmltopdf versions are a mess. 0.12.1 is stable
-# See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
-#  we are waiting for 0.12.5 to land for https://github.com/wkhtmltopdf/wkhtmltopdf/issues/3241
-# The github version is massive and makes the Heroku slug huge
 install_if -> { RUBY_PLATFORM =~ /darwin/ } do
-  gem 'wkhtmltopdf-binary', git: 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
+  gem 'wkhtmltopdf-binary', '0.12.5.1'
 end
 install_if -> { ENV['ON_HEROKU'] == 'true' } do
   gem 'wkhtmltopdf-heroku'
@@ -138,8 +132,8 @@ end
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.0'
-  gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
+  gem 'rspec-collection_matchers'
   gem 'pry-rails'
   gem 'pry-remote'
   gem 'byebug'
@@ -166,6 +160,7 @@ group :test do
   gem 'vcr'
   gem 'fire_poll', '1.2.0'
   gem 'capybara-screenshot'
+  gem 'stripe-ruby-mock', '~> 2.5.8', :require => 'stripe_mock'
 end
 
 group :staging do

@@ -2,7 +2,7 @@ module Search
   class SellerPaymentGroupFinder
     attr_reader :q
 
-    def initialize(user: user, query: query, current_market: current_market)
+    def initialize(user:, query:, current_market:)
       scope = Order.payable_to_sellers.includes(:credit)
 
       @seller_id = query[:filtered_organization_id_in]

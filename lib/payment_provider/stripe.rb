@@ -106,8 +106,8 @@ module PaymentProvider
           currency: self.default_currency_for_country(market.country).downcase,
           source: source,
           customer: customer,
-          transfer_data: { 
-            destination: destination 
+          transfer_data: {
+            destination: destination
           },
           on_behalf_of: destination,
           application_fee_amount: fee_in_cents,
@@ -264,16 +264,6 @@ module PaymentProvider
             representative_params: representative_params)
         else
           raise "PaymentProvider::Stripe doesn't support adding payment methods of type #{type.inspect}; only 'card' supported currently."
-        end
-      end
-
-      def add_deposit_account(entity:, type:, bank_account_params:)
-        if type == 'checking'
-          AddStripeDepositAccountToMarket.perform(
-            entity: entity,
-            bank_account_params: bank_account_params)
-        else
-          raise "PaymentProvider::Stripe only supports adding Deposit Accounts of type 'checking'; dunno what to do with this type: #{type.inspect}"
         end
       end
 
@@ -457,7 +447,7 @@ module PaymentProvider
 
       def get_stripe_plans(plan = nil)
         if plan.nil?
-          ::Stripe::Plan.all.data
+          ::Stripe::Plan.list.data
         else
           ::Stripe::Plan.retrieve(plan.upcase)
         end
@@ -468,7 +458,7 @@ module PaymentProvider
       end
 
       def get_stripe_invoices(customer_filter = nil)
-        ::Stripe::Invoice.all(customer_filter)
+        ::Stripe::Invoice.list(customer_filter)
       end
 
       def get_stripe_account_status(acct)
@@ -480,26 +470,26 @@ module PaymentProvider
       end
 
       def get_stripe_balance_transactions(acct)
-        response = ::Stripe::BalanceTransaction.all({limit: 10}, {stripe_account: acct})
+        response = ::Stripe::BalanceTransaction.list({limit: 10}, {stripe_account: acct})
         response.data
       end
 
       def get_stripe_charge_transactions(acct)
-        response = ::Stripe::Charge.all({limit: 10}, {stripe_account: acct})
+        response = ::Stripe::Charge.list({limit: 10}, {stripe_account: acct})
         response.data
       end
 
       def get_stripe_transfers(acct)
-        response = ::Stripe::Transfer.all({limit: 10}, {stripe_account: acct})
+        response = ::Stripe::Transfer.list({limit: 10}, {stripe_account: acct})
         response.data
       end
 
       private
 
       def enumerate_transfer_transactions(transfer_id:, stripe_account_id:)
-        response = ::Stripe::BalanceTransaction.all(
+        response = ::Stripe::BalanceTransaction.list(
           {limit: 100, type: 'payment', expand: ['data.source'],
-            transfer: transfer_id}, {stripe_account: stripe_account_id})
+            payout: transfer_id}, {stripe_account: stripe_account_id})
 
         response.data
       end
@@ -528,9 +518,6 @@ module PaymentProvider
           "0".to_d
         end
       end
-
-
     end
-
   end
 end

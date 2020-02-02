@@ -1,0 +1,113 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/events/evt_15xcvAHouQbaP1MV0Qwrf4VG
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2015-04-07'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.3.8 p459 (2018-10-18)","platform":"x86_64-darwin18","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 18.2.0 Darwin Kernel Version 18.2.0: Fri Oct  5 19:41:49 PDT 2018; root:xnu-4903.221.2~2/RELEASE_X86_64
+        x86_64","hostname":"kite"}'
+      Stripe-Account:
+      - acct_15xJY9HouQbaP1MV
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 21 Nov 2018 03:13:35 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1112'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_3v5jYE9h8d6Nsu
+      Stripe-Account:
+      - acct_15xJY9HouQbaP1MV
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "evt_15xcvAHouQbaP1MV0Qwrf4VG",
+          "object": "event",
+          "api_version": "2015-04-07",
+          "created": 1430482028,
+          "data": {
+            "object": {
+              "id": "tr_15xcv9HouQbaP1MVXim58UCZ",
+              "object": "transfer",
+              "created": 1430482027,
+              "date": 1430524800,
+              "livemode": false,
+              "amount": 33210,
+              "currency": "usd",
+              "reversed": false,
+              "status": "pending",
+              "type": "bank_account",
+              "reversals": {
+                "object": "list",
+                "total_count": 0,
+                "has_more": false,
+                "url": "/v1/transfers/tr_15xcv9HouQbaP1MVXim58UCZ/reversals",
+                "data": [
+
+                ]
+              },
+              "balance_transaction": "txn_15xcv9HouQbaP1MVh0dMRAi8",
+              "destination": null,
+              "description": "STRIPE TRANSFER",
+              "failure_message": null,
+              "failure_code": null,
+              "amount_reversed": 0,
+              "metadata": {
+              },
+              "statement_descriptor": null,
+              "recipient": null,
+              "source_transaction": null,
+              "application_fee": null
+            }
+          },
+          "livemode": false,
+          "pending_webhooks": 1,
+          "request": null,
+          "type": "transfer.created"
+        }
+    http_version: 
+  recorded_at: Wed, 21 Nov 2018 03:13:32 GMT
+recorded_with: VCR 4.0.0

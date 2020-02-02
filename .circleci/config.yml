@@ -20,6 +20,7 @@ jobs:
           POSTGRES_USER: localorbit
           POSTGRES_DB: localorbit_test
           POSTGRES_PASSWORD: ""
+      - image: stripemock/stripe-mock:latest
     steps:
       - add_ssh_keys
 
@@ -27,7 +28,7 @@ jobs:
 
       - run:
           name: Install package dependencies
-          command: sudo apt-get install -f libjpeg-dev libgs9 ghostscript libicu-dev imagemagick wkhtmltopdf
+          command: sudo apt-get update && sudo apt-get install -f libjpeg-dev libgs9 ghostscript libicu-dev imagemagick wkhtmltopdf
 
       - run:
           name: Which bundler?
@@ -83,11 +84,18 @@ jobs:
           command: |
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
-                              --out test_results/rspec.xml \
+                              --out test-results/rspec/results.xml \
                               --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
 
       # Save test results for timing analysis
       - store_test_results:
-          path: test_results
+          path: test-results
+
+      - store_artifacts:
+          path: coverage
+
+      - store_artifacts:
+          path: tmp/capybara
+          destination: capybara
