@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "Viewing products" do
   let(:market_org) { create(:organization, :market, :single_location, payment_model: 'consignment') }
-  let!(:market) { create(:market, :with_addresses, organization: market_org, alternative_order_page: true) }
+  let!(:market) { create(:market, :with_addresses, organization: market_org) }
   let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup,
                                      market: market,
                                      delivery_cycle: 'manual',
