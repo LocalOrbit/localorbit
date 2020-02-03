@@ -76,6 +76,7 @@ RSpec.configure do |config|
   config.include PauseHelpers, type: :feature
   config.include DropdownHelpers, type: :feature
   config.include StripeWebhooksHelpers, type: :request
+  config.include WebhookHelpers, type: :request
 
   config.use_transactional_fixtures = false
 
