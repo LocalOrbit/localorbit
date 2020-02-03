@@ -7,7 +7,7 @@ RSpec.describe 'Stripe invoice events', type: :request do
   before(:each) { bypass_event_signature payload }
 
   describe 'invoice.payment_succeeded' do
-    let(:stripe_customer_id) {'cus_00000000000000'} # matches invoice.payment_succeeded.json
+    let(:stripe_customer_id) {'cus_9aUcniAOYTXn42'} # matches invoice.payment_succeeded.json
     let(:stripe_charge_id) {'ch_19HJd82VpjOYk6TmrzJdKLYR'} # matches invoice.payment_succeeded.json
 
     let!(:organization) { create(:organization, stripe_customer_id: stripe_customer_id, org_type: 'M') }

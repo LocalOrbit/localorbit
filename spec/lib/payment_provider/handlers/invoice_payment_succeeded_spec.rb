@@ -53,7 +53,7 @@ xdescribe 'invoice.payment_succeeded webhook', type: :request, vcr: false do
   it 'creates a new payment object' do
     initial_count = find_payment(stripe_charge_id).count
 
-    post '/webhooks/stripe', JSON.parse(File.read('spec/fixtures/stripe_webhooks/invoice.payment_succeeded.json'))
+    post '/webhooks/stripe', JSON.parse(File.read('spec/fixtures/webhooks/stripe/invoice.payment_succeeded.json'))
     expect(response.status).to eq 200
 
     expect(find_payment(stripe_charge_id).count).to eq initial_count + 1
