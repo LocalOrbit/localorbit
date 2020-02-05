@@ -12,6 +12,8 @@ ON_HEROKU: 'false'
 TWITTER_WIDGET_ID: 'create-me-at-twitter-dot-com'
 STRIPE_PUBLISHABLE_KEY: <stripe publishable key (test on local system)>
 STRIPE_SECRET_KEY: <stripe secret key (test on local system)>
+STRIPE_ACCOUNT_SIGNING_SECRET: <stripe account signing secret>
+STRIPE_CONNECT_SIGNING_SECRET: <stripe connect signing secret>
 STRIPE_CLIENT_ID: <stripe client key (test on local system)>
 FROALA_KEY: <api key for froala>
 SMTP_USERNAME: <mandrill smtp username>

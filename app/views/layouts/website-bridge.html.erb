@@ -51,7 +51,7 @@
 
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <!-- ================================================= -->
-  <%= tag :meta, :name => "stripe-key", :content => Rails.configuration.stripe[:publishable_key] %>
+  <%= tag :meta, name: 'stripe-key', content: Figaro.env.stripe_publishable_key %>
 
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= stylesheet_link_tag "divi_styles", media: "all" %>
