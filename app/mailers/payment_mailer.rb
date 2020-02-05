@@ -1,6 +1,4 @@
 class PaymentMailer < BaseMailer
-  include DeadCode
-
   def payment_made(recipients, payment)
     @payment = payment
     @market  = @payment.market
