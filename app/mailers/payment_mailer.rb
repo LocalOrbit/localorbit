@@ -9,7 +9,6 @@ class PaymentMailer < BaseMailer
   end
 
   def payment_received(recipients, payment)
-    dead_code!
     @payment = payment
     @market  = @payment.market
 
