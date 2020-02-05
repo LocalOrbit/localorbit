@@ -376,9 +376,9 @@ module PaymentProvider
       end
 
 
-      def order_ids_for_market_payout_transfer(transfer_id:, stripe_account_id:)
+      def order_ids_for_market_payout_transfer(payout_id:, stripe_account_id:)
 
-        order_ids = enumerate_transfer_transactions(transfer_id: transfer_id, stripe_account_id: stripe_account_id).map do |transaction|
+        order_ids = enumerate_transfer_transactions(payout_id: payout_id, stripe_account_id: stripe_account_id).map do |transaction|
           if metadata = transaction.try(:source).try(:metadata)
             order_id = metadata['lo.order_id']
             order_id.to_i unless order_id.nil?
@@ -387,13 +387,13 @@ module PaymentProvider
         order_ids.compact.uniq
       end
 
-      def create_market_payment(transfer_id:, market:, order_ids:, status:, amount:)
+      def create_market_payment(payout_id:, market:, order_ids:, status:, amount:)
         Payment.create!(
           payment_provider: self.id.to_s,
           payment_type:   amount < 0 ? "lo fee" : "market payment",
           amount:         amount,
           status:         status,
-          stripe_transfer_id: transfer_id,
+          stripe_transfer_id: payout_id,
           market:         market,
           payee:          market,
           bank_account:   market.deposit_account,
@@ -486,10 +486,10 @@ module PaymentProvider
 
       private
 
-      def enumerate_transfer_transactions(transfer_id:, stripe_account_id:)
+      def enumerate_transfer_transactions(payout_id:, stripe_account_id:)
         response = ::Stripe::BalanceTransaction.list(
           {limit: 100, type: 'payment', expand: ['data.source'],
-            payout: transfer_id}, {stripe_account: stripe_account_id})
+            payout: payout_id}, {stripe_account: stripe_account_id})
 
         response.data
       end

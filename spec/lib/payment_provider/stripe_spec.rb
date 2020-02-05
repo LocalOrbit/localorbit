@@ -520,14 +520,14 @@ describe PaymentProvider::Stripe do
     let(:order_ids) { orders.map do |o| o.id end }
 
     let(:params) {{
-      transfer_id: 'the transfer id',
+      payout_id: 'the payout id',
       market: market,
       order_ids: order_ids,
       status: 'the status',
       amount: "12.34".to_d
     }}
 
-    it "creates and returns a Payment record to track the Stripe transfer and the involved Orders" do
+    it "creates and returns a Payment record to track the Stripe payout and the involved Orders" do
       payment = described_class.create_market_payment(params)
       expect(payment).to be
       expect(payment.id).to be
@@ -536,7 +536,7 @@ describe PaymentProvider::Stripe do
       expect(payment.payee).to eq(market)
       expect(payment.market).to eq(market)
       expect(payment.order_ids.to_set).to eq(order_ids.to_set)
-      expect(payment.stripe_transfer_id).to eq 'the transfer id'
+      expect(payment.stripe_transfer_id).to eq 'the payout id'
       expect(payment.status).to eq 'the status'
       expect(payment.amount).to eq '12.34'.to_d
       expect(payment.payment_provider).to eq PaymentProvider::Stripe.id.to_s
@@ -617,7 +617,7 @@ xdescribe PaymentProvider::Stripe, vcr: true do
     # some `metadata: {lo.order_id: NNN}` is now missing on responses from Stripe
     it "returns lo order ids from a transaction's payments" do
       order_ids = described_class.order_ids_for_market_payout_transfer(
-        transfer_id: 'tr_15xxwkHouQbaP1MV8O0tEg2b', stripe_account_id: 'acct_15xJY9HouQbaP1MV')
+        payout_id: 'tr_15xxwkHouQbaP1MV8O0tEg2b', stripe_account_id: 'acct_15xJY9HouQbaP1MV')
       expect(order_ids).to eq([1234, 187, 1337])
     end
   end
