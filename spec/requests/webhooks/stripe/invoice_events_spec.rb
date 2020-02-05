@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'Stripe invoice events', type: :request do
+RSpec.describe 'Stripe invoice events' do
   before(:all) { StripeMock.start }
   after(:all)  { StripeMock.stop }
 

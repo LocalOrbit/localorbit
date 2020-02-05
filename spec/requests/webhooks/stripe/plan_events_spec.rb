@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'Stripe plan events', type: :request do
+RSpec.describe 'Stripe plan events' do
   before(:all) { StripeMock.start }
   after(:all)  { StripeMock.stop }
   before(:each) { bypass_event_signature payload }
