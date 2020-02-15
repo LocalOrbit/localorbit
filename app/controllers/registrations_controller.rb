@@ -3,7 +3,6 @@ class RegistrationsController < ApplicationController
   skip_before_action :ensure_market_affiliation
   skip_before_action :ensure_active_organization
   skip_before_action :ensure_user_not_suspended
-  #before_action :ensure_allow_signups
 
   def index
   end
@@ -15,7 +14,7 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
 
-    if @registration.save
+    if verify_recaptcha(model: @registration) && @registration.save
       ActivateOrganization.perform(organization: @registration.organization, market: current_market)
       MarketMailer.delay.registration(current_market, @registration.organization)
 

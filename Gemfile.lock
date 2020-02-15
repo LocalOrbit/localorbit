@@ -609,6 +609,8 @@ GEM
       execjs
       rails (>= 3.2)
       tilt
+    recaptcha (5.1.1)
+      json
     reek (4.7.3)
       codeclimate-engine-rb (~> 0.4.0)
       parser (>= 2.4.0.0, < 2.5)
@@ -861,6 +863,7 @@ DEPENDENCIES
   rails_view_annotator
   ransack
   react-rails
+  recaptcha
   rollbar
   rschema!
   rspec-collection_matchers
