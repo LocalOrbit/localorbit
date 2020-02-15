@@ -17,6 +17,8 @@ STRIPE_CONNECT_SIGNING_SECRET: <stripe connect signing secret>
 STRIPE_CLIENT_ID: <stripe client key (test on local system)>
 RECAPTCHA_SITE_KEY: ''
 RECAPTCHA_SECRET_KEY: ''
+RECAPTCHA_SITE_KEY_V3: ''
+RECAPTCHA_SECRET_KEY_V3: ''
 FROALA_KEY: <api key for froala>
 SMTP_USERNAME: <mandrill smtp username>
 SMTP_PASSWORD: <mandrill smtp password>
