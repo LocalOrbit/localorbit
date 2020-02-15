@@ -14,7 +14,7 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
 
-    if verify_recaptcha(action: 'registration', model: @registration) && @registration.save
+    if verify_recaptcha(action: 'registration', minimum_score: 0.1) && @registration.save
       ActivateOrganization.perform(organization: @registration.organization, market: current_market)
       MarketMailer.delay.registration(current_market, @registration.organization)
 
