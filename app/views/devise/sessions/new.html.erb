@@ -30,7 +30,7 @@
       <%= link_to "<strong>Request an Account</strong>".html_safe, registration_path, class: 'account-request pull-right' if current_market %>
       <div class="clearfix"></div>
 
-      <%= recaptcha_v3 action: 'login' %>
+      <%= recaptcha_v3(action: 'login', site_key: Figaro.env.recaptcha_site_key_v3) %>
     <% end -%>
   </div>
 </div
