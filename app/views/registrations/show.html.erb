@@ -124,7 +124,12 @@
     </div>
   </fieldset>
 
-  <%= recaptcha_v3 action: 'registration' %>
+  <% if @show_checkbox_recaptcha %>
+    <%= recaptcha_tags %>
+  <% else %>
+    <%= recaptcha_v3(action: 'registration') %>
+  <% end %>
+
   <div class="field form-actions" >
     <%= f.submit "Sign Up", class: "registration-submit" %>
   </div>

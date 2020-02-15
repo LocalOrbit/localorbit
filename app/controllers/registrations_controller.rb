@@ -14,7 +14,10 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
 
-    if verify_recaptcha(action: 'registration', minimum_score: 0.1) && @registration.save
+    success = verify_recaptcha(action: 'registration', minimum_score: 0.5)
+    checkbox_success = verify_recaptcha(model: @registration) unless success
+
+    if (success || checkbox_success) && @registration.save
       ActivateOrganization.perform(organization: @registration.organization, market: current_market)
       MarketMailer.delay.registration(current_market, @registration.organization)
 
@@ -22,6 +25,9 @@ class RegistrationsController < ApplicationController
 
       redirect_to dashboard_path if @registration.user.confirmed?
     else
+      if !success
+        @show_checkbox_recaptcha = true
+      end
       flash.now[:alert] = "Unable to complete registration..."
       render :show
     end
