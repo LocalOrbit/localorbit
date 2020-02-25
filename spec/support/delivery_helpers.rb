@@ -1,6 +1,6 @@
 module DeliveryHelpers
   def choose_delivery(description=nil)
-    expect(page).to have_css("#deliveries") # waits for special cases
+    expect(page).to have_css("#deliveries")
 
     if description.present?
       choices = Dom::Buying::DeliveryChoice.all
@@ -20,6 +20,7 @@ module DeliveryHelpers
     end
 
     schedule.choose!
+    expect(page).to have_css('.product-catalog-category')
   end
 
   def available_deliveries
@@ -59,7 +60,7 @@ module DeliveryHelpers
   # def check_product_delivery_choice(days:nil,delivery_schedule:nil)
   #   if days
   #     Dom::Admin::ProductDelivery.find_by_weekday(days).check!
-  #   elsif delivery_schedule 
+  #   elsif delivery_schedule
   #     Dom::Admin::ProductDelivery.find_by_weekday(delivery_schedule.decorate.buyer_weekday.pluralize).check!
   #
   #   end
@@ -67,7 +68,7 @@ module DeliveryHelpers
   # def uncheck_product_delivery_choice(days:nil,delivery_schedule:nil)
   #   if days
   #     Dom::Admin::ProductDelivery.find_by_weekday(days).uncheck!
-  #   elsif delivery_schedule 
+  #   elsif delivery_schedule
   #     Dom::Admin::ProductDelivery.find_by_weekday(delivery_schedule.decorate.buyer_weekday.pluralize).check!
   #
   #   end

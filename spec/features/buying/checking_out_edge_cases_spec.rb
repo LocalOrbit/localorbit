@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Checking Out', :js, :vcr do
+describe 'Checking Out', :js do
   let!(:user) { create(:user) }
   let!(:other_buying_user) {  create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
@@ -91,7 +91,9 @@ describe 'Checking Out', :js, :vcr do
 
       choose_delivery
 
-      Dom::Cart::Item.find_by_name('Bananas').set_quantity(101)
+      expect(page).to have_content('Bananas')
+      Dom::ProductListing.find_by_name('Bananas').set_quantity("1")
+
       expect(page).to have_content('Added to cart!')
       expect(page).to_not have_content('Added to cart!')
       expect(page).to have_text('Cart 1')

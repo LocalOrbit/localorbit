@@ -86,8 +86,9 @@ feature "When a Market is closed" do
     end
 
     scenario "if the Buyer begins shopping, and the Market Manager closes the market, the Buyer will not be able to check out.", js:true do
-      item = Dom::Cart::Item.find_by_name(products[0].name)
-      item.set_quantity(12)
+      expect(page).to have_content(products[0].name)
+      Dom::ProductListing.find_by_name(products[0].name).set_quantity("12")
+
       expect(page).to have_content("Added to cart!")
       expect(page).to_not have_content("Added to cart!")
       expect(page).to have_text("Cart 1")

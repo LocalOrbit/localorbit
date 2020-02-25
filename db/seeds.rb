@@ -52,6 +52,7 @@ Unit.find_or_create_by!(singular: 'Box', plural: 'Boxes')
 ap 'creating base plans...'
 Plan.create(name: "Start Up")
 Plan.create(name: "Grow",     cross_selling: true, discount_codes: true, custom_branding: true)
-Plan.create(name: "Automate", cross_selling: true, discount_codes: true, custom_branding: true, automatic_payments: true)
+Plan.create(name: "Accelerate", cross_selling: true, discount_codes: true, custom_branding: true, advanced_pricing: true,
+  advanced_inventory: true, promotions: true, order_printables: true, packing_labels: true, sellers_edit_orders: true)
 
 ap '...and done seeding!'
