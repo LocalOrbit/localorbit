@@ -11,6 +11,11 @@ module OrderHelpers
       end
     end
   end
+
+  def go_to_order_page
+    click_link "Order", match: :first
+    expect(page).to have_css('.product-catalog-category')
+  end
 end
 
 RSpec.configure do |config|

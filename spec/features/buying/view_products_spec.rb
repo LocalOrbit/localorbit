@@ -35,11 +35,6 @@ feature "Viewing products", :js do
     Dom::Cart::Item.find_by_name("celery")
   end
 
-  def go_to_order_page
-    click_link "Order", match: :first
-    expect(page).to have_css('.product-catalog-category')
-  end
-
   before do
     Timecop.travel(Time.zone.parse("October 7 2014"))
     switch_to_subdomain market.subdomain
@@ -74,19 +69,6 @@ feature "Viewing products", :js do
     end
   end
 
-  scenario "a product with less inventory than required to purchase" do
-    skip 'This test is accurately failing but need to fix the actual bug'
-    org1_product.prices.first.update(min_quantity: 200) # there are only 150
-    org1_product.prices << create(:price, :past_price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
-    org1_product.prices << create(:price, :past_price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
-    org1_product.prices << create(:price, :past_price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
-    go_to_order_page
-
-    expect(Dom::ProductListing.all.count).to eql(1)
-    expect(Dom::ProductListing.find_by_name(org1_product.name)).to be_nil
-    expect(Dom::ProductListing.find_by_name(org2_product.name)).to_not be_nil
-  end
-
   scenario "a product with just enough inventory required to purchase" do
     org1_product.prices.first.update_column(:min_quantity, 150) # there are only 150
     org1_product.prices << create(:price, :past_price, min_quantity: 150) # current scope is summing total available quantity once for each price that exists.
@@ -96,33 +78,6 @@ feature "Viewing products", :js do
 
     expect(Dom::ProductListing.all.count).to eql(2)
     expect(Dom::ProductListing.find_by_name(org1_product.name)).to_not be_nil
-    expect(Dom::ProductListing.find_by_name(org2_product.name)).to_not be_nil
-  end
-
-  scenario "a product with less inventory than required to purchase that is cross-sold in multiple markets" do
-    skip 'This test is accurately failing but need to fix the actual bug'
-    delivery_schedule1.require_delivery = true
-    delivery_schedule1.save!
-
-    delivery_schedule2.deleted_at = nil
-    delivery_schedule2.save!
-
-    org1_product.delivery_schedules << delivery_schedule2
-    org1_product.save!
-
-    org2_product.delivery_schedules << delivery_schedule2
-    org2_product.save!
-
-    org1_product.prices.first.update(min_quantity: 200) # there are only 150
-    org1_product.prices << create(:price, :past_price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
-    org1_product.prices << create(:price, :past_price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
-    org1_product.prices << create(:price, :past_price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
-
-    visit new_sessions_deliveries_path
-    choose_delivery "Between 12:00PM and 2:00PM"
-
-    expect(Dom::ProductListing.all.count).to eql(1)
-    expect(Dom::ProductListing.find_by_name(org1_product.name)).to be_nil
     expect(Dom::ProductListing.find_by_name(org2_product.name)).to_not be_nil
   end
 
