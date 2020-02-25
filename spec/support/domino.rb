@@ -1173,13 +1173,11 @@ module Dom
     end
   end
 
-  class AlternativeProduct < Domino
+  class ProductListing < Domino
     selector ".product-listing"
 
     attribute :name, "H3"
     attribute :organization_name, "H5"
-    attribute :pricing
-    attribute :quantity
 
     def open_who_story
       node.click_link organization_name
@@ -1189,10 +1187,8 @@ module Dom
       node.click_link "How"
     end
 
-    def prices
-      node.all(".tiers li").map do |tier|
-        tier.find(".unit-price").text
-      end
+    def set_quantity(quantity)
+      within(node) { find('input.app-product-input', match: :first).set(quantity) }
     end
   end
 
@@ -1351,16 +1347,10 @@ module Dom
     end
 
     class SelectedDelivery < Domino
-      selector ".selected-delivery"
-
-      attribute :display_date
-      attribute :time_range
-      attribute :delivery_type
-      attribute :location_name
-      attribute :location_address
+      selector ".order-information-container"
 
       def click_change
-        click_link "Change"
+        click_link "Change delivery options"
       end
     end
   end
