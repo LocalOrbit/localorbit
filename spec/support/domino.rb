@@ -1187,8 +1187,12 @@ module Dom
       node.click_link "How"
     end
 
+    def quantity_field
+      node.find('input.app-product-input', match: :first)
+    end
+
     def set_quantity(quantity)
-      within(node) { find('input.app-product-input', match: :first).set(quantity) }
+      quantity_field.set(quantity)
     end
   end
 

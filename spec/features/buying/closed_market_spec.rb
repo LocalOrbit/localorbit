@@ -67,7 +67,7 @@ feature "When a Market is closed" do
     scenario "the Sellers don't display products" do
       click_link "Suppliers", match: :first
 
-      choose_delivery "Delivery: Tuesday June 17, 2014 Between 7:00AM and 11:00AM"
+      choose_delivery(description: "Delivery: Tuesday June 17, 2014 Between 7:00AM and 11:00AM", wait_for_css: '#seller-info')
 
       expect(page).to have_content("Who")
       expect(page).to have_content("When")

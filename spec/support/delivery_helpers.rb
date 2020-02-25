@@ -1,5 +1,5 @@
 module DeliveryHelpers
-  def choose_delivery(description=nil)
+  def choose_delivery(description: nil, wait_for_css: '.product-catalog-category')
     expect(page).to have_css("#deliveries")
 
     if description.present?
@@ -20,7 +20,7 @@ module DeliveryHelpers
     end
 
     schedule.choose!
-    expect(page).to have_css('.product-catalog-category')
+    expect(page).to have_css(wait_for_css)
   end
 
   def available_deliveries
