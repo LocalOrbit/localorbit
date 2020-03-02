@@ -152,7 +152,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'domino'
+  gem 'domino', '< 0.8.0' # v0.8.0 breaks child classes in PackList. Need to dig in more.
   gem 'email_spec'
   gem 'database_cleaner'
   gem 'guard-rspec', require: false

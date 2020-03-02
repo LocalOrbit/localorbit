@@ -112,7 +112,7 @@ feature "View Seller Profiles" do
 
       #expect(page).to have_content ("Currently Selling")
 
-      products = Dom::NewProduct.all
+      products = Dom::ProductListing.all
       expect(products.count).to eq(1)
       expect(products.map(&:name)).to match_array([product1.name])
     end
@@ -132,7 +132,7 @@ feature "View Seller Profiles" do
 
       click_link "View Products"
 
-      products = Dom::NewProduct.all
+      products = Dom::ProductListing.all
       expect(products.count).to eq(1)
       expect(products.map(&:name)).to match_array([product1.name])
     end
@@ -159,7 +159,7 @@ feature "View Seller Profiles" do
 
       #expect(page).to have_content ("Currently Selling")
 
-      products = Dom::NewProduct.all
+      products = Dom::ProductListing.all
       expect(products.count).to eq(3)
       # two inner headers (apples/bananas)
       expect(page).to have_content ("Apples")

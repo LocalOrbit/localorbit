@@ -1180,7 +1180,7 @@ module Dom
     attribute :organization_name, "H5"
 
     def open_who_story
-      node.click_link organization_name
+      node.click_link "Who"
     end
 
     def open_how_story
@@ -1204,26 +1204,11 @@ module Dom
     attribute :pricing
     attribute :quantity
 
-    def open_who_story
-      node.click_link organization_name
-    end
-
-    def open_how_story
-      node.click_link "How"
-    end
-
     def prices
       node.all(".tiers li").map do |tier|
         tier.find(".unit-price").text
       end
     end
-  end
-
-  class NewProduct < Domino
-    selector ".product-listing"
-
-    attribute :name
-
   end
 
   class ProductFilter < Domino
