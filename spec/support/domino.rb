@@ -1173,26 +1173,26 @@ module Dom
     end
   end
 
-  class AlternativeProduct < Domino
+  class ProductListing < Domino
     selector ".product-listing"
 
     attribute :name, "H3"
     attribute :organization_name, "H5"
-    attribute :pricing
-    attribute :quantity
 
     def open_who_story
-      node.click_link organization_name
+      node.click_link "Who"
     end
 
     def open_how_story
       node.click_link "How"
     end
 
-    def prices
-      node.all(".tiers li").map do |tier|
-        tier.find(".unit-price").text
-      end
+    def quantity_field
+      node.find('input.app-product-input', match: :first)
+    end
+
+    def set_quantity(quantity)
+      quantity_field.set(quantity)
     end
   end
 
@@ -1204,49 +1204,10 @@ module Dom
     attribute :pricing
     attribute :quantity
 
-    def open_who_story
-      node.click_link organization_name
-    end
-
-    def open_how_story
-      node.click_link "How"
-    end
-
     def prices
       node.all(".tiers li").map do |tier|
         tier.find(".unit-price").text
       end
-    end
-  end
-
-  class NewProduct < Domino
-    selector ".product-listing"
-
-    attribute :name
-
-  end
-
-  class ProductFilter < Domino
-    selector "#product-filter"
-
-    def self.filter_by_seller(org)
-      first.find("#product-filter-organization").click_link(org.name)
-    end
-
-    def self.filter_by_category(category)
-      categories.click_link(category.name)
-    end
-
-    def self.categories
-      first.find("#product-filter-category")
-    end
-
-    def self.current_seller
-      first.find("#product-filter-organization > .current").text
-    end
-
-    def self.current_category
-      first.find("#product-filter-category > .current").text
     end
   end
 
@@ -1351,16 +1312,10 @@ module Dom
     end
 
     class SelectedDelivery < Domino
-      selector ".selected-delivery"
-
-      attribute :display_date
-      attribute :time_range
-      attribute :delivery_type
-      attribute :location_name
-      attribute :location_address
+      selector ".order-information-container"
 
       def click_change
-        click_link "Change"
+        click_link "Change delivery options"
       end
     end
   end

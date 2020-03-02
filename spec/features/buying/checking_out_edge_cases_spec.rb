@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Checking Out', :js, :vcr do
+describe 'Checking Out', :js do
   let!(:user) { create(:user) }
   let!(:other_buying_user) {  create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
@@ -18,8 +18,8 @@ describe 'Checking Out', :js, :vcr do
            managers: [market_manager],
            sellers_edit_orders: true)
   end
-  let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: '8:00 AM', seller_delivery_end: '5:00 PM', buyer_pickup_location_id: 0, buyer_pickup_start: '12:00 AM', buyer_pickup_end: '12:00 AM', market_pickup: false) }
-  let!(:delivery_schedule2) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: '8:00 AM', seller_delivery_end: '5:00 PM', buyer_pickup_location_id: 0, buyer_pickup_start: '12:00 AM', buyer_pickup_end: '12:00 AM', market_pickup: false) }
+  let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee, order_cutoff: 24, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: '8:00 AM', seller_delivery_end: '5:00 PM', buyer_pickup_location_id: 0, buyer_pickup_start: '12:00 AM', buyer_pickup_end: '12:00 AM', market_pickup: false) }
+  let!(:delivery_schedule2) { create(:delivery_schedule, :percent_fee, order_cutoff: 24, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: '8:00 AM', seller_delivery_end: '5:00 PM', buyer_pickup_location_id: 0, buyer_pickup_start: '12:00 AM', buyer_pickup_end: '12:00 AM', market_pickup: false) }
 
   # Fulton St. Farms
   let!(:bananas) { create(:product, :sellable, name: 'Bananas', organization: fulton_farms) }
@@ -59,7 +59,9 @@ describe 'Checking Out', :js, :vcr do
   def checkout_with_po
     choose 'Pay by Purchase Order'
     fill_in 'PO Number', with: '12345'
-    click_button 'Place Order'
+    VCR.use_cassette('place-order-by-purchase-order') do
+      click_button 'Place Order'
+    end
   end
 
   def add_to_order_as_market_manager
@@ -91,7 +93,9 @@ describe 'Checking Out', :js, :vcr do
 
       choose_delivery
 
-      Dom::Cart::Item.find_by_name('Bananas').set_quantity(101)
+      expect(page).to have_content('Bananas')
+      Dom::ProductListing.find_by_name('Bananas').set_quantity("1")
+
       expect(page).to have_content('Added to cart!')
       expect(page).to_not have_content('Added to cart!')
       expect(page).to have_text('Cart 1')
@@ -101,7 +105,6 @@ describe 'Checking Out', :js, :vcr do
 
     context 'then cutoff time passes, and buyer checks out' do
       it 'shows them a past cutoff error' do
-        # Travel to a few minutes after the cutoff
         Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
 
         checkout_with_po
@@ -112,6 +115,7 @@ describe 'Checking Out', :js, :vcr do
     context 'then buyer checks out' do
       before do
         checkout_with_po
+        expect(page).to have_content('Thank you for your order!')
         sign_out
       end
 
@@ -124,7 +128,6 @@ describe 'Checking Out', :js, :vcr do
 
       context 'then cutoff time passes' do
         before do
-          # Travel to a few minutes after the cutoff
           Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
         end
 
@@ -146,7 +149,6 @@ describe 'Checking Out', :js, :vcr do
 
         context 'after cutoff passes' do
           before do
-            # Travel to a few minutes after the cutoff
             Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
           end
 

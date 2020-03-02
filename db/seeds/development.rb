@@ -5,7 +5,7 @@ mkt_org = Organization.find_or_create_by!(name: 'Fulton Market Growers Associati
   org.allow_credit_cards = true
   org.active = true
   org.needs_activated_notification = false
-  org.plan = Plan.find_by!(name: 'Grow')
+  org.plan = Plan.find_by!(name: 'Accelerate')
   org.org_type = 'M'
 }
 
