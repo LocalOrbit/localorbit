@@ -7,6 +7,8 @@
 	  <div><%= f.label :email %><br />
 	  <%= f.email_field :email, :autofocus => true %></div>
 
+		<%= recaptcha_v3(action: 'confirmation', site_key: Figaro.env.recaptcha_site_key_v3) %>
+
 	  <div><%= f.submit "Resend confirmation instructions" %></div>
 	<% end %>
 
