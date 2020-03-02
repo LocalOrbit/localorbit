@@ -539,7 +539,7 @@ GEM
       pry (~> 0.9)
       slop (~> 3.0)
     public_suffix (4.0.3)
-    puma (2.14.0)
+    puma (3.12.4)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     quiet_assets (1.0.3)
