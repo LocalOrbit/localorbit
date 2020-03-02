@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Viewing the cart", js:true do
+describe "Viewing the cart", :js do
   before(:each) do
     Timecop.travel("May 12, 2014")
   end
@@ -85,10 +85,7 @@ describe "Viewing the cart", js:true do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
 
-    # NOTE: the behavior of clicking the cart link will change
-    # once the cart preview has been built. See
-    # https://www.pivotaltracker.com/story/show/67553382
-    cart_link.node.click # This behavior will change once the cart preview is implemented
+    cart_link.node.click
     expect(page).to have_content("Your Order")
   end
 
@@ -104,9 +101,6 @@ describe "Viewing the cart", js:true do
     fulton_farms_group = Dom::Cart::SellerGroup.find_by_seller("Fulton St. Farms")
     ada_farms_group = Dom::Cart::SellerGroup.find_by_seller("Ada Farms")
 
-    # expect(fulton_farms_group).to have_product_row("Bananas")
-    # expect(fulton_farms_group).to have_product_row("Kale")
-    # expect(ada_farms_group).to have_product_row("Potatoes")
     expect(page).to have_content("Bananas")
     expect(page).to have_content("Kale")
     expect(page).to have_content("Potatoes")
@@ -133,7 +127,6 @@ describe "Viewing the cart", js:true do
       expect(potatoes_item.quantity_field.value).to eql("5")
 
       sign_out
-
       sign_in_as(other_user)
 
       cart_link.node.click
@@ -315,25 +308,6 @@ describe "Viewing the cart", js:true do
         expect(page).to have_content("Quantity must be greater than or equal to 0")
       end
     end
-
-    context "incrementing and decrementing quantities" do
-
-      #      it "increments kale" do
-      #        kale_item.set_quantity(0)
-      #        kale_item.node.find('.increment').click
-      #        sleep 2
-      #        kale_item.node.find('.increment').click
-      #        sleep 2
-      #        expect(kale_item.quantity_field.value).to eql("2")
-      #      end
-
-      #      it "decrements kale"  do
-      #        bananas_item.set_quantity(2)
-      #        bananas_item.node.find('.decrement').click
-      #        expect(bananas_item.quantity_field.value).to eql("1")
-      #      end
-
-    end
   end
 
   context "place order button" do
@@ -411,10 +385,9 @@ describe "Viewing the cart", js:true do
 
         expect(page).to have_content("Discount applied")
 
-        click_link "Order"
+        go_to_order_page
 
-        kale_item.set_quantity(1)
-        #bananas_item.quantity_field.node.trigger('click')
+        Dom::ProductListing.find_by_name("Kale").set_quantity(1)
         expect(Dom::CartLink.first).to have_content("Item updated!")
 
         cart_link.node.click
