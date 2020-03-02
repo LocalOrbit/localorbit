@@ -1211,30 +1211,6 @@ module Dom
     end
   end
 
-  class ProductFilter < Domino
-    selector "#product-filter"
-
-    def self.filter_by_seller(org)
-      first.find("#product-filter-organization").click_link(org.name)
-    end
-
-    def self.filter_by_category(category)
-      categories.click_link(category.name)
-    end
-
-    def self.categories
-      first.find("#product-filter-category")
-    end
-
-    def self.current_seller
-      first.find("#product-filter-organization > .current").text
-    end
-
-    def self.current_category
-      first.find("#product-filter-category > .current").text
-    end
-  end
-
   class ProductRow < Domino
     selector ".product-row"
 
