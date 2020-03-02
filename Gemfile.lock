@@ -554,7 +554,7 @@ GEM
     rack-canonical-host (0.1.0)
       addressable
       rack (~> 1.0)
-    rack-cors (0.4.0)
+    rack-cors (1.0.3)
     rack-mini-profiler (0.10.7)
       rack (>= 1.2.0)
     rack-protection (1.5.5)
