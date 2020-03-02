@@ -3,7 +3,6 @@ class RegistrationsController < ApplicationController
   skip_before_action :ensure_market_affiliation
   skip_before_action :ensure_active_organization
   skip_before_action :ensure_user_not_suspended
-  #before_action :ensure_allow_signups
 
   def index
   end
@@ -15,7 +14,10 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
 
-    if @registration.save
+    success = verify_recaptcha(action: 'registration', minimum_score: 0.2, secret_key: Figaro.env.recaptcha_secret_key_v3)
+    checkbox_success = verify_recaptcha(model: @registration) unless success
+
+    if (success || checkbox_success) && @registration.save
       ActivateOrganization.perform(organization: @registration.organization, market: current_market)
       MarketMailer.delay.registration(current_market, @registration.organization)
 
@@ -23,6 +25,9 @@ class RegistrationsController < ApplicationController
 
       redirect_to dashboard_path if @registration.user.confirmed?
     else
+      if !success
+        @show_checkbox_recaptcha = true
+      end
       flash.now[:alert] = "Unable to complete registration..."
       render :show
     end

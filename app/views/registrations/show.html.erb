@@ -124,6 +124,12 @@
     </div>
   </fieldset>
 
+  <% if @show_checkbox_recaptcha %>
+    <%= recaptcha_tags %>
+  <% else %>
+    <%= recaptcha_v3(action: 'registration', site_key: Figaro.env.recaptcha_site_key_v3) %>
+  <% end %>
+
   <div class="field form-actions" >
     <%= f.submit "Sign Up", class: "registration-submit" %>
   </div>
