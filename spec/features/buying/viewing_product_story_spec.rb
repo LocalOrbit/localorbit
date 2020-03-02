@@ -42,9 +42,8 @@ feature "View a products story", js: true do
   end
 
   context "show product stories" do
-    skip 'Specs are good, regression from alternative order page'
-
     scenario "view the 'who' story" do
+      skip 'Spec is good, regression from alternative order page'
       product = Dom::ProductListing.find_by_name(product2.name)
       product.open_who_story
 
@@ -52,6 +51,7 @@ feature "View a products story", js: true do
     end
 
     scenario "view the 'how' story" do
+      skip 'Spec is good, regression from alternative order page'
       product = Dom::ProductListing.find_by_name(product2.name)
       product.open_how_story
 
