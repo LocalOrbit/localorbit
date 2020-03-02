@@ -22,7 +22,6 @@ feature "View a products story", js: true do
   before do
     switch_to_subdomain market.subdomain
     sign_in_as(user)
-    binding.pry
     go_to_order_page
   end
 
