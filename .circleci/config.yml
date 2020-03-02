@@ -82,7 +82,7 @@ jobs:
       - run:
           name: Run rspec in parallel
           command: |
-            TESTFILES=$(circleci tests glob "spec/**/*.rb" | circleci tests split --split-by=timings)
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
                               --out test-results/rspec/result${TEST_ENV_NUMBER}.xml \
