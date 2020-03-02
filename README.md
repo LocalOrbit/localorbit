@@ -9,7 +9,7 @@ See the `docs/` directory for more documentation.
 
 ## Developer Setup
 
-1. Install `ruby 2.3.7` (use a ruby version manage like [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/))
+1. Install `ruby 2.3.8` (use a ruby version manage like [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/))
 1. Clone this repo `git clone git@github.com:LocalOrbit/localorbit.git`, `cd localorbit` into it
 1. Install dependencies (for MacOs) via [Homebrew](https://brew.sh/) with `brew bundle`. Other platforms see requirements in [`Brewfile`](./Brewfile).
 1. `bundle`
