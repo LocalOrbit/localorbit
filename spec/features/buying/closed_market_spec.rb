@@ -9,7 +9,7 @@ feature "When a Market is closed" do
     Timecop.return
   end
 
-  let!(:market)   { create(:market, :with_addresses, :with_delivery_schedule, closed: true, alternative_order_page: false) }
+  let!(:market)   { create(:market, :with_addresses, :with_delivery_schedule, closed: true) }
   let!(:seller)   { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:buyer)    { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:products) { create_list(:product, 5, :sellable, organization: seller) }
@@ -67,7 +67,7 @@ feature "When a Market is closed" do
     scenario "the Sellers don't display products" do
       click_link "Suppliers", match: :first
 
-      choose_delivery "Delivery: Tuesday June 17, 2014 Between 7:00AM and 11:00AM"
+      choose_delivery(description: "Delivery: Tuesday June 17, 2014 Between 7:00AM and 11:00AM", wait_for_css: '#seller-info')
 
       expect(page).to have_content("Who")
       expect(page).to have_content("When")
@@ -86,8 +86,9 @@ feature "When a Market is closed" do
     end
 
     scenario "if the Buyer begins shopping, and the Market Manager closes the market, the Buyer will not be able to check out.", js:true do
-      item = Dom::Cart::Item.find_by_name(products[0].name)
-      item.set_quantity(12)
+      expect(page).to have_content(products[0].name)
+      Dom::ProductListing.find_by_name(products[0].name).set_quantity("12")
+
       expect(page).to have_content("Added to cart!")
       expect(page).to_not have_content("Added to cart!")
       expect(page).to have_text("Cart 1")

@@ -135,7 +135,7 @@
             hasMore={self.state.hasMore}
             threshold={scrollThreshold}
             loadMore={self.loadMore}
-            loader={(<p>Loading products....</p>)}
+            loader={(<p>Loading products...</p>)}
             useWindow={fullWindow}
           >
             <div id="product-search-table" className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={self.toggleImages}><i className="font-icon" data-icon=""></i> {(self.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Viewing featured promotion" do
+describe "Viewing featured promotion", :js do
   let!(:market)    { create(:market, :with_delivery_schedule, :with_address) }
   let!(:seller)    { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:product)   { create(:product, :sellable, organization: seller) }
@@ -9,33 +9,24 @@ describe "Viewing featured promotion" do
   let!(:buyer) { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:user) { create(:user, :buyer, organizations: [buyer]) }
 
-  context "with inventory" do
+  context "with available inventory" do
     before do
       switch_to_subdomain(market.subdomain)
       sign_in_as user
     end
 
-    context "with a price" do
+    context "and a configured price" do
       before do
         visit products_path
       end
 
       it "shows the featured product" do
+        pause
         expect(page).to have_content("Featured")
-      end
-
-      it "can be toggled between minimized and maximized", js: true do
-        expect(page).to have_content("Big savings!")
-        find(".featured-product-toggle").click
-
-        expect(page).not_to have_content("Big savings!")
-
-        find(".featured-product-toggle").click
-        expect(page).to have_content("Big savings!")
       end
     end
 
-    context "without a price" do
+    context "without a configured price" do
       before do
         product.prices.delete_all
         visit products_path
@@ -46,7 +37,7 @@ describe "Viewing featured promotion" do
       end
     end
 
-    context "without a price for the market" do
+    context "without a configured price for the market" do
       before do
         product.prices.first.update(market_id: market.id + 1)
         visit products_path
@@ -57,7 +48,7 @@ describe "Viewing featured promotion" do
       end
     end
 
-    context "without a price for the buyer" do
+    context "without a configured price for the buyer" do
       before do
         product.prices.first.update(organization_id: buyer.id + 1)
         visit products_path

@@ -8,8 +8,6 @@ describe "Master Pack List" do
   let!(:thursday_delivery)  { create(:delivery, delivery_schedule: thursdays_schedule, deliver_on: Date.parse("May 8, 2014")) }
   let!(:fridays_schedule)   { create(:delivery_schedule, :buyer_pickup, market: market, day: 4, seller_delivery_start: "4:45 PM", seller_delivery_end: "9:05 PM", buyer_day: 5, buyer_pickup_start: "8:30 AM", buyer_pickup_end: "10:15 AM")}
   let!(:friday_delivery)    { create(:delivery, delivery_schedule: fridays_schedule, deliver_on: Date.parse("May 8, 2014"), buyer_deliver_on: Date.parse("May 9, 2014")) }
-  # let!(:thursdays_schedule) { create(:delivery_schedule, market: market, day: 3, 
-  # let!(:thursday_delivery)  { create(:delivery, delivery_schedule: thursdays_schedule, deliver_on: Date.parse("May 7, 2014"), buyer_deliver_on: Date.parse("May 8, 2014")) }
 
   let!(:sellers1)           { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:product1)           { create(:product, :sellable, organization: sellers1) }
