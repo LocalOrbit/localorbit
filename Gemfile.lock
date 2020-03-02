@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/circleci/rspec_junit_formatter.git
-  revision: 6885218137afbadf560c922114767866953f8cbf
-  specs:
-    rspec_junit_formatter (0.2.0)
-      builder (< 4)
-      rspec (>= 2, < 4)
-      rspec-core (!= 2.12.0)
-
-GIT
   remote: https://github.com/dcrosby42/tabulator.git
   revision: aa3d14ea734979580dae3c6878a83a6a80643678
   specs:
@@ -24,6 +15,13 @@ GIT
       nokogiri
       oauth (= 0.4.7)
       roxml (= 3.3.1)
+
+GIT
+  remote: https://github.com/sj26/rspec_junit_formatter.git
+  revision: fedadd9aba87068ea6bcdd56335f10d8c14e56d2
+  specs:
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
 
 GIT
   remote: https://github.com/tomdalling/rschema.git
