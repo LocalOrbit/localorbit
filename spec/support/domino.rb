@@ -1194,6 +1194,10 @@ module Dom
     def set_quantity(quantity)
       quantity_field.set(quantity)
     end
+
+    def remove_link
+      node.find(".icon-clear")
+    end
   end
 
   class Product < Domino

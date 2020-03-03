@@ -185,7 +185,7 @@
           </tr>
          </tbody>
       </table>
-      <% if FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && FeatureAccess.can_edit_order?(user: current_user, order: order) && order.payment_method=="purchase order" && order.payment_status == "unpaid" # is this how it should be for quantities too? %>
+      <% if FeatureAccess.can_edit_order?(user: current_user, order: order) && order.payment_method=="purchase order" && order.payment_status == "unpaid" # is this how it should be for quantities too? %>
           <a href="#creditEdit" class="btn btn--small btn--primary modal-toggle app-edit-credit-modal-button"><%= order.credit_amount > 0 ? "Modify" : "Add" %> Credit</a></td>
       <% end %>
     <% end %>
@@ -335,7 +335,7 @@
               -
             <% end %>
           </td>
-          <td class="price"> <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) && FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
+          <td class="price"> <% if FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
            <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
             <% end %>
           </td>
@@ -451,7 +451,7 @@
     <%= render "shared/so_trans", {order: order, f: f} %>
   <% end %>
 
-  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && current_market.is_buysell_market? %>
+  <% if !current_user.buyer_only? && current_market.is_buysell_market? %>
   <div class="order-totals">
     <div class="table-wrapper">
       <h2>Order Totals</h2>
