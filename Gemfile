@@ -146,7 +146,7 @@ group :development, :test do
   gem 'webmock'
   gem 'capybara-slow_finder_errors'
   gem 'capybara'
-  gem 'selenium-webdriver', '3.141.0'
+  gem 'selenium-webdriver', '3.141.0' # Can remove once we're able to upgrade capybara https://stackoverflow.com/a/55816611/444921
   gem 'webdrivers'
 end
 
