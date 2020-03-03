@@ -146,8 +146,8 @@ group :development, :test do
   gem 'webmock'
   gem 'capybara-slow_finder_errors'
   gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'selenium-webdriver', '3.141.0'
+  gem 'webdrivers'
 end
 
 group :test do

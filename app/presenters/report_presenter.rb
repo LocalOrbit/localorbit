@@ -235,14 +235,10 @@ class ReportPresenter
       buyer_reports
     elsif user.market_manager?
       reports = nil
-      if FeatureAccess.not_LE_market_manager?(user: user, market: market)
-        if !Pundit.policy!(user, :all_supplier).index?
-          reports = seller_reports + mm_reports - exclude_ss_reports
-        else
-          reports = seller_reports + mm_reports
-        end
+      if !Pundit.policy!(user, :all_supplier).index?
+        reports = seller_reports + mm_reports - exclude_ss_reports
       else
-        reports = mm_reports + le_mm_reports - exclude_mm_reports
+        reports = seller_reports + mm_reports
       end
       if Pundit.policy!(user, :advanced_inventory).index?
         reports = reports + lot_reports
