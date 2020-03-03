@@ -108,8 +108,14 @@ describe "Viewing the cart", :js do
 
   it "shows an error when minimum is not met" do
     bananas_item.set_quantity(0)
+    expect(page).to_not have_content("Bananas")
+
     potatoes_item.set_quantity(0)
+    expect(page).to_not have_content("Potatoes")
+
     kale_item.set_quantity(0)
+    expect(page).to_not have_content("Kale")
+
     expect(page).to have_content("Your order does not meet the subtotal order minimum")
     carrots_item.set_quantity(4)
     carrots_item.quantity_field.click
