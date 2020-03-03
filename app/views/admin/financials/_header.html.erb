@@ -6,7 +6,7 @@
     <div class="tabs-wrapper">
       <ul class="tabs">
         <% if policy(:financial_overview).index? %><%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials, :overview]), class: 'tab') %><% end %>
-        <% if policy(:send_invoices).index? %><%= content_tag(:li, link_to_or_span(FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) ? "Send Invoices" : "Invoices", [:admin, :financials, :invoices]), class: 'tab') %><% end %>
+        <% if policy(:send_invoices).index? %><%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %><% end %>
         <% if policy(:enter_receipts).index? %><%= content_tag(:li, link_to_or_span("Enter Receipts", [:admin, :financials, :receipts]), class: 'tab') %><% end %>
         <% if policy(:record_payments).index? %><%= content_tag(:li, link_to_or_span("Record Payments to Suppliers", [:admin, :financials, :vendor_payments]), class: 'tab') %><% end %>
         <% if policy(:payment_history).index? %><%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %><% end %>

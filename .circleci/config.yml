@@ -85,7 +85,7 @@ jobs:
             TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
-                              --out test-results/rspec/result${TEST_ENV_NUMBER}.xml \
+                              --out test-results/rspec/results.xml \
                               --format progress \
                               -- ${TESTFILES}
 
