@@ -56,7 +56,7 @@
               <div class="warning"><strong><%= flash[:discount_message] %></strong></div>
               <%= hidden_field_tag :prev_discount_code, current_cart.discount_code %>
               <%= label_tag :discount_code, "Discount Code" %><br>
-              <%= text_field_tag :discount_code, current_cart.discount_code, class: "input--short" %>
+              <%= text_field_tag :discount_code, current_cart.discount_code, class: 'input--short', autocomplete: 'local-orbit-discount-code' %>
               <% if current_cart.discount.present? %>
                 <%= link_to "Clear", "#", id: "clear-discount" %>
               <% else %>
