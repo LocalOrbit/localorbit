@@ -11,13 +11,13 @@ class GeneralProduct < ActiveRecord::Base
 
   has_many :product
 
-  attr_accessor :skip_validation, :consignment_market, :sales_market
+  attr_accessor :skip_validation, :sales_market
 
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end
 
-  validates :name, presence: true, on: :create, :unless => :consignment_market
+  validates :name, presence: true, on: :create
   validates :name, presence: true, uniqueness: {scope: :organization_id, allow_blank: false, case_sensitive: false}, on: :create, :unless => :sales_market
 
   dragonfly_accessor :thumb

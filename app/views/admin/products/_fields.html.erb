@@ -22,24 +22,6 @@
   <%= f.text_field :name, class: "column column--full" %>
 </div>
 
-<% if current_market.is_consignment_market? %>
-    <div class="field">
-      <%= f.label :parent_product_id, "Parent Product" %><br>
-      <%= f.select :parent_product_id, !@supplier_products.nil? ? options_for_select(@supplier_products.collect { |product|
-        [product.name.titleize, product.id] },@product.parent_product_id) : '', {include_blank: 'Select Parent Product'}, { id: 'supplier_products', class: "column--full chosen" } %>
-    </div>
-
-    <div class="field">
-      <% children_products = !@product.object.id.nil? ? Product.where(parent_product_id: @product.object.id).visible : nil %>
-      <% if !children_products.nil? && !children_products.empty? %>
-        <label>Associated Child Products</label><br/>
-        <% children_products.each do |child_product| %>
-          <%= link_to "#{child_product.name}: ##{child_product.unit_quantity}, #{child_product.unit_quantity > 1 ? child_product.unit_plural : child_product.unit_singular}", admin_product_path(child_product.id) %><br/>
-        <% end %>
-      <% end %>
-    </div>
-<% end %>
-
 <div class="field">
   <%= f.label :category_id %>
   <span class="tooltip pull-right" data-tooltip="Type the product name and select a category."></span>
@@ -96,13 +78,8 @@
 <table id="units_table">
   <thead><tr>
     <td><%= f.label :unit_id %></td>
-    <% if current_market.is_buysell_market? %>
     <td><%= f.label :unit_description %> <span class="hint">Up to 20 characters</span></td>
-    <% end %>
     <td><%= f.label :code, "Product Code" %> <span class="tooltip" data-tooltip="Optional product code"></span></td>
-    <% if current_market.is_consignment_market? %>
-    <td><%= f.label :unit_quantity, "Unit Quantity" %> <span class="tooltip" data-tooltip="Quantity for this unit"></span></td>
-    <% end %>
     <td></td>
   </tr></thead>
 
@@ -113,19 +90,12 @@
                    {data: {placeholder: "Choose a Unit"},
                     class: "chosen column--full"} %>
     </td>
-    <% if current_market.is_buysell_market? %>
     <td class="field">
       <%= f.text_field :unit_description, size: 20, maxlength: 20, class: "column column--full" %>
     </td>
-    <% end %>
     <td class="field">
       <%= f.text_field :code, class: "column column--full" %>
     </td>
-    <% if current_market.is_consignment_market? %>
-    <td class="field">
-      <%= f.text_field :unit_quantity, class: "column column--full" %>
-    </td>
-    <% end %>
     <td></td>
   </tr>
 
@@ -140,28 +110,18 @@
                       class: "chosen column--full",
                       name: 'product[sibling_unit_id][]'} %>
       </td>
-      <% if current_market.is_buysell_market? %>
       <td class="field">
         <%= f.text_field :sibling_unit_description,
                          value: sibling.unit_description,
                          multiple: true,
                          size: 20, maxlength: 20, class: "column column--full" %>
       </td>
-      <% end %>
       <td class="field">
         <%= f.text_field :sibling_product_code,
                          value: sibling.code,
                          multiple: true,
                          class: "column column--full" %>
       </td>
-      <% if current_market.is_consignment_market? %>
-      <td class="field">
-        <%= f.text_field :sibling_unit_quantity,
-                         value: sibling.unit_quantity,
-                         multiple: true,
-                         class: "column column--full" %>
-      </td>
-      <% end %>
       <td></td>
     </tr>
   <% end %>
@@ -188,19 +148,9 @@
                        multiple: true,
                        class: "column column--full" %>
     </td>
-    <% if current_market.is_consignment_market? %>
-    <td class="edit-cell">
-      <%= f.text_field :sibling_unit_quantity,
-                       value: @product.unit_quantity,
-                       multiple: true,
-                       class: "column column--full" %>
-    </td>
-    <% end %>
-    <% if !current_market.is_consignment_market? %>
     <td class="edit-cell">
       <button class="cancel">Cancel</button>&nbsp;/&nbsp;<%= link_to "Add", '#add-unit', class: 'add-copy' %>
     </td>
-    <% end %>
   </tr>
 
 <% if @product.persisted? %>
@@ -208,12 +158,7 @@
     <td></td>
     <td></td>
     <td></td>
-    <% if current_market.is_consignment_market? %>
-    <td></td>
-    <% end %>
-    <% if !current_market.is_consignment_market? %>
     <td><%= link_to "Add Unit", '#add-unit', class: 'add-toggle' %></td>
-    <% end %>
   </tr>
   </tbody>
 <% end %>
@@ -224,8 +169,6 @@
     </td>
   </tr></tfoot>
 </table>
-
-<% if current_market.is_buysell_market? %>
 
 <fieldset class="conditional">
   <legend>More product info (Where, Who, How)</legend>
@@ -282,5 +225,4 @@
   <p class="form-footer">
     At this point your product is complete but won't be listed until you have added inventory and set pricing.
   </p>
-<% end %>
 <% end %>

@@ -2,43 +2,27 @@ class UpdateOrderDelivery
   include Interactor
 
   def perform
-    if order.market.is_buysell_market?
-
-      if schedule_and_location_changed?
-        if new_delivery.requires_location?
-          if order.organization.locations.visible.count == 1
-            address = order.organization.locations.visible.first
-          else
-            fail_and_notify
-            return
-          end
+    if schedule_and_location_changed?
+      if new_delivery.requires_location?
+        if order.organization.locations.visible.count == 1
+          address = order.organization.locations.visible.first
         else
-          address = new_delivery.delivery_schedule.buyer_pickup_location
+          fail_and_notify
+          return
         end
-
-        order.apply_delivery_address(address)
+      else
+        address = new_delivery.delivery_schedule.buyer_pickup_location
       end
 
-      order.delivery_id = delivery_id
-    else
-      if !order.delivery.deliver_on.nil?
-        order.delivery.deliver_on = deliver_on
-        order.delivery.buyer_deliver_on = deliver_on
-        order.delivery.save
-        order.items.each do |item|
-          if !item.quantity_delivered.nil? && item.quantity_delivered > 0
-            item.delivered_at = deliver_on
-            item.save
-          end
-        end
-      end
+      order.apply_delivery_address(address)
     end
+
+    order.delivery_id = delivery_id
+
     if order.valid?
       order.save
-      if order.market.is_buysell_market?
-        UpdateDeliveryFee.perform(order: order)
-        UpdatePurchase.perform(order: order)
-      end
+      UpdateDeliveryFee.perform(order: order)
+      UpdatePurchase.perform(order: order)
     else
       fail_and_notify
     end

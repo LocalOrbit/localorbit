@@ -2,27 +2,13 @@
   <div class="column column--three-fourths">
     <legend>Edit Price of <%= @order_item.name %></legend>
   </div>
-    
+
     <%= form_for @order_item, :url => { :action => "update" }, :method => "patch" do |f| %>
 
-        <% if current_market.is_buysell_market? %>
         <div class="field">
           <%= f.label :unit_price %><br>
           <%= f.text_field :unit_price, { style: 'text-align:right; width: 100px', class: "column---one-eighth" } %>
         </div>
-        <% else %>
-          <div style="display: inline-block; width: 25%">
-            <div  style="float: left" class="field">
-              <%= f.label :unit_price, "Sale Price" %><br/>
-              <%= f.text_field :unit_price, { style: 'text-align:right; width: 100px', class: "column--one-eighth" } %>
-            </div>
-
-            <div style="float: right" class="field">
-            <%= f.label :net_price, "Net Price" %><br/>
-            <%= f.text_field :net_price, { style: 'text-align:right; width: 100px', class: "column--one-eighth" } %>
-            </div>
-          </div>
-        <% end %>
 
         <div class="form-actions">
           <%= f.submit "Edit Price" %>

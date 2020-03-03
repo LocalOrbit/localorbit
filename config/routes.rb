@@ -72,14 +72,6 @@ Rails.application.routes.draw do
       resources :category_fees, only: [:index, :new, :create, :destroy]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
-      resource :qb_profile, controller: :market_qb_profile do
-        collection do
-          get :authenticate
-          get :oauth_callback
-          get :sync
-          get :disconnect
-        end
-      end
       resources :storage_locations, controller: :market_storage_locations
       get :payment_options
       patch :toggle_self_enabled_cross_sell
@@ -207,11 +199,6 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :consignment_transactions
-
-    get "consignment_inventory" => "consignment_inventory#index"
-    put "consignment_inventory" => "consignment_inventory#update"
-
     resources :order_items, only: [:index, :update], path: :sold_items do
       collection do
         post :set_status
@@ -246,21 +233,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :batch_consignment_printables, only: :show do
-      member do
-        get :progress
-      end
-    end
-
     resources :activities, only: :index
     resources :categories, only: [:index, :show, :new, :create], path: :taxonomy
     resource :unit_request, only: :create
     resource :category_request, only: :create
 
     resources :reports, only: [:index, :show]
-
-    resources :consignment_partial_po_report, only: [:show]
-    resources :consignment_qb_report, only: [:show]
 
     resources :metrics, only: [:index, :show] do
       collection do

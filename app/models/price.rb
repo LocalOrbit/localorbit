@@ -36,18 +36,12 @@ class Price < ActiveRecord::Base
   validates :min_quantity, :sale_price, presence: true, numericality: {greater_than: 0, less_than: 1_000_000, allow_blank: true}
   validates :min_quantity, uniqueness: {scope: [:product_id, :market_id, :organization_id, :deleted_at]}
 
-  attr_accessor :is_consignment_market
-
   def update_product_record
     product.touch
   end
 
-  def net_price(market=nil, pct_array=nil, current_market=nil, is_consignment_market=nil)
-    if is_consignment_market
-      self[:net_price]
-    else
-      ((sale_price || 0) * net_percent(market, pct_array, current_market)).round(2)
-    end
+  def net_price(market=nil, pct_array=nil, current_market=nil)
+    ((sale_price || 0) * net_percent(market, pct_array, current_market)).round(2)
   end
 
   def net_percent(curr_market=nil, pct_array=nil, current_market=nil)

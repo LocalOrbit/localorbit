@@ -26,7 +26,6 @@
         <% if policy(:admin_cross_selling).index? %><%= content_tag(:li, link_to_or_span("Admin X-Sell", [:admin, market, :cross_sell]), class: 'tab') if market.allow_cross_sell && current_user.admin? %><% end %>
         <% if policy(:market_cross_selling).index? %><%= content_tag(:li, link_to_or_span("Cross Sell", [:admin, market, :cross_selling_lists]), class: 'tab') if market.allow_cross_sell  %><% end %>
         <% if policy(:market_stripe).index? %><%= content_tag(:li, link_to_or_span("Stripe", [:admin, market, :stripe]), class: 'tab') if !market.nil? %><% end %>
-        <% if policy(:market_quickbooks).index? %><%= content_tag(:li, link_to_or_span("QuickBooks", [:admin, market, :qb_profile]), class: 'tab') %><% end %>
         <% if policy(:market_storage_locations).index? %><%= content_tag(:li, link_to_or_span("Storage Locations", [:admin, market, :storage_locations]), class: 'tab') %><% end %>
       </ul>
     </div>

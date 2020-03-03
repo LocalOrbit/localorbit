@@ -54,115 +54,77 @@
             <li>
               <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
               <%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden edit_price", novalidate: "novalidate", data: { prefix: "price_#{price.id}" }} do |f| %>
-
-              <% if !current_user.admin? && current_market.is_consignment_market? %>
-                  <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
-                  <hgroup>
-                    <h2>Edit Consignment Price</h2>
-                    <h3><%= price.product.name %></h3>
-                  </hgroup>
-                  <%= fields_for :price, price, index: price.id do |f| %>
-                  <table class="pricing-table">
-                    <thead>
-                    <tr>
-                      <th><label for="<%= "price_#{price.id}_sale_price" %>">Sale Price</label></th>
-                      <th><label for="<%= "price_#{price.id}_net_price" %>">Net Price</label></th>
-                    </tr>
-                    </thead>
-
-                    <tr>
-                      <td>
-                        <%= f.number_field :sale_price, min: 0, size: 4 %>
-                      </td>
-                      <td>
-                        <%= f.number_field :net_price, min: 0, size: 4 %>
-                      </td>
-                    </tr>
-                  </table>
-
-                  <div class="form-actions pull-right">
-                    <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
-                  </div>
-
-                <% end %>
-              <% else %>
-                  <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
-                  <hgroup>
-                    <h2>Edit Price</h2>
-                    <h3><%= price.product.name %></h3>
-                  </hgroup>
-                  <%= fields_for :price, price, index: price.id do |f| %>
-                      <div class="fields">
-                        <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(price.product.organization, :advanced_pricing)) %>
-                            <%= f.select :market_id, price.product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "select_market_id chosen"} %>
-                        <% else %>
-                            All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
-                        <% end %>
-                        <h3>Price for All Buyers</h3>
-                        <span class="preserve-alignment" style="vertical-align: top">
-                          <label style="float: left" for="<%= "price_#{price.id}_net_price" %>">Net Price</label>
-                          <% if policy(:product_fees).index? && price.product_fee_pct > 0 %>
-                          <label class="lock-label" for="lockFieldID" style="float: left">
-                            <input type="checkbox" id="lockFieldID" class="lock-field"/>
-                            <span></span>
-                          </label>
-                          <% end %>
-                          <div style="clear: left"></div>
-                          <% if price.fee == 0 %>
-                            <input type="hidden" name="price[<%=price.id%>][fee]" value="0" class="fee-type mkt-fee">
-                          <% elsif price.fee == 1 %>
-                            <input type="hidden" name="price[<%=price.id%>][fee]" value="1" class="fee-type category-fee">
-                          <% elsif price.fee == 2 %>
-                            <input type="hidden" name="price[<%=price.id%>][fee]" value="2" class="fee-type product-fee">
-                          <% end %>
-
-                          <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"category-fee" => json_escape(::Financials::Pricing.category_percents_by_market(price.product.organization.all_markets, price.product).to_json), "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(::Financials::Pricing.seller_net_percents_by_market(price.product.organization.all_markets).to_json), "cc-rate" =>::Financials::Pricing.seller_cc_rate(current_market)} %>
-                        </span>
-                        <% if policy(:product_fees).index? && price.product_fee_pct > 0 %>
-                        <span class="preserve-alignment" style="vertical-align: top">
-                          <label for="<%= "price_#{price.id}_product_fee_pct" %>">Fee</label>
-                          <div>
-                            <%= f.number_field :product_fee_pct, min: 0, step: 0.01, size: 4, class: "fee has-product-fee" %>
-                            <div class="markup-pct"></div>
-                          </div>
-                        </span>
-                        <% end %>
-                        <span class="preserve-alignment" style="vertical-align: top">
-                          <label for="<%= "price_#{price.id}_sale_price" %>">Sale Price</label>
-                          <%= f.number_field :sale_price, min: 0, step: 0.01, size: 4, class: "sale-price" %>
-                        </span>
-                        <span class="preserve-alignment" style="vertical-align: top">
-                          <label for="<%= "price_#{price.id}_min_quantity" %>">Min Qty</label>
-                          <%= f.number_field :min_quantity, min: 0, size: 4 %>
-                        </span>
-                        <div class="popup-error">
-                        </div>
-                      </div>
-                      <div class="form-actions pull-right">
-                        <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
-                      </div>
-                      <% if can_access?(:advanced_pricing) %>
-                          <div class="links">
-                            <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %><br/>
-                            <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
-                          </div>
+                <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
+                <hgroup>
+                  <h2>Edit Price</h2>
+                  <h3><%= price.product.name %></h3>
+                </hgroup>
+                <%= fields_for :price, price, index: price.id do |f| %>
+                    <div class="fields">
+                      <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(price.product.organization, :advanced_pricing)) %>
+                          <%= f.select :market_id, price.product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "select_market_id chosen"} %>
+                      <% else %>
+                          All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
                       <% end %>
-                  <% end %>
+                      <h3>Price for All Buyers</h3>
+                      <span class="preserve-alignment" style="vertical-align: top">
+                        <label style="float: left" for="<%= "price_#{price.id}_net_price" %>">Net Price</label>
+                        <% if policy(:product_fees).index? && price.product_fee_pct > 0 %>
+                        <label class="lock-label" for="lockFieldID" style="float: left">
+                          <input type="checkbox" id="lockFieldID" class="lock-field"/>
+                          <span></span>
+                        </label>
+                        <% end %>
+                        <div style="clear: left"></div>
+                        <% if price.fee == 0 %>
+                          <input type="hidden" name="price[<%=price.id%>][fee]" value="0" class="fee-type mkt-fee">
+                        <% elsif price.fee == 1 %>
+                          <input type="hidden" name="price[<%=price.id%>][fee]" value="1" class="fee-type category-fee">
+                        <% elsif price.fee == 2 %>
+                          <input type="hidden" name="price[<%=price.id%>][fee]" value="2" class="fee-type product-fee">
+                        <% end %>
+
+                        <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"category-fee" => json_escape(::Financials::Pricing.category_percents_by_market(price.product.organization.all_markets, price.product).to_json), "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(::Financials::Pricing.seller_net_percents_by_market(price.product.organization.all_markets).to_json), "cc-rate" =>::Financials::Pricing.seller_cc_rate(current_market)} %>
+                      </span>
+                      <% if policy(:product_fees).index? && price.product_fee_pct > 0 %>
+                      <span class="preserve-alignment" style="vertical-align: top">
+                        <label for="<%= "price_#{price.id}_product_fee_pct" %>">Fee</label>
+                        <div>
+                          <%= f.number_field :product_fee_pct, min: 0, step: 0.01, size: 4, class: "fee has-product-fee" %>
+                          <div class="markup-pct"></div>
+                        </div>
+                      </span>
+                      <% end %>
+                      <span class="preserve-alignment" style="vertical-align: top">
+                        <label for="<%= "price_#{price.id}_sale_price" %>">Sale Price</label>
+                        <%= f.number_field :sale_price, min: 0, step: 0.01, size: 4, class: "sale-price" %>
+                      </span>
+                      <span class="preserve-alignment" style="vertical-align: top">
+                        <label for="<%= "price_#{price.id}_min_quantity" %>">Min Qty</label>
+                        <%= f.number_field :min_quantity, min: 0, size: 4 %>
+                      </span>
+                      <div class="popup-error">
+                      </div>
+                    </div>
+                    <div class="form-actions pull-right">
+                      <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
+                    </div>
+                    <% if can_access?(:advanced_pricing) %>
+                        <div class="links">
+                          <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %><br/>
+                          <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
+                        </div>
+                    <% end %>
+                <% end %>
               <% end %>
-              <% end %>
-              <%#= render partial: "edit_price_advanced", locals: { price: price.decorate } %>
             </li>
           <% end %>
         </ul>
       </td>
       <td class="stock">
         <% if product.use_simple_inventory? %>
-            <% if current_user.admin? || current_market.is_buysell_market? %>
-              <%= link_to product.available_inventory, "#edit_product_#{product.id}",
-                      class: "edit-toggle popup-toggle" %>
-            <% else %>
-              <%= product.available_inventory %>
-            <% end %>
+            <%= link_to product.available_inventory, "#edit_product_#{product.id}",
+                  class: "edit-toggle popup-toggle" %>
             <%= form_for [:admin, product], url: admin_product_path(product, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}} do |f| %>
                 <div class="fields">
                   <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
@@ -229,15 +191,11 @@
         <% end %>
       </td>
       <td><%= product.updated_at_dte %></td>
-      <% if current_user.admin? || current_market.is_buysell_market? %>
       <td class="delete action-link">
         <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, product], method: :delete,
                     data: { confirm: "Are you sure you want to permanently delete #{product.plural_units_with_name}?" },
                     title: "Delete", class: "del-link font-icon" %>
       </td>
-      <% else %>
-      <td></td>
-      <% end %>
     </tr>
   <% end %>
 </table>

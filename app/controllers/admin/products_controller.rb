@@ -6,7 +6,6 @@ module Admin
     before_action :ensure_selling_organization
     before_action :find_product, only: [:show, :update, :destroy]
     before_action :find_sticky_params, only: :index
-    before_action :load_qb_session
 
     def index
       if params["clear"]
@@ -58,7 +57,6 @@ module Admin
       @product = Product.new(product_params).decorate
       find_selling_organizations
       @product.organization = @organizations.detect {|o| o.id == @product.organization_id }
-      @product.consignment_market = current_market.is_consignment_market?
       if @product.save
         update_sibling_units(@product)
         if ENV['USE_UPLOAD_QUEUE'] == "true"
@@ -93,7 +91,6 @@ module Admin
     end
 
     def update
-      @product.consignment_market = current_market.is_consignment_market?
       updated = update_product
       if ENV['USE_UPLOAD_QUEUE'] == 'true'
         Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product.object), queue: :urgent
@@ -115,8 +112,6 @@ module Admin
       update_general_product(@product)
 
       find_sibling_units(@product)
-
-      update_quickbooks(@product)
 
       message = updated ? "Saved #{@product.name}" : nil
       respond_to do |format|
@@ -184,7 +179,7 @@ module Admin
     def after_create_page
       if params[:after_save]
         params[:after_save]
-      elsif @product.lots.count > 0 || current_market.is_consignment_market?
+      elsif @product.lots.count > 0
         [:admin, @product, :prices]
       else
         [:admin, @product, :lots]
@@ -264,11 +259,8 @@ module Admin
           sibling_unit_id = product.sibling_unit_id[i]
           sibling_unit_description = product.sibling_unit_description[i]
           sibling_product_code = product.sibling_product_code[i]
-          if current_market.is_consignment_market?
-            sibling_unit_quantity = product.sibling_unit_quantity[i]
-          else
-            sibling_unit_quantity = 0
-          end
+          sibling_unit_quantity = 0
+
           if sibling_unit_id && sibling_unit_id != ""
             if sibling_id == "0"
               sibling = product.model.dup
@@ -332,12 +324,6 @@ module Admin
 
       status_code = updated ? 200 : 422
       render json: @data, status: status_code
-    end
-
-    def update_quickbooks(product)
-      if Pundit.policy(current_user, :market_quickbooks) && !product.qb_item_id.nil?
-        result = Quickbooks::Item.update_item(product, session)
-      end
     end
   end
 end

@@ -10,10 +10,6 @@
         <% ReportPresenter.reports_for_user(current_user, current_market).each do |report| %>
           <%= content_tag(:li, link_to_or_span(report.titleize, admin_report_path(report.dasherize)), class: 'tab') %>
         <% end %>
-        <% if current_market.is_consignment_market? %>
-            <%= content_tag(:li, link_to_or_span("Open PO", admin_consignment_partial_po_report_path), class: 'tab') %>
-            <%= content_tag(:li, link_to_or_span("QuickBooks", admin_consignment_qb_report_path), class: 'tab') %>
-        <% end %>
       </ul>
     </div>
     <div class="mobile-only">

@@ -10,18 +10,6 @@
           </span>
         </div>
 
-        <% if current_market.is_consignment_market? %>
-        <div class="pull-right date-filters mobile-block">
-          <span class="preserve-alignment">
-            <label for="q_delivery_deliver_on_date_gteq">Filter by Delivery Date</label><br>
-            <%=  datetime_field_tag "q[delivery_deliver_on_date_gteq]", @search_presenter.start_date, class: append_sticky_class("delivery_deliver_on_date_gteq", "datepicker", [30.days.ago.to_date.to_s]) %>
-          </span>
-              <span class="preserve-alignment">
-            <label for="q_delivery_deliver_on_date_lteq" class="is-invisible">End Date</label><br>
-                <%=  datetime_field_tag "q[delivery_deliver_on_date_lteq]", @search_presenter.end_date, class: append_sticky_class("delivery_deliver_on_date_lteq", "datepicker", [Date.today.to_s]) %>
-          </span>
-        </div>
-        <% else %>
         <div class="pull-right date-filters mobile-block">
           <span class="preserve-alignment">
             <label for="q_placed_at_date_gteq">Filter by Creation Date</label><br>
@@ -32,33 +20,24 @@
             <%=  datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: append_sticky_class("placed_at_date_lteq", "datepicker", [Date.today.to_s]) %>
           </span>
         </div>
-        <% end %>
 
         <div class="manager-filters unjustify mobile-block">
           <% if current_user.multi_market_membership? %>
-          <span class="preserve-alignment mobile-block">
-            <%= f.label :market_id_in, "Market" %><br>
-            <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, ""),'multiselect']} %>
-          </span>
+            <span class="preserve-alignment mobile-block">
+              <%= f.label :market_id_in, "Market" %><br>
+              <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, ""),'multiselect']} %>
+            </span>
           <% end %>
 
           <span class="preserve-alignment mobile-block">
             <%= f.label :organization_id_in, "Buyer" %><br>
             <%= f.collection_select :organization_id_in, @search_presenter.buyer_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
           </span>
-
-          <% if current_market.is_consignment_market? %>
+          <% if (current_user.admin? || current_user.market_manager?) && policy(:all_supplier).index? %>
             <span class="preserve-alignment mobile-block">
               <%= f.label :products_organization_id_in, "Supplier" %><br>
               <%= f.collection_select :products_organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:products_organization_id_in, ""),'multiselect']} %>
             </span>
-          <% else %>
-              <% if (current_user.admin? || current_user.market_manager?) && policy(:all_supplier).index? %>
-              <span class="preserve-alignment mobile-block">
-                <%= f.label :products_organization_id_in, "Supplier" %><br>
-                <%= f.collection_select :products_organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:products_organization_id_in, ""),'multiselect']} %>
-              </span>
-              <% end %>
           <% end %>
         </div>
 
@@ -73,13 +52,6 @@
             <%= f.label :payment_status_in, "Payment Status" %><br>
             <%= f.select :payment_status_in, Order::PAYMENT_STATUSES.map { |ps| [ps[1], ps[0]] }, {include_blank: 'Select'}, {multiple: false} %>
           </span>
-
-          <% if current_market.is_consignment_market? && @order_type == 'purchase' %>
-          <span class="preserve-alignment mobile-block">
-            <%= f.label :sold_through_true, "Sold Through?" %><br>
-            <%= f.check_box :sold_through_true %>
-          </span>
-          <% end %>
         </div>
       </div>
       <div class="column column--fourth column--guttered">

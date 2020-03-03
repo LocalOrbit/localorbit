@@ -7,7 +7,6 @@ class OrderItem < ActiveRecord::Base
   before_save :update_delivery_status
   before_save :update_delivered_at
   before_save :update_consumed_inventory
-  before_destroy :remove_consignment_transaction
 
   audited allow_mass_assignment: true, associated_with: :order
 
@@ -29,7 +28,6 @@ class OrderItem < ActiveRecord::Base
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
 
   validate :product_availability, on: :create
-  validate :consignment_product_availability, on: [:create, :update]
 
   scope :delivered,       -> { where(delivery_status: "delivered") }
   scope :undelivered,     -> { where(delivery_status: "pending") }
@@ -67,9 +65,9 @@ class OrderItem < ActiveRecord::Base
       name: item.product.name,
       quantity: item.quantity,
       unit: item.unit,
-      unit_price: !item.sale_price.nil? && item.sale_price >= 0 && order.market.is_consignment_market? ? item.sale_price : item.unit_price.nil? ? 0 : item.unit_price.sale_price,
-      net_price: !item.net_price.nil? && item.net_price >= 0 && order.market.is_consignment_market? ? item.net_price : 0,
-      product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 && order.market.is_consignment_market? ? 0 : item.unit_price.nil? ? 0 : item.unit_price.product_fee_pct,
+      unit_price: item.unit_price.nil? ? 0 : item.unit_price.sale_price,
+      net_price: 0,
+      product_fee_pct: item.unit_price.nil? ? 0 : item.unit_price.product_fee_pct,
       category_fee_pct: category_fee_pct.nil? ? 0 : category_fee_pct,
       fee: !item.fee.nil? ? item.fee : 0,
       seller_name: item.product.organization.name,
@@ -126,35 +124,12 @@ class OrderItem < ActiveRecord::Base
   end
 
   def product_availability
-    return unless product.present? && !order.nil? && order.market.is_buysell_market?
+    return unless product.present? && !order.nil?
 
     qty = product.lots.available_specific(deliver_on_date, order.market_id, order.organization_id).sum(:quantity)
     qty += product.lots.available_general(deliver_on_date).sum(:quantity)
     if qty < quantity
       errors[:inventory] = "there are only #{qty} #{product.name.pluralize(qty)} available."
-    end
-  end
-
-  def consignment_product_availability
-    return unless product.present? && !order.nil? && order.market.is_consignment_market? && order.sales_order?
-
-    if !order.nil?
-      market_id = order.market.id
-      organization_id = order.organization.id
-    end
-    qty = 0
-    ct = ConsignmentTransaction.where(id: po_ct_id).where(lot_id:nil).where(deleted_at: nil)
-    if !ct.nil? && !ct.empty?
-      qty = ct.sum(:quantity)
-    elsif !product.lots.empty? && product.lots.sum(:quantity) > 0
-      qty = product.lots.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
-      qty += product.lots.available_general(Time.current.end_of_minute).sum(:quantity)
-    end
-    if qty > 0 && (qty + (quantity_was || 0)) < quantity
-      errors.add(:inventory, "there are only #{Integer(qty)} #{product.name.pluralize(qty)} available.")
-    end
-    if !quantity_delivered.nil? && qty > 0 && (qty + (quantity_delivered_was || 0)) < quantity_delivered
-      errors.add(:inventory, "there are only #{Integer(qty + quantity)} #{product.name.pluralize(qty)} available.")
     end
   end
 
@@ -168,23 +143,6 @@ class OrderItem < ActiveRecord::Base
 
   def delivered?
     delivery_status == "delivered"
-  end
-
-  def remove_consignment_transaction
-    # If an order item is to be removed, any associated consignment transaction is retrieved.
-    # If there is a PO lot associated (which indicates delivery of the PO item), it must be zeroed out.
-    # Finally, the consignment transaction is soft deleted.
-
-    ct = ConsignmentTransaction.where(order_id: self.order.id, order_item_id: self.id, deleted_at: nil).first
-
-    if !ct.nil?
-      if !ct.lot_id.nil? && ct.transaction_type == 'PO'
-        lot = Lot.find_by_id(ct.lot_id)
-        lot.quantity = 0
-        lot.save
-      end
-      ct.soft_delete
-    end
   end
 
   private
@@ -250,19 +208,21 @@ class OrderItem < ActiveRecord::Base
   end
 
   def consume_inventory_amount(initial_amount, market_id, organization_id)
-    if !po_lot_id.nil? && po_lot_id > 0 # Decrement specific consignment lot
-      lot = Lot.find(po_lot_id)
-      if initial_amount <= lot.quantity
-        num_to_consume = [lot.quantity, initial_amount].min
-        lot.decrement!(:quantity, num_to_consume)
-        lots.build(lot: lot, quantity: num_to_consume)
-      end
-    elsif po_lot_id.nil? && !po_ct_id.nil?
-      # This condition represents a consignment PO product awaiting delivery that does not have a lot yet
-    else
-      specific = false
-      amount = initial_amount
-      product.lots_by_expiration.available_specific(deliver_on_date, market_id, organization_id).each do |lot|
+    specific = false
+    amount = initial_amount
+    product.lots_by_expiration.available_specific(deliver_on_date, market_id, organization_id).each do |lot|
+      break unless amount > 0
+
+      num_to_consume = [lot.quantity, amount].min
+      lot.decrement!(:quantity, num_to_consume)
+
+      lots.build(lot: lot, quantity: num_to_consume)
+      amount -= num_to_consume
+      specific = true
+    end
+
+    if amount > 0
+      product.lots_by_expiration.available_general(deliver_on_date).each do |lot|
         break unless amount > 0
 
         num_to_consume = [lot.quantity, amount].min
@@ -270,88 +230,42 @@ class OrderItem < ActiveRecord::Base
 
         lots.build(lot: lot, quantity: num_to_consume)
         amount -= num_to_consume
-        specific = true
       end
+    end
 
-      if amount > 0
-        product.lots_by_expiration.available_general(deliver_on_date).each do |lot|
-          break unless amount > 0
+    amount = initial_amount
+    lots.order(created_at: :desc).each do |lot|
+      break unless amount
 
-          num_to_consume = [lot.quantity, amount].min
-          lot.decrement!(:quantity, num_to_consume)
+      num_to_consume = [lot.quantity, amount].min
+      lot.increment!(:quantity, num_to_consume)
 
-          lots.build(lot: lot, quantity: num_to_consume)
-          amount -= num_to_consume
-        end
-      end
-
-      amount = initial_amount
-      lots.order(created_at: :desc).each do |lot|
-        break unless amount
-
-        num_to_consume = [lot.quantity, amount].min
-        lot.increment!(:quantity, num_to_consume)
-
-        amount -= num_to_consume
-      end
+      amount -= num_to_consume
     end
   end
 
   def return_inventory_amount(amount)
-    if !po_lot_id.nil? && po_lot_id > 0 # Increment specific consignment lot
-      lot = Lot.find(po_lot_id)
+    lots.order(created_at: :desc).each do |lot|
+      break unless amount
+
       num_to_return = [lot.quantity, amount].min
-      lot.increment!(:quantity, num_to_return)
-    end
+      lot.lot.increment!(:quantity, num_to_return)
+      lot.decrement!(:quantity, num_to_return)
 
-    if order.market.is_buysell_market? || (order.market.is_consignment_market? && (delivery_status == 'pending' || delivery_status == 'canceled'))
-      lots.order(created_at: :desc).each do |lot|
-        break unless amount
-
-        num_to_return = [lot.quantity, amount].min
-        lot.lot.increment!(:quantity, num_to_return)
-        lot.decrement!(:quantity, num_to_return)
-
-        amount -= num_to_return
-      end
+      amount -= num_to_return
     end
   end
 
   def update_consumed_inventory
     quantity_remaining = nil
-    if !order.nil? && order.market.is_consignment_market?
-      if !order.nil? && order.sales_order?
-        if persisted? && quantity_changed?
-          quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
-        end
+    if !order.nil? && order.sales_order?
+      if persisted? && quantity_changed?
+        quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
 
-        if persisted? && quantity_delivered_changed? && changes[:quantity_delivered][1] > 0
-          if changes[:quantity_delivered][0].nil?
-            quantity_remaining = changes[:quantity_delivered][1] - quantity
-          else
-            quantity_remaining = changes[:quantity_delivered][1] - (changes[:quantity_delivered][0] || 0)
-          end
-        end
-
-        if !quantity_remaining.nil?
-          if quantity_remaining > 0
-            consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
-          else
-            return_inventory_amount(quantity_remaining.abs)
-          end
-        end
-
-      end
-    else
-      if !order.nil? && order.sales_order?
-        if persisted? && quantity_changed?
-          quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
-
-          if quantity_remaining > 0
-            consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
-          else
-            return_inventory_amount(quantity_remaining.abs)
-          end
+        if quantity_remaining > 0
+          consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
+        else
+          return_inventory_amount(quantity_remaining.abs)
         end
       end
     end

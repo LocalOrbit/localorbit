@@ -92,10 +92,7 @@
       if (this.props.promo)
         inputClass = "redesigned app-product-input promo";
 
-      if (this.props.consignmentMarket)
-          fee_type_val = 0;
-      else
-          fee_type_val = this.props.product.prices[0].fee_type;
+      fee_type_val = this.props.product.prices[0].fee_type;
 
       if (this.props.orderId) {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);

@@ -5,18 +5,6 @@ GIT
     tabulator (1.0.0)
 
 GIT
-  remote: https://github.com/ruckus/quickbooks-ruby.git
-  revision: ba54c446bf37d9c1a0b5f763d01989228df298d6
-  ref: ba54c446bf37
-  specs:
-    quickbooks-ruby (0.4.6)
-      activemodel
-      multipart-post
-      nokogiri
-      oauth (= 0.4.7)
-      roxml (= 3.3.1)
-
-GIT
   remote: https://github.com/sj26/rspec_junit_formatter.git
   revision: fedadd9aba87068ea6bcdd56335f10d8c14e56d2
   specs:
@@ -480,7 +468,6 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    oauth (0.4.7)
     oauth2 (1.4.0)
       faraday (>= 0.8, < 0.13)
       jwt (~> 1.0)
@@ -610,9 +597,6 @@ GEM
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     rollbar (2.23.2)
-    roxml (3.3.1)
-      activesupport (>= 2.3.0)
-      nokogiri (>= 1.3.3)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -848,7 +832,6 @@ DEPENDENCIES
   pry-remote
   puma
   pundit
-  quickbooks-ruby!
   quiet_assets
   rack-cache
   rack-canonical-host

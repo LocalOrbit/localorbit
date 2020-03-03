@@ -59,11 +59,7 @@ class CartsController < ApplicationController
     end
     product = Product.includes(:prices).find(params[:product_id])
 
-    if current_market.is_consignment_market? && ((!order.nil? && order.sales_order?) || @order_type == 'sales')
-      @item = current_cart.items.find_or_initialize_by(product_id: product.id, lot_id: params[:lot_id], ct_id: params[:ct_id])
-    else
-      @item = current_cart.items.find_or_initialize_by(product_id: product.id)
-    end
+    @item = current_cart.items.find_or_initialize_by(product_id: product.id)
 
     if params[:quantity].to_i > 0
       @item.quantity = params[:quantity]
@@ -104,12 +100,9 @@ class CartsController < ApplicationController
   def validate_qty(item)
     error = nil
     product = Product.includes(:prices).find(item.product.id)
-    if current_market.is_buysell_market? || (current_market.is_consignment_market? && item.lot_id > 0)
-      delivery_date = current_delivery.deliver_on
-      actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
-    else # Checking consignment awaiting delivery item
-      actual_count = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: nil).sum(:quantity)
-    end
+    delivery_date = current_delivery.deliver_on
+    actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
+
     if item.quantity && item.quantity > 0 && item.quantity > actual_count
       error = {
           item_id: item.id,

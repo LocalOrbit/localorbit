@@ -95,7 +95,6 @@ module Imports
 								use_simple_inventory: prod_hash["Lot Number"].nil?,
 				)
 				product.skip_validation = true
-				product.consignment_market = current_market.is_consignment_market?
 				product.save
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
@@ -116,7 +115,6 @@ module Imports
 				end
 				if !product.nil? # if there is a product-unit with this name, category, org
 					product.skip_validation = true
-					product.consignment_market = current_market.is_consignment_market?
 					product.update_attributes!(name: prod_hash["Product Name"].strip,
 																		 category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
 																		 unit_description: prod_hash["Unit Description"],
@@ -158,7 +156,6 @@ module Imports
 								general_product_id: gp_id_or_false
 					)
 					product.skip_validation = true
-					product.consignment_market = current_market.is_consignment_market?
 					product.save
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)

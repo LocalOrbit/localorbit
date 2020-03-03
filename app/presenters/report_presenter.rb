@@ -87,14 +87,6 @@ class ReportPresenter
       mm_only: true,
       ex_ss: true,
     },
-    sales_by_consignment_buyer: {
-        filters: [:delivered_at, :order_number, :market_name, :buyer_name],
-        fields: [
-            :placed_at, :delivered_at, :buyer_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
-            :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-        ],
-        consignment_only: true
-    },
     sales_by_buyer: {
       filters: [:placed_at, :deliver_on, :order_number, :market_name, :buyer_name],
       fields: [
@@ -167,14 +159,6 @@ class ReportPresenter
 
   def self.exclude_ss_reports
     REPORT_MAP.keys.select {|k| REPORT_MAP[k][:ex_ss]}
-  end
-
-  def self.le_mm_reports
-    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:le_mm]}
-  end
-
-  def self.consignment_reports
-    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:consignment_only]}
   end
 
   def initialize(report:, market:, user:, search: {}, paginate: {})

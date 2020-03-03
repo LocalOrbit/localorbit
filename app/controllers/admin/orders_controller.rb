@@ -3,7 +3,6 @@ class Admin::OrdersController < AdminController
   include Inventory
 
   before_action :find_sticky_params, only: [:index, :purchase_orders]
-  before_action :load_qb_session
 
   def index
     if params["clear"]
@@ -66,18 +65,14 @@ class Admin::OrdersController < AdminController
   end
 
   def build_order_list
-    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, current_market.is_consignment_market? ? :delivery_deliver_on : :placed_at)
+    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
     @q, @totals = search_and_calculate_totals(@search_presenter)
 
     @orders = @q.result(distinct: true)
   end
 
   def search_and_calculate_totals(search)
-    if current_market.is_consignment_market? && search.query.has_key?('products_organization_id_in')
-      results = Order.includes(:market, :organization, :items, :delivery).orders_for_consignment_seller(current_user).visible.search(search.query)
-    else
-      results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).visible.search(search.query)
-    end
+    results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).visible.search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
     # FIXME: OMG
@@ -95,55 +90,6 @@ class Admin::OrdersController < AdminController
     [results, totals]
   end
 
-  def create
-    case params["order_batch_action"]
-      when "pick_list", "invoice", "receipt"
-
-        orders = Order.where(id: params["order_id"])
-        printable_type = params[:order_batch_action]
-
-        context = InitializeBatchConsignmentPrintable.perform(user: current_user, orders: orders)
-        if context.success?
-          batch_consignment_printable = context.batch_consignment_printable
-          GenerateBatchConsignmentPrintablePdf.delay(queue: :urgent).perform(batch_consignment_printable: batch_consignment_printable, type: printable_type,
-                                                request: RequestUrlPresenter.new(request))
-
-          redirect_to action: :batch_printable_show, id: batch_consignment_printable.id
-        else
-          redirect_to @order_type == 'sales' ? admin_orders_path : admin_purchase_order_path, alert: "Error generating documents."
-        end
-
-      when "export"
-        params["order_id"].each do |o|
-          order = Order.find(o)
-          if order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil?
-            if order.order_type == "purchase"
-              export_bill(order, @po_transactions, @child_transactions, true)
-            else
-              export_invoice(order, true)
-            end
-          end
-        end
-        redirect_to admin_orders_path, notice: 'Orders Processed.'
-
-      when "unclose"
-        params["order_id"].each do |o|
-          order = Order.find(o)
-          if order.delivery_status_for_user(current_user) == 'exported' && !order.qb_ref_id.nil?
-            unclose_order(order, true)
-          end
-        end
-        redirect_to admin_orders_path, notice: 'Orders Processed.'
-
-      when nil, ""
-        redirect_to admin_orders_path, alert: 'No action provided.'
-
-    else
-      redirect_to admin_orders_path, alert: "Unsupported action: '#{params[:order_batch_action]}'"
-
-    end
-  end
-
   def show
     order = Order.orders_for_seller(current_user).find(params[:id])
 
@@ -157,20 +103,11 @@ class Admin::OrdersController < AdminController
       @order = SellerOrder.new(order, current_user)
     end
 
-    if current_market.is_consignment_market?
-      load_consignment_transactions(@order)
-      load_open_po
-    end
-
     setup_deliveries(@order)
   end
 
   def update
     order = Order.find(params[:id])
-
-    if current_market.is_consignment_market?
-      load_consignment_transactions(order)
-    end
 
     setup_deliveries(order)
     merge = nil
@@ -192,27 +129,6 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Duplicate Order"
       duplicate_order(order)
       return
-    elsif params[:commit] == "Export Invoice"
-      export_invoice(order)
-      return
-    elsif params[:commit] == "Export Bill"
-      export_bill(order, @po_transactions, @child_transactions)
-      return
-    elsif params[:commit] == "Generate Receipt"
-      orders = []
-      generate_consignment_printable(orders << order,'receipt')
-      return
-    elsif params[:commit] == "Generate Picklist"
-      orders = []
-      generate_consignment_printable(orders << order,'pick_list')
-      return
-    elsif params[:commit] == "Generate Invoice"
-      orders = []
-      generate_consignment_printable(orders << order,'invoice')
-      return
-    elsif params[:commit] == "Unclose Order"
-      unclose_order(order)
-      return
     elsif params[:commit] == "Uninvoice Order"
       uninvoice_order(order)
       return
@@ -222,53 +138,13 @@ class Admin::OrdersController < AdminController
     elsif params["order"][:credit_clear] == "true"
       remove_credit(order)
       return
-    elsif params[:commit] == "Shrink"
-      shrink_transaction(order, params)
-      Inventory::Utils.check_sold_through(order)
-      return
-    elsif params[:commit] == "Undo Shrink"
-      unshrink_transaction(order, params)
-      Inventory::Utils.check_sold_through(order)
-      return
-    elsif params[:commit] == "Holdover"
-      holdover_transaction(order, params)
-      Inventory::Utils.check_sold_through(order)
-      return
-    elsif params[:commit] == "Undo Holdover"
-      unholdover_transaction(order, params)
-      Inventory::Utils.check_sold_through(order)
-      return
-    elsif params[:commit] == "Repack"
-      repack_transaction(order, params)
-      Inventory::Utils.check_sold_through(order)
-      return
-    elsif params[:commit] == "Undo Repack"
-      unrepack_transaction(order, params)
-      Inventory::Utils.check_sold_through(order)
-      return
     elsif params[:commit] == "Save Notes"
       save_note(order, order_params)
       return
-    # elsif params[:commit] == "Undo Mark Delivered"
-    #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     perform_order_update(order, order_params, merge)
-
-    if current_market.is_consignment_market? && order.purchase_order?
-      Inventory::Utils.check_sold_through(order)
-    end
-  end
-
-  def destroy
-    o = Order.find(params[:id])
-    result = RemoveConsignmentOrder.perform(order: o)
-    if result.success?
-      redirect_to o.sales_order? ? admin_orders_path : admin_purchase_orders_path, notice: 'Order Removed Successfully'
-    else
-      redirect_to o.sales_order? ? admin_order_path(order) : admin_purchase_order_path(order), error: 'Error Removing Order'
-    end
   end
 
   def save_note(order, params)
@@ -304,29 +180,6 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def export_invoice(order, batch = nil)
-    result = ExportInvoiceToQb.perform(order: order, curr_market: current_market, session: session)
-    if batch.nil?
-      if result.success?
-        redirect_to admin_order_path(order), notice: "Invoice Exported to QB."
-      else
-        #puts 'Failed JE: ' + result
-        redirect_to admin_order_path(order), error: "Failed to Export Invoice."
-      end
-    end
-  end
-
-  def export_bill(order, po_transactions, child_transactions, batch = nil)
-    result = ExportBillToQb.perform(order: order, po_transactions: po_transactions, child_transactions: child_transactions, curr_market: current_market, session: session)
-    if batch.nil?
-      if result.success?
-        redirect_to admin_order_path(order), notice: "Bill Exported to QB."
-      else
-        redirect_to admin_order_path(order), error: "Failed to Export Bill."
-      end
-    end
-  end
-
   def unclose_order(order, batch = nil)
     result = UncloseOrder.perform(order: order)
     if batch.nil?
@@ -345,92 +198,6 @@ class Admin::OrdersController < AdminController
       redirect_to admin_order_path(order), notice: "Order Uninvoiced."
     else
       redirect_to admin_order_path(order), error: "Failed to Uninvoice Order."
-    end
-  end
-
-  def shrink_transaction(order, params)
-    result = CreateShrinkTransaction.perform(user: current_user, order: order, params: params)
-    if result.success?
-      redirect_to admin_order_path(order), notice: "Shrink Successful."
-    else
-      redirect_to admin_order_path(order), error: "Failed to Shrink."
-    end
-  end
-
-  def unshrink_transaction(order, params)
-    result = UnShrinkTransaction.perform(user: current_user, params: params)
-    if result.success?
-      redirect_to admin_order_path(order), notice: "Unshrink Successful."
-    else
-      redirect_to admin_order_path(order), error: "Failed to Unshrink."
-    end
-  end
-
-  def holdover_transaction(order, params)
-    result = CreateHoldoverTransaction.perform(user: current_user, order: order, params: params)
-    if result.success?
-      redirect_to admin_order_path(order), notice: "Holdover Successful."
-    else
-      redirect_to admin_order_path(order), error: "Failed to Holdover."
-    end
-  end
-
-  def unholdover_transaction(order, params)
-    result = UnHoldoverTransaction.perform(user: current_user, params: params)
-    if result.success?
-      redirect_to admin_order_path(order), notice: "Unholdover Successful."
-    else
-      redirect_to admin_order_path(order), error: "Failed to Unholdover."
-    end
-  end
-
-  def repack_transaction(order, params)
-    result = CreateRepackTransaction.perform(user: current_user, order: order, params: params)
-    if result.success?
-      redirect_to admin_order_path(order), notice: "Repack Successful."
-    else
-      redirect_to admin_order_path(order), error: "Failed to Repack."
-    end
-  end
-
-  def unrepack_transaction(order, params)
-    result = UnRepackTransaction.perform(user: current_user, order: order, params: params)
-    if result.success?
-      redirect_to admin_order_path(order), notice: "Unrepack Successful."
-    else
-      redirect_to admin_order_path(order), error: "Failed to Unrepack."
-    end
-  end
-
-  def generate_consignment_printable(orders, printable_type)
-    printable = ConsignmentPrintable.create!(user: current_user)
-
-    context = GenerateConsignmentPrintablePdf.delay(queue: :urgent).perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
-
-    redirect_to action: :printable_show, id: printable.id
-  end
-
-  def printable_show
-    @printable = ConsignmentPrintable.for_user(current_user).find params[:id]
-
-    respond_to do |format|
-      format.html {}
-      format.json do
-        output = if @printable.pdf then {pdf_url: @printable.pdf.remote_url} else {pdf_url: nil} end
-        render json: output
-      end
-    end
-  end
-
-  def batch_printable_show
-    @batch_consignment_printable = BatchConsignmentPrintable.for_user(current_user).find params[:id]
-
-    respond_to do |format|
-      format.html {}
-      format.json do
-        output = if @batch_consignment_printable.pdf then {pdf_url: @batch_consignment_printable.pdf.remote_url} else {pdf_url: nil} end
-        render json: output
-      end
     end
   end
 
@@ -500,15 +267,10 @@ class Admin::OrdersController < AdminController
   # Builds a list of deliveries for potential changes
   # Some from the past, some from future, and the order's actual one.
   def setup_deliveries(order)
-    if current_market.is_buysell_market?
-      #curr_delivery = order.delivery
-      #::Orders::PotentialDeliveries.get_potential_deliveries(order.delivery, 3)
-      #@current_delivery = order.delivery
-      recent_deliveries = order.market.deliveries.recent.active.uniq
-      future_deliveries = order.market.deliveries.future.active.uniq
+    recent_deliveries = order.market.deliveries.recent.active.uniq
+    future_deliveries = order.market.deliveries.future.active.uniq
 
-      @deliveries = recent_deliveries | future_deliveries | [order.delivery]
-    end
+    @deliveries = recent_deliveries | future_deliveries | [order.delivery]
   end
 
   def perform_order_update(order, params, merge) # TODO this needs to handle price edits
@@ -571,11 +333,6 @@ class Admin::OrdersController < AdminController
   end
 
   def show_add_items_form(order)
-    if current_market.is_consignment_market?
-      load_consignment_transactions(order)
-      load_open_po
-    end
-
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show

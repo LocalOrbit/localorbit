@@ -3,8 +3,7 @@
   var ProductLots = React.createClass({
     propTypes: {
         purchaseOrder: React.PropTypes.bool,
-        salesOrder: React.PropTypes.bool,
-        consignmentMarket: React.PropTypes.bool
+        salesOrder: React.PropTypes.bool
     },
 
     mixins: [window.lo.ProductInputMixin],
@@ -141,7 +140,7 @@
             committed_summary = ('');
         }
 
-      var deleteButton = (this.state.cartItemQuantity > 0 ||  this.state.cartNetPrice > 0 || this.state.cartSalePrice > 0) && (this.state.cartLotId == lot.id || this.state.cartCtId == lot.ct_id) ? (<a href="javascript:void(0)" onClick={this.deleteSOFields} className="font-icon icon-clear consignment" style={{marginLeft: "10px"}}></a>) : null;
+      var deleteButton = (this.state.cartItemQuantity > 0 ||  this.state.cartNetPrice > 0 || this.state.cartSalePrice > 0) && (this.state.cartLotId == lot.id || this.state.cartCtId == lot.ct_id) ? (<a href="javascript:void(0)" onClick={this.deleteSOFields} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
       var inputClass = "redesigned app-product-input";
 
       if (committed_ad_count >= 0 && this.props.lot.quantity == 0 || committed_count >= 0 && this.props.lot.quantity == 0) {

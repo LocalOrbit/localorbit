@@ -35,13 +35,9 @@
           <% end %>
         </p>
       </div>
-
-      <% if current_market.is_buysell_market? %>
       <div>
         <p><strong>Payment Status:</strong>  &nbsp; <%= @order.payment_status.titleize %></p>
       </div>
-      <% end %>
-
       <div>
         <p><strong>Payment Method:</strong>  &nbsp; <%= @order.display_payment_method %></p>
       </div>

@@ -42,9 +42,6 @@ class Organization < ActiveRecord::Base
   belongs_to :plan, inverse_of: :organizations
   belongs_to :plan_bank_account, class_name: "BankAccount"
 
-  has_one :qb_token
-  has_one :qb_profile
-
   validates :org_type, inclusion: { in: ORG_TYPES }
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
   validate :require_payment_method
@@ -63,7 +60,6 @@ class Organization < ActiveRecord::Base
   serialize :twitter, TwitterUser
 
   accepts_nested_attributes_for :locations, reject_if: :reject_location
-  accepts_nested_attributes_for :qb_profile
 
   dragonfly_accessor :photo
   define_after_upload_resize(:photo, 1200, 1200)
@@ -167,8 +163,6 @@ class Organization < ActiveRecord::Base
   def primary_payment_provider
     if m = markets.first
       m.primary_payment_provider
-    elsif market.try(:is_consignment_market?)
-      market.primary_payment_provider
     else
       nil
     end
@@ -187,10 +181,6 @@ class Organization < ActiveRecord::Base
   def adjunct_organization
     # This should probably be boiled down to a single 'master market' flag...
     !(plan_start_at && plan_interval)
-  end
-
-  def is_consignment_organization?
-    payment_model == 'consignment'
   end
 
   def next_service_payment_at
@@ -271,7 +261,7 @@ class Organization < ActiveRecord::Base
   end
 
   def require_payment_method
-    unless self.payment_model == "consignment" || self.org_type == TYPE_MARKET || allow_purchase_orders? || allow_credit_cards? || allow_ach?
+    unless self.org_type == TYPE_MARKET || allow_purchase_orders? || allow_credit_cards? || allow_ach?
       errors.add(:payment_method, "At least one payment method is required for the organization")
     end
   end

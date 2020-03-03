@@ -20,15 +20,6 @@
       <%= f.text_field :name, class: "column column--full" %>
     </div>
 
-    <% if current_market.is_consignment_market? %>
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <label>Phone</label><br/>
-            <%= @organization.locations.map(&:phone).join(', ') %>
-          </div>
-        </div>
-    <% end %>
-
     <% if @organization.new_record? || current_user.can_manage_market?(current_market) %>
       <div class="row row--field">
       <% if policy(:all_supplier).index?  || current_user.admin? %>
@@ -46,7 +37,7 @@
       <%= hidden_field_tag :can_sell, @organization.can_sell %>
     <% end %>
 
-    <% if (@organization.new_record? || @organization.can_sell?) && current_market.is_buysell_market? %>
+    <% if @organization.new_record? || @organization.can_sell? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <%= f.check_box :show_profile %>
@@ -56,7 +47,7 @@
       </div>
     <% end %>
 
-    <% if current_market.is_buysell_market? && (@organization.new_record? || current_user.can_manage_organization?(@organization)) %>
+    <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
     <fieldset class="seller-fields<%= ' is-hidden' unless @organization.can_sell? %>">
       <div class="field field--inline">
         <%= f.label :facebook %><br>
@@ -127,18 +118,16 @@
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <label>Organization Status</label><br>
-          <%= f.check_box :active, checked: (@organization.new_record? && current_market.is_consignment_market?) || f.object.active %>
+          <%= f.check_box :active, checked: f.object.active %>
           <%= f.label :active, "Organization is active" %>
         </div>
       </div>
 
-      <% if current_market.is_buysell_market? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered" id="allowed-payment-methods">
           <%= render 'admin/markets/payment_options' %>
         </div>
       </div>
-      <% end %>
 
       <div class="row row--field">
         <div class="field column column--half column--guttered">
@@ -162,15 +151,6 @@
         <%= render "admin/locations/fields", form: location %>
       <% end %>
     </fieldset>
-  <% end %>
-
-  <% if current_market.is_consignment_market? && @organization.supplier? %>
-  <div class="row row--field">
-    <div class="field column column--half column--guttered">
-      <%= f.label :qb_check_name, "QuickBooks Check Name" %><br/>
-      <%= f.text_field :qb_check_name %>
-    </div>
-  </div>
   <% end %>
 
   <div class="row row--field">

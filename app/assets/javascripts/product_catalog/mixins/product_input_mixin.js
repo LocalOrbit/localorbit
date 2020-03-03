@@ -43,19 +43,9 @@
         $(target).removeClass('invalid-value');
         $(target).val('');
         context.setState({cartItemQuantity: null});
-        //context.setState({cartSalePrice: null});
-        //context.setState({cartNetPrice: null});
-        //context.setState({cartLotId: null});
         this.cSalePrice = $(target).parent().parent().find('.app-sale-price-input').val();
         this.cNetPrice = $(target).parent().parent().find('.app-net-price-input').val();
-        if (this.props.consignmentMarket && this.props.salesOrder) {
-            if ((this.cSalePrice > 0 || this.cSalePrice === 0) && (this.cNetPrice > 0 || this.cNetPrice === 0) && this.cItemQuantity > 0)
-                $(target).trigger("cart.inputFinished");
-        }
-        else {
-            $(target).trigger("cart.inputFinished");
-        }
-
+        $(target).trigger("cart.inputFinished");
         in_str = '';
     },
 

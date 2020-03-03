@@ -12,8 +12,7 @@ class Order < ActiveRecord::Base
 
   PAYMENT_STATUSES = {
       "unpaid" => "Unpaid",
-      "paid" => "Paid",
-      "exported" => "Exported to QBO"
+      "paid" => "Paid"
   }.freeze
 
   BATCH_PO_ACTIONS = {
@@ -242,16 +241,6 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.orders_for_consignment_seller(user)
-    if user.admin?
-      all
-    else
-      # TODO: check cross selling logic
-      #joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq
-      includes(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
-    end
-  end
-
   def self.orders_for_seller(user)
     if user.admin?
       all
@@ -425,18 +414,12 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def is_localeyes_order?
-    market.organization.plan.has_procurement_managers
-  end
-
   def update_total_cost
     cost = gross_total
     if credit && credit.apply_to == "subtotal"
       cost = gross_total - credit_amount
     end
-    if market.is_buysell_market?
-      self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
-    end
+    self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
     self.total_cost    = calculate_total_cost(cost).round(2)
   end
 
@@ -475,7 +458,6 @@ class Order < ActiveRecord::Base
   def update_payment_status
     statuses = items.map(&:payment_status).uniq
     self.payment_status = "refunded" if statuses == ["refunded"]
-    self.payment_status = "exported" if !qb_ref_id.nil?
   end
 
   def update_order_item_payment_status

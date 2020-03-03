@@ -443,17 +443,17 @@ $ ->
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    if $(this).hasClass("in-cart") || $(this).hasClass("consignment")
+    if $(this).hasClass("in-cart")
       lotId = $(this).parent().parent().find(".lot-id").val()
     else
       lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
 
-    if $(this).hasClass("in-cart") || $(this).hasClass("consignment")
+    if $(this).hasClass("in-cart")
       ctId = $(this).parent().parent().find(".ct-id").val()
     else
       ctId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".ct-id").val()
 
-    if $(this).hasClass("in-cart") || $(this).hasClass("consignment")
+    if $(this).hasClass("in-cart")
       feeType = $(this).parent().parent().find(".fee-type").val()
     else
       feeType = $(this).parent().parent().parent().parent().parent().parent().parent().find(".fee-type").val()

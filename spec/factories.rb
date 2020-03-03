@@ -347,24 +347,6 @@ FactoryBot.define do
         order.items = create_list(:order_item, 1, product: create(:product, :sellable))
       end
     end
-
-    trait :consignment_po do
-      order_type       "purchase"
-      after(:create) do |order|
-        order.items.each do |item|
-          create(:consignment_transaction, order_id: order.id, transaction_type: 'PO', order_item_id: item.id, product_id: item.product.id, quantity: item.quantity)
-        end
-      end
-    end
-
-    trait :consignment_so do
-      order_type       "sales"
-      after(:create) do |order|
-        order.items.each do |item|
-          create(:consignment_transaction, order_id: order.id, transaction_type: 'SO', order_item_id: item.id, product_id: item.product.id, quantity: item.quantity, sale_price: item.sale_price, net_price: item.net_price)
-        end
-      end
-    end
   end
 
   factory :order_item do
@@ -781,9 +763,4 @@ FactoryBot.define do
     user
     delivery
   end
-
-  factory :consignment_transaction do
-
-  end
-
 end

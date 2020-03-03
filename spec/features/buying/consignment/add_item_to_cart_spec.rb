@@ -5,7 +5,7 @@ describe "Add item to cart", js: true do
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
   let!(:seller) { create(:organization, :seller, :single_location) }
 
-  let(:market_org) { create(:organization, :market, payment_model: 'consignment') }
+  let(:market_org) { create(:organization, :market) }
   let(:market) { create(:market, :with_addresses, organization: market_org, organizations: [buyer, seller]) }
   let!(:delivery) { create(:delivery_schedule, market: market, delivery_cycle: 'manual') }
 

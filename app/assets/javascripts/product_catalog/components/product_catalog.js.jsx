@@ -16,7 +16,6 @@
       supplierInfo: React.PropTypes.string,
       purchaseOrder: React.PropTypes.bool,
       salesOrder: React.PropTypes.bool,
-      consignmentMarket: React.PropTypes.bool,
       currentSupplier: React.PropTypes.number,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
@@ -54,10 +53,7 @@
             divStyle = ({});
         }
 
-        if (this.props.consignmentMarket)
-            stickFilters = ('stickable');
-        else
-            stickFilters = ('');
+        stickFilters = ('');
 
         if(this.props.currentSupplier > 0 && this.props.purchaseOrder) {
             window.lo.ProductActions.newFilters(null, this.props.currentSupplier);
@@ -89,10 +85,9 @@
             orderId={this.props.orderId}
             purchaseOrder={this.props.purchaseOrder}
             salesOrder={this.props.salesOrder}
-            consignmentMarket={this.props.consignmentMarket}
             supplierView={this.props.supplierView}
         />);
-        
+
         return (
         <div id='supplierCatalog' className={divClass} style={divStyle}>
           {orderTemplates}
