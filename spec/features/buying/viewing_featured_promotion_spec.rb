@@ -21,7 +21,6 @@ describe "Viewing featured promotion", :js do
       end
 
       it "shows the featured product" do
-        pause
         expect(page).to have_content("Featured")
       end
     end
