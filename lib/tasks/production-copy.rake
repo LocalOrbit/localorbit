@@ -202,10 +202,11 @@ module CloneProductionHelper
 
   def production_copy_params
     {
-      database:"localorbit-production-copy",
-      adapter:"postgresql",
-      encoding:"unicode",
-      template:"template0"
+      database: "localorbit-production-copy",
+      adapter:  "postgresql",
+      encoding: "unicode",
+      template: "template0",
+      host:     "localhost"
     }
   end
 
