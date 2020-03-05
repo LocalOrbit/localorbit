@@ -17,12 +17,8 @@ class BuyerOrder
     :gross_total,
     :sellers,
     :signature_data,
-    :order_type,
-    :sales_order?,
-    :purchase_order?,
     :created_at,
     :delivery_status,
-    :sold_through,
     :payment_method,
     :delivery_fees,
     to: :@order

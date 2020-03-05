@@ -66,7 +66,7 @@ describe SendUpdateEmails do
 
   let(:update_params) { { updated_at: Time.current } }
 
-  let!(:plan)         { create(:plan, :localeyes) }
+  let!(:plan)         { create(:plan, :accelerate) }
 
   before do
     Order.enable_auditing

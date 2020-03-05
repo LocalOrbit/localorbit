@@ -99,18 +99,6 @@ module Metrics
         calculation_arg: :grow_markets,
         format: :percent
       },
-      automate_markets: {
-        title: "Markets On Automate Plan",
-        scope: Market,
-        calculation: :metric,
-        format: :integer
-      },
-      automate_markets_percent_growth: {
-        title: "Automate Plan Markets % Growth",
-        calculation: :percent_growth,
-        calculation_arg: :automate_markets,
-        format: :percent
-      },
     }
 
     STATES.each do |state|

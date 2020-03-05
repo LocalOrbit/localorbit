@@ -9,26 +9,13 @@ class OrdersController < ApplicationController
   before_action :require_current_delivery,       only: :create
   before_action :require_cart,                   only: :create
   before_action :hide_admin_navigation,          only: :create
-  before_action :find_sticky_params, only: [:index, :purchase_orders]
+  before_action :find_sticky_params, only: [:index]
 
   def index
-    po_filter = {:q => {"order_type_matches" => 'sales'}}
-    @query_params.deep_merge!(po_filter)
-
     order_list
-  end
-
-  def purchase_orders
-    po_filter = {:q => {"order_type_eq" => "purchase"}}
-    @query_params.deep_merge!(po_filter)
-
-    order_list
-
-    render :index
   end
 
   def order_list
-    #@query_params["order_type_matches"] = 'sales'
     @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
     @query_params["placed_at_date_lteq"] ||= Date.today.to_s
     @search_presenter = BuyerOrderPresenter.new(current_user, current_market, request.query_parameters, @query_params)
@@ -43,11 +30,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order_type = session[:order_type]
     # Validate cart items against current inventory...
     errors ||= []
     current_cart.items.each do |item|
-      invalid = Inventory::Utils.validate_qty(item, @order_type, current_market, current_organization, current_delivery)
+      invalid = Inventory::Utils.validate_qty(item, current_market, current_organization, current_delivery)
       errors << invalid if invalid
 
       if invalid then
@@ -136,7 +122,6 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-      :order_type,
       :discount_code,
       :delivery_fees,
       :payment_method,

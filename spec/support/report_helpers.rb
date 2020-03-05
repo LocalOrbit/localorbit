@@ -6,7 +6,7 @@ module ReportHelpers
     follow_order_link order: order
 
     # (cheat: peek at the path to see we're on buyer version of the page:)
-    order_path = order.order_type == 'purchase' ? purchase_order_path(order) : order_path(order)
+    order_path = order_path(order)
     expect(page.current_path).to eq(order_path)
   end
 
@@ -41,8 +41,7 @@ module ReportHelpers
   end
 
   def see_buyer_order_link(order:)
-    order_path = order.order_type == 'purchase' ? purchase_order_path(order) : order_path(order)
-    expect(page).to have_link(order.order_number, href: order_path)
+    expect(page).to have_link(order.order_number, href: order_path(order))
   end
 
   #

@@ -1,7 +1,6 @@
 <div class="cart-page">
   <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
   <%= form_for :order, url: [:orders], html: {id: "order-form"} do |f| %>
-    <%= f.hidden_field 'order_type', value: (@order_type || 'sales') %>
     <%= render "shared/errors", {resource: @order} if @order %>
     <% if flash[:error] %>
       <div class="flash flash--warning">
@@ -12,19 +11,13 @@
       <div class="column column--half column--guttered">
         <div class="cart_items" data-cart-url="<%= cart_path %>">
           <table class="cart">
-          <%= render partial: (@order_type || 'sales')+'_order', locals: {f: f} %>
+          <%= render partial: 'sales_order', locals: {f: f} %>
           </table>
-          <% if policy(:template).index? && @order_type == 'sales' %>
+          <% if policy(:template).index? %>
             <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
           <% end %>
           <h2 class="order-min-msg"></h2>
         </div>
-        <% if @order_type == 'purchase' %>
-            <div style="margin-top: 10px;">
-              <%= f.label :notes %>
-              <%= f.text_area :notes, rows: 5 %>
-            </div>
-        <% end %>
         </div
       ><div class="column column--half column--guttered">
         <div id="additional-information">
@@ -40,7 +33,7 @@
             </address>
           </div>
 
-          <% if current_market.organization.plan.discount_codes? && @order_type == 'sales'%>
+          <% if current_market.organization.plan.discount_codes? %>
           <div id="discount-info">
             <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Discount Information</h2>
           </div>
@@ -164,7 +157,7 @@
             <%= link_to "Cancel Order", [:cart], data: {method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive", id: "cancel-button" %>
             <span class="note">(Clear Cart)</span>
           </span>
-          <%= link_to "Continue Ordering", @order_type == 'sales' ? products_path : products_purchase_path, class: "continue-shop" %>  
+          <%= link_to "Continue Ordering", products_path, class: "continue-shop" %>  
         </div>
       </div>
     </div>

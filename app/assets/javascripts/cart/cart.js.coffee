@@ -4,7 +4,6 @@ $ ->
   order_id = $('.add-items-to-order').data('order-id')
   order_min = $('.subtotal').data('order-min')
   subtotal = $('.subtotal').data('subtotal')
-  order_type = $('#order_order_type').prop('value')
 
   window.CartNotificationDuration = 2000
 
@@ -140,7 +139,7 @@ $ ->
     updateSubtotal: (subtotal)->
       totals = $("#totals")
       totals.find(".subtotal").text(accounting.formatMoney(subtotal))
-      if subtotal*1 >= order_min*1 || order_type == 'purchase'
+      if subtotal*1 >= order_min*1
         $('.order-min-msg').html('')
         $('.payment-method').prop("disabled", false)
       else if order_min > 0
@@ -481,27 +480,6 @@ $ ->
       $("#place-order-button").attr("disabled", false)
     else
       $("#place-order-button").attr("disabled", true)
-
-  $(document.body).on 'click', ".submit-split", (e)->
-    e.preventDefault()
-    $(this).attr("disabled", true)
-    quantity = $(this).parent().parent().parent().find(".split-qty").val()
-    unallocated = $(this).parent().parent().parent().data("unallocated")
-    productId = $(this).parent().parent().parent().find(".split-product option:selected").val()
-    lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
-    parentProductId = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().data("cart-item")["product_id"]
-    if quantity > 0 && quantity <= unallocated
-      $.post("/admin/products/split", {parent_product_id: parentProductId, product_id: productId, lot_id: lotId, quantity: quantity} )
-        .done (data)=>
-          location.reload()
-
-  $(document.body).on 'click', ".undo-submit-split", (e)->
-    e.preventDefault()
-    #$(this).attr("disabled", true)
-    productId = $(this).parent().parent().parent().parent().parent().data("cart-item")["product_id"]
-    $.post("/admin/products/undo_split", {product_id: productId} )
-      .done (data)=>
-        location.reload()
 
   $(document.body).on 'click', "#place-order-button", (e)->
     e.preventDefault()

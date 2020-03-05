@@ -12,8 +12,6 @@
   orderCutoff: current_delivery.cutoff_time,
   buyerInfo: current_organization.name,
   supplierInfo: !@current_supplier.nil? ? @current_supplier.name : nil,
-  purchaseOrder: @order_type == 'purchase',
-  salesOrder: @order_type == 'sales',
   currentSupplier: current_supplier_id,
   limit: 10,
   useTemplates: policy(:template).index?,

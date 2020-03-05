@@ -18,7 +18,6 @@ module Api
         @seller_ids = (params[:seller_ids] || [])
         @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
         order = !session[:order_id].nil? ? Order.find(session[:order_id]) : nil
-        order_type = session[:order_type].present? ? session[:order_type] : nil
 
         if order
           featured_promotion = @order.market.featured_promotion(@order.organization, current_delivery)
@@ -123,9 +122,6 @@ module Api
         prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
 
         lots = nil
-        committed = nil
-        split_options = nil
-        undo_split_options = nil
 
         if prices && prices.length > 0 && available_inventory && available_inventory > 0 && !product.cart_item.nil?
           cart_item = product.cart_item.decorate
@@ -138,10 +134,6 @@ module Api
               :unit_description => product.unit_plural,
               :prices => prices,
               :lots => lots,
-              :committed => committed_array,
-              :committed_ad => committed_ad_array,
-              :split_options => split_options,
-              :undo_split_id => !undo_split_options.nil? ? undo_split_options.child_lot_id : nil,
               :cart_item => cart_item.object,
               :cart_item_persisted => cart_item.persisted?,
               :cart_item_quantity => cart_item.quantity,

@@ -8,10 +8,6 @@ class Admin::OrdersController < AdminController
     if params["clear"]
       redirect_to url_for(params.except(:clear))
     else
-      po_filter = {:q => {"order_type_matches" => "sales"}}
-      @query_params = @query_params.deep_merge!(po_filter)
-      @order_type = 'sales'
-
       build_order_list
 
       respond_to do |format|
@@ -30,37 +26,6 @@ class Admin::OrdersController < AdminController
           end
         end
       end
-    end
-  end
-
-  def purchase_orders
-    if params["clear"]
-      redirect_to url_for(params.except(:clear))
-    else
-      po_filter = {:q => {"order_type_matches" => "purchase"}}
-      @query_params = @query_params.deep_merge!(po_filter)
-      @order_type = 'purchase'
-
-      build_order_list
-
-      respond_to do |format|
-        format.html do
-          @orders = @orders.page(params[:page]).per(@query_params[:per_page])
-          render :index
-        end
-        format.csv do
-          @order_items = Orders::OrderItems.find_order_items(@orders.map(&:id), current_user)
-          @abort_mission = @order_items.count > 2999
-          if Figaro.env.use_upload_queue == "true"
-            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id)), priority: 30
-            flash[:notice] = "Please check your email for export results."
-            redirect_to admin_purchase_orders_path
-          else
-            @filename = "orders.csv"
-          end
-        end
-      end
-
     end
   end
 
@@ -92,10 +57,6 @@ class Admin::OrdersController < AdminController
 
   def show
     order = Order.orders_for_seller(current_user).find(params[:id])
-
-    if order.purchase_order? && !order.sold_through
-      Inventory::Utils.check_sold_through(order)
-    end
 
     if current_user.organization_ids.include?(order.organization_id) || current_user.can_manage_organization?(order.organization)
       @order = BuyerOrder.new(order)
@@ -311,7 +272,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(user: current_user, payment_provider: order.payment_provider, order: order, cart: current_cart, request: request, holdover: false, repack: false)
+    result = UpdateOrderWithNewItems.perform(user: current_user, payment_provider: order.payment_provider, order: order, cart: current_cart, request: request)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."

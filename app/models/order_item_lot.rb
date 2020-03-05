@@ -12,12 +12,6 @@ class OrderItemLot < ActiveRecord::Base
 
   protected
 
-  def check_po
-    if !order_item.order.nil? && order_item.order.purchase_order?
-      self.quantity = 0
-    end
-  end
-
   def return_inventory_to_lot
     lot.increment!(:quantity, quantity)
   end

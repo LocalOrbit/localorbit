@@ -123,7 +123,7 @@
         <label>Cross Selling</label><br>
         <%= f.check_box :allow_cross_sell %>
         <%= f.label :allow_cross_sell, "Allow Cross Selling" %>
-        <span class="tooltip" data-tooltip="This feature applies to the Grow and Automate plans.  Check this box to allow cross selling between your markets."></span>
+        <span class="tooltip" data-tooltip="This feature applies to the Grow and Accelerate plans.  Check this box to allow cross selling between your markets."></span>
           </div<%- if @market.new_record? or FeatureAccess.sellers_edit_orders_feature_available?(market: @market) %>><div
           class="field column column--half column--guttered">
             <label>Deliveries</label><br>
@@ -196,7 +196,7 @@
         <% end %>
       </div>
     </div>
-  <% end %>  
+  <% end %>
   <% if current_user.admin? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">

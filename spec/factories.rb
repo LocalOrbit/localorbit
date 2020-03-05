@@ -334,7 +334,6 @@ FactoryBot.define do
 
     payment_method   "purchase order"
     payment_status   "unpaid"
-    order_type       "sales"
 
     total_cost       100.99
 
@@ -382,7 +381,6 @@ FactoryBot.define do
     display_twitter       false
     display_facebook      false
     active                true
-    payment_model         'buysell'
 
     trait :admin do
       org_type Organization::TYPE_ADMIN
@@ -518,8 +516,8 @@ FactoryBot.define do
       stripe_id 'GROW'
     end
 
-    trait :automate do
-      name "Automate"
+    trait :accelerate do
+      name "Accelerate"
       discount_codes     true
       cross_selling      true
       custom_branding    true
@@ -530,23 +528,7 @@ FactoryBot.define do
       order_printables   true
       packing_labels     true
       sellers_edit_orders     true
-      stripe_id 'AUTOMATE'
-    end
-
-    trait :localeyes do
-      name "LocalEyes"
-      discount_codes     true
-      cross_selling      true
-      custom_branding    true
-      automatic_payments false
-      advanced_pricing   false
-      advanced_inventory false
-      promotions         false
-      order_printables   true
-      packing_labels     true
-      sellers_edit_orders     false
-      has_procurement_managers true
-      stripe_id 'LOCALEYES'
+      stripe_id 'ACCELERATE'
     end
   end
 

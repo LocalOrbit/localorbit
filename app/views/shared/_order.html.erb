@@ -9,7 +9,7 @@
   <div style="display: inline-block; width: 100%">
     <input type="hidden" name="commit" />
     <div style="float: left">
-      <h1>Order info for <%= order.purchase_order? ? "Purchase Order " : "" %><%= order.order_number %></h1>
+      <h1>Order info for <%= order.order_number %></h1>
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
     <div class="button-bar" style="float: right">
@@ -69,7 +69,6 @@
       </div>
     </div>
     <div style="float: left; margin-right: 50px">
-    <% if order.sales_order? %>
       <h2>Financial Summary</h2>
       <table class="order-totals-table">
         <tbody>
@@ -139,25 +138,18 @@
       <% if FeatureAccess.can_edit_order?(user: current_user, order: order) && order.payment_method=="purchase order" && order.payment_status == "unpaid" # is this how it should be for quantities too? %>
           <a href="#creditEdit" class="btn btn--small btn--primary modal-toggle app-edit-credit-modal-button"><%= order.credit_amount > 0 ? "Modify" : "Add" %> Credit</a></td>
       <% end %>
-    <% end %>
     </div>
     <div class="order-info-status-section" style="float: left">
       <h2>Payment Status</h2>
       <table class="order-info-status">
         <tbody>
-        <% if order.purchase_order? %>
-            <tr>
-              <th scope="row">Sold Through ?</th>
-              <td><%= order.sold_through ? 'Yes&nbsp;<i style="color: #559955" class="fa fa-check"></i>'.html_safe : 'No' %></td>
-            </tr>
-        <% end %>
         <tr>
           <th scope="row">Payment Method: </th>
           <td><%= order.display_payment_method %></td>
         </tr>
         <% if (order.payment_method == "invoice" || order.payment_method == "purchase order" || order.payment_method == "po" || order.payment_method == "check") %>
         <tr>
-          <th scope="row"><%= order.sales_order? ? 'Payment Ref. #' : 'Supplier Inv. #' %></th>
+          <th scope="row">Payment Ref. #</th>
           <td><%= order.payment_note %></td>
         </tr>
         <% end %>
@@ -165,12 +157,10 @@
           <th scope="row">Delivery Status: </th>
           <td><%= order.delivery_status_for_user(current_user).titleize %></td>
         </tr>
-        <% if order.sales_order? %>
         <tr>
           <th scope="row">Buyer Payment: </th>
           <td><%= order.buyer_payment_status.titleize %><%= order.buyer_payment_invoice_status %></td>
         </tr>
-        <% end %>
         </tbody>
       </table>
       <% if order.payment_method=="purchase order" && !order.invoiced_at.nil? %>
@@ -188,10 +178,6 @@
         <tr>
           <th>Product Name</th>
           <th>Quantity</th>
-          <% if order.purchase_order? %>
-          <th>Lot</th>
-          <th>Delivery</th>
-          <% end %>
           <th>Product Code</th>
           <th>Price</th>
           <th>Total</th>
@@ -285,9 +271,7 @@
                 useTemplates: FeatureAccess.order_templates?(market: current_market),
                 supplierId: nil,
                 orderId: order.id,
-                purchaseOrder: order.order_type == 'purchase',
-                salesOrder: order.order_type == 'sales',
-                currentSupplier: order.order_type == 'purchase' ? order.sellers[0].id : nil,
+                currentSupplier: nil,
             }) %>
           </div>
         </div>

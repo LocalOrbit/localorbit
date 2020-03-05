@@ -22,7 +22,6 @@
       var order_qty_header;
       var whowherewhy;
       var img;
-      var committed_count;
       var cmt;
 
 

@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   include ActiveSupport::NumberHelper
-  before_action :set_order_type, only: [:purchase, :index]
   before_action :check_order_id, only: [:purchase, :index]
   before_action :require_current_supplier, only: [:purchase]
   before_action :require_selected_market
@@ -77,14 +76,5 @@ class ProductsController < ApplicationController
 
   def load_products
     @products_for_sale = ProductsForSale.new(current_delivery, current_organization, current_cart, request.query_parameters, product_id: params[:id])
-  end
-
-  def set_order_type
-    @order_type = case params[:action]
-      when 'index' then 'sales'
-      else params[:action]
-    end
-
-    session[:order_type] = @order_type unless session[:order_type] == @order_type
   end
 end

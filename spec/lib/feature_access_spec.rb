@@ -13,19 +13,9 @@ describe FeatureAccess do
   let(:user)                   { create(:user, :buyer, organizations: [buyer]) }
   let(:admin)                  { create(:user, :admin) }
   let(:market_manager)         { create(:user, :market_manager, managed_markets: [market]) }
-  let(:localeyes_plan)         { create(:plan, :localeyes) }
-  let(:localeyes_market_org)   { create(:organization, :market, plan: localeyes_plan)}
-  let(:localeyes_market)       { create(:market, :with_delivery_schedule, :with_address, organization: localeyes_market_org) }
 
   before do
     user.markets << market
-  end
-
-  describe ".order_templates?" do
-    it "only returns true if the market belongs to the localeyes plan" do
-      expect(FeatureAccess.order_templates?(market: market)).to eq false
-      expect(FeatureAccess.order_templates?(market: localeyes_market)).to eq true
-    end
   end
 
   describe ".order_printables?" do
@@ -692,12 +682,5 @@ describe FeatureAccess do
         expect(subject.has_procurement_managers?(market: market)).to eq false
       end
     end
-
-    context "LocalEyes Plan" do
-      it "returns true" do
-        expect(subject.has_procurement_managers?(market: localeyes_market)).to eq true
-      end
-    end
-
   end
 end

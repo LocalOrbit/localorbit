@@ -43,9 +43,7 @@ describe PaymentProvider::Stripe do
         user: params[:user],
         order_params: params[:order_params],
         cart: params[:cart],
-        request: params[:request],
-        holdover: false,
-        repack: false
+        request: params[:request]
       )
 
       described_class.place_order(params)

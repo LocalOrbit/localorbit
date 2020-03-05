@@ -16,11 +16,7 @@ module Api
           user_type = nil
 
           if current_user.admin_or_mm?
-            if current_market.organization.plan.name == 'LocalEyes'
-              user_type = "P"
-            else
-              user_type = "M"
-            end
+            user_type = "M"
           elsif current_user.seller?
             user_type = "S"
           elsif !current_user.admin_or_mm? && current_user.buyer_only?

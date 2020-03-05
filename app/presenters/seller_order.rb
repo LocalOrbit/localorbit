@@ -12,10 +12,6 @@ class SellerOrder
     :sellers,
     :errors,
     :signature_data,
-    :order_type,
-    :sales_order?,
-    :purchase_order?,
-    :sold_through,
     to: :@order
 
   attr_reader :seller

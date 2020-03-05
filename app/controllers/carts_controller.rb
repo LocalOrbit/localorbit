@@ -8,18 +8,16 @@ class CartsController < ApplicationController
   before_action :set_payment_provider
 
   def show
-    @order_type = session[:order_type]
     respond_to do |format|
       format.html do
         errors ||= []
         if current_cart.items.empty?
           target = 'products'
-          target += '_purchase' if @order_type == 'purchase'
 
           redirect_to [target.to_sym], alert: "Your cart is empty. Please add items to your cart before checking out."
         else
           current_cart.items.each do |item|
-            invalid = Inventory::Utils.validate_qty(item, @order_type, current_market, current_organization, current_delivery)
+            invalid = Inventory::Utils.validate_qty(item, current_market, current_organization, current_delivery)
             errors << invalid if invalid
 
             if invalid then
@@ -52,11 +50,6 @@ class CartsController < ApplicationController
 
   def update
     order = !params[:order_id].nil? ? Order.find(params[:order_id]) : nil
-    if order.nil?
-      @order_type = session[:order_type]
-    else
-      @order_type = order.order_type
-    end
     product = Product.includes(:prices).find(params[:product_id])
 
     @item = current_cart.items.find_or_initialize_by(product_id: product.id)
@@ -70,7 +63,7 @@ class CartsController < ApplicationController
       @item.fee = params[:fee_type]
       @item.product = product
 
-      invalid_qty = Inventory::Utils.validate_qty(@item, @order_type, current_market, current_organization, current_delivery)
+      invalid_qty = Inventory::Utils.validate_qty(@item, current_market, current_organization, current_delivery)
       if !invalid_qty.nil?
         @error = invalid_qty[:error_msg]
         @item.quantity = invalid_qty[:actual_count]

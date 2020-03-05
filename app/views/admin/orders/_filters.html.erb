@@ -1,5 +1,5 @@
 <% # KXM GC: order filters will have to account for order status and sales/purchase types %>
-  <%= search_form_for @q, url: @order_type == 'sales' ? admin_orders_path : admin_purchase_orders_path, html: { class: "order_search clear-after" } do |f| %>
+  <%= search_form_for @q, url: admin_orders_path, html: { class: "order_search clear-after" } do |f| %>
     <div class="row">
       <div class="column column--two-thirds column--guttered">
         <div class="pull-left order-search-widget mobile-block">
@@ -57,7 +57,7 @@
       <div class="column column--fourth column--guttered">
         <div class="pull-right" style="margin-top: 45px">
           <%= f.submit "Search", class: "btn--small" %>
-          <%= link_to "Reset", @order_type == 'sales' ? admin_orders_path(clear: '') : admin_purchase_orders_path(clear:''), class: 'btn reset' if can_reset?(@query_params) %>
+          <%= link_to "Reset", admin_orders_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
         </div>
       </div>
     </div>

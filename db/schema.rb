@@ -718,12 +718,12 @@ ActiveRecord::Schema.define(version: 20200303095412) do
     t.string   "invoice_pdf_name"
     t.string   "payment_provider"
     t.decimal  "market_seller_fee_pct",     precision: 5,  scale: 3
-    t.string   "order_type",                                         default: "sales", null: false
-    t.string   "payment_model"
-    t.boolean  "sold_through"
     t.text     "signature_data"
     t.string   "receipt_pdf_uid"
     t.string   "receipt_pdf_name"
+    t.boolean  "sold_through"
+    t.string   "payment_model"
+    t.string   "order_type"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -758,18 +758,18 @@ ActiveRecord::Schema.define(version: 20200303095412) do
     t.string   "org_type"
     t.integer  "plan_id"
     t.datetime "plan_start_at"
-    t.integer  "plan_interval",                                        default: 1,         null: false
-    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,       null: false
+    t.integer  "plan_interval",                                        default: 1,     null: false
+    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
     t.boolean  "subscribed",                                           default: false
     t.string   "subscription_id"
     t.string   "payment_provider"
     t.string   "subscription_status"
-    t.string   "payment_model",                                        default: "buysell"
     t.string   "contact_first_name"
     t.string   "contact_last_name"
     t.string   "contact_email"
     t.text     "notes"
+    t.string   "payment_model"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree

@@ -31,8 +31,6 @@ class OrderItem < ActiveRecord::Base
 
   scope :delivered,       -> { where(delivery_status: "delivered") }
   scope :undelivered,     -> { where(delivery_status: "pending") }
-  scope :sales_orders,    -> { where(orders: {order_type: 'sales'}) }
-  scope :purchase_orders, -> { where(orders: {order_type: 'purchase'}) }
 
   has_one :seller, through: :product, class_name: Organization
 
@@ -72,8 +70,6 @@ class OrderItem < ActiveRecord::Base
       fee: !item.fee.nil? ? item.fee : 0,
       seller_name: item.product.organization.name,
       delivery_status: "pending",
-      po_lot_id: !item.lot_id.nil? && item.lot_id > 0 ? item.lot_id : nil,
-      po_ct_id: !item.ct_id.nil? && item.ct_id > 0 ? item.ct_id : nil,
     )
   end
 
@@ -148,7 +144,7 @@ class OrderItem < ActiveRecord::Base
   private
 
   def consume_inventory
-    if !order.nil? && order.sales_order?
+    if !order.nil?
       if order
         market_id = order.market.id
         organization_id = order.organization.id
@@ -258,7 +254,7 @@ class OrderItem < ActiveRecord::Base
 
   def update_consumed_inventory
     quantity_remaining = nil
-    if !order.nil? && order.sales_order?
+    if !order.nil?
       if persisted? && quantity_changed?
         quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
 
