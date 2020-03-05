@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200303095412) do
+ActiveRecord::Schema.define(version: 20200304230406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -721,9 +721,6 @@ ActiveRecord::Schema.define(version: 20200303095412) do
     t.text     "signature_data"
     t.string   "receipt_pdf_uid"
     t.string   "receipt_pdf_name"
-    t.boolean  "sold_through"
-    t.string   "payment_model"
-    t.string   "order_type"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -769,7 +766,6 @@ ActiveRecord::Schema.define(version: 20200303095412) do
     t.string   "contact_last_name"
     t.string   "contact_email"
     t.text     "notes"
-    t.string   "payment_model"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
