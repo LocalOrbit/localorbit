@@ -4,7 +4,6 @@ class OrderItemLot < ActiveRecord::Base
   belongs_to :lot
 
   before_destroy :return_inventory_to_lot
-  before_create :check_po
 
   def number
     lot.number

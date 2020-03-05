@@ -11,6 +11,8 @@ class GeneralProduct < ActiveRecord::Base
 
   has_many :product
 
+  attr_accessor :skip_validation
+
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end
