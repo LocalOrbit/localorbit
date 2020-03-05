@@ -666,21 +666,4 @@ describe FeatureAccess do
     end
 
   end
-
-  describe ".has_procurement_managers?" do
-    context "Market has no Plan" do
-      before do
-        market.update_column :plan_id, nil
-      end
-      it "returns false" do
-        expect(subject.has_procurement_managers?(market: market)).to eq false
-      end
-    end
-
-    context "Grow Plan" do
-      it "returns false" do
-        expect(subject.has_procurement_managers?(market: market)).to eq false
-      end
-    end
-  end
 end
