@@ -256,7 +256,7 @@
                 deliveryDate: order.delivery.buyer_deliver_on,
                 orderCutoff: order.delivery.cutoff_time,
                 buyerInfo: order.organization.name,
-                useTemplates: FeatureAccess.order_templates?(market: current_market),
+                useTemplates: false,
                 supplierId: nil,
                 orderId: order.id
             }) %>
@@ -268,7 +268,7 @@
                 orderCutoff: order.delivery.cutoff_time,
                 buyerInfo: order.organization.name,
                 limit: 10,
-                useTemplates: FeatureAccess.order_templates?(market: current_market),
+                useTemplates: false,
                 supplierId: nil,
                 orderId: order.id,
                 currentSupplier: nil,

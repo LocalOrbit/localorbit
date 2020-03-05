@@ -2,11 +2,6 @@
 
 (function() {
   var ProductRow = React.createClass({
-    propTypes: {
-        purchaseOrder: React.PropTypes.bool,
-        salesOrder: React.PropTypes.bool
-    },
-
     mixins: [window.lo.ProductRowMixin],
 
     render: function() {
@@ -48,12 +43,12 @@
         fontWeight: "bold",
         fontSize: "11px"
       }}>
-        {(this.props.purchaseOrder) ? "" : "Total Cost"}
+        Total Cost
       </th>);
 
 
       unit_prices = _.map(gp.available, function(p) {
-        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder} salesOrder={self.props.salesOrder} /> });
+        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} /> });
 
 
 
