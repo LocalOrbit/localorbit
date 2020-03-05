@@ -1,0 +1,8 @@
+product_code,name,category,price
+abc123,St. John's Wart,Herbs,1.23,2/3 lb tub
+      ,St. John's Wart,Herbs,1.23,2/3 lb tub
+abc123,               ,Herbs,1.23,2/3 lb tub
+abc123,St. John's Wart,     ,1.23,2/3 lb tub
+abc123,St. John's Wart,Herbs,    ,2/3 lb tub
+abc123,St. John's Wart,Herbs,1.23,
+abc123,St. John's Wart,Herbs,dolla,2/3 lb tub
