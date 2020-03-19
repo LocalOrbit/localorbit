@@ -4,13 +4,15 @@ Because we are using a wildcard cert we [cannot use Heroku's own automated
 cert renewal](https://devcenter.heroku.com/articles/automated-certificate-management#providing-your-own-tls-certificate).
 
 Our DNS provider is [DNSMadeEasy](https://cp.dnsmadeeasy.com/login), get the
-credentials from Weston or Rob.
+credentials from Rob.
 
 Can see all certs, their expiries, and learn their heroku names with:
 
     heroku certs -a localorbit-staging
 
 There are [docs for the DNSMadeEasy letencrypt api options](https://github.com/Neilpang/acme.sh/tree/dev/dnsapi#9-use-dnsmadeeasy-domain-api), but you can just follow the specific instructions below.
+
+Note, if you have trouble you can always [do it manually](https://github.com/acmesh-official/acme.sh/wiki/DNS-manual-mode).
 
 ## To update staging certs
 
