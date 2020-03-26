@@ -306,6 +306,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_market_open
+    return if current_user.try(:market_manager?)
     render "shared/market_closed" if current_market.closed? && session[:order_id].nil?
   end
 
