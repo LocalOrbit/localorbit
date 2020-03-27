@@ -1,6 +1,12 @@
-csv << ["Buyer Fulfillment Date",
-        "Buyer Fulfillment Method",
-        "Buyer Fulfillment Location",
+csv << ["Delivery Date",
+        "Delivery Method",
+        "Delivery Address Label",
+        "Delivery Address",
+        "Delivery City",
+        "Delivery State",
+        "Delivery Zip",
+        "Delivery Phone",
+        "Billing Phone",
         "Buyer",
         "Item",
         "Quantity",
@@ -9,17 +15,16 @@ csv << ["Buyer Fulfillment Date",
 
 @load_lists.each_with_index do |load_list, index|
   load_list.order_items.each do |order_item|
-    location = if load_list.buyer_pickup?
-      load_list.buyer_delivery_location_label + ', ' + load_list.buyer_pickup_location.address + ', ' +
-        load_list.buyer_pickup_location.city + ', ' + load_list.buyer_pickup_location.state + ' ' + load_list.buyer_pickup_location.zip
-    else
-      order_item.order.delivery_address + ', ' + order_item.order.delivery_city + ', ' + order_item.order.delivery_state + ' ' + order_item.order.delivery_zip
-    end
-
     csv << [
       load_list.delivery.get_buyer_deliver_on,
       load_list.buyer_delivery_method,
-      location,
+      load_list.buyer_pickup? ? load_list.buyer_delivery_location_label : '',
+      load_list.buyer_pickup? ? load_list.buyer_pickup_location.address : order_item.order.delivery_address,
+      load_list.buyer_pickup? ? load_list.buyer_pickup_location.city : order_item.order.delivery_city,
+      load_list.buyer_pickup? ? load_list.buyer_pickup_location.state : order_item.order.delivery_state,
+      load_list.buyer_pickup? ? load_list.buyer_pickup_location.zip : order_item.order.delivery_zip,
+      order_item.order.delivery_phone,
+      order_item.order.billing_phone,
       order_item.order.organization.name,
       order_item.name,
       order_item.quantity,
