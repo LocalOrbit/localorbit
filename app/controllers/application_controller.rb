@@ -72,8 +72,6 @@ class ApplicationController < ActionController::Base
       return @current_organization
     end
 
-    return current_market.organization if current_market.try(:is_consignment_market?) && session[:order_type] == 'purchase'
-
     if @current_organization && (@last_organization_market == current_market || @current_organization.all_markets.include?(current_market))
       @last_organization_market = current_market
       return @current_organization
@@ -298,11 +296,6 @@ class ApplicationController < ActionController::Base
     elsif current_organization.locations.visible.default_shipping.nil? || current_organization.locations.visible.default_billing.nil?
       redirect_to [:admin, current_organization, :locations], alert: "You must select a default billing and shipping address for this organization before you can shop"
     end
-  end
-
-  def require_manual_delivery_schedule
-    return unless current_market.is_consignment_market? && current_market.delivery_schedules.manual.none?
-    redirect_to [:new_admin, current_market, :delivery_schedule], alert: "You must enter a manual delivery schedule before you can purchase"
   end
 
   def require_market_open

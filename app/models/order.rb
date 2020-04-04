@@ -12,8 +12,7 @@ class Order < ActiveRecord::Base
 
   PAYMENT_STATUSES = {
       "unpaid" => "Unpaid",
-      "paid" => "Paid",
-      "exported" => "Exported to QBO"
+      "paid" => "Paid"
   }.freeze
 
   BATCH_PO_ACTIONS = {
@@ -109,17 +108,9 @@ class Order < ActiveRecord::Base
   scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
   scope :clean_payment_records, -> { where(arel_table[:placed_at].gt(Time.parse("2014-01-01"))) }
   scope :for_seller, -> (user) { orders_for_seller(user) }
-  scope :on_automate_plan, -> { joins(market: [organization: :plan]).where(plans: {name: 'Automate'}) }
-  scope :not_on_automate_plan, -> { joins(market: [organization: :plan]).where.not(plans: {name: 'Automate'}) }
-  scope :so_orders, -> { where(order_type: 'sales')}
-  scope :po_orders, -> { where(order_type: 'purchase')}
 
   scope :stripe,       -> { where(payment_provider: PaymentProvider::Stripe.id.to_s) }
   scope :not_stripe,   -> { where.not(payment_provider: PaymentProvider::Stripe.id.to_s) }
-
-  scope :po, -> {visible.where(order_type: "purchase")}
-  scope :sold_through, -> {visible.where(sold_through: true)}
-  scope :not_sold_through, -> {visible.where("sold_through IS NULL OR sold_through IS false")}
 
   scope :placed_between, lambda {|range| visible.where(placed_at: range) }
 
@@ -239,16 +230,6 @@ class Order < ActiveRecord::Base
     else
       # where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq #.where(market_id: user.markets)
       where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
-    end
-  end
-
-  def self.orders_for_consignment_seller(user)
-    if user.admin?
-      all
-    else
-      # TODO: check cross selling logic
-      #joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq
-      includes(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
     end
   end
 
@@ -425,18 +406,12 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def is_localeyes_order?
-    market.organization.plan.has_procurement_managers
-  end
-
   def update_total_cost
     cost = gross_total
     if credit && credit.apply_to == "subtotal"
       cost = gross_total - credit_amount
     end
-    if market.is_buysell_market?
-      self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
-    end
+    self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
     self.total_cost    = calculate_total_cost(cost).round(2)
   end
 
@@ -446,14 +421,6 @@ class Order < ActiveRecord::Base
       oi.payment_status = "unpaid"
     end
     save!
-  end
-
-  def sales_order?
-    order_type == 'sales'
-  end
-
-  def purchase_order?
-    order_type == 'purchase'
   end
 
   private
@@ -475,7 +442,6 @@ class Order < ActiveRecord::Base
   def update_payment_status
     statuses = items.map(&:payment_status).uniq
     self.payment_status = "refunded" if statuses == ["refunded"]
-    self.payment_status = "exported" if !qb_ref_id.nil?
   end
 
   def update_order_item_payment_status

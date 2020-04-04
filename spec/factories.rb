@@ -334,7 +334,6 @@ FactoryBot.define do
 
     payment_method   "purchase order"
     payment_status   "unpaid"
-    order_type       "sales"
 
     total_cost       100.99
 
@@ -345,24 +344,6 @@ FactoryBot.define do
     trait :with_items do
       before(:create) do |order|
         order.items = create_list(:order_item, 1, product: create(:product, :sellable))
-      end
-    end
-
-    trait :consignment_po do
-      order_type       "purchase"
-      after(:create) do |order|
-        order.items.each do |item|
-          create(:consignment_transaction, order_id: order.id, transaction_type: 'PO', order_item_id: item.id, product_id: item.product.id, quantity: item.quantity)
-        end
-      end
-    end
-
-    trait :consignment_so do
-      order_type       "sales"
-      after(:create) do |order|
-        order.items.each do |item|
-          create(:consignment_transaction, order_id: order.id, transaction_type: 'SO', order_item_id: item.id, product_id: item.product.id, quantity: item.quantity, sale_price: item.sale_price, net_price: item.net_price)
-        end
       end
     end
   end
@@ -400,7 +381,6 @@ FactoryBot.define do
     display_twitter       false
     display_facebook      false
     active                true
-    payment_model         'buysell'
 
     trait :admin do
       org_type Organization::TYPE_ADMIN
@@ -536,8 +516,8 @@ FactoryBot.define do
       stripe_id 'GROW'
     end
 
-    trait :automate do
-      name "Automate"
+    trait :accelerate do
+      name "Accelerate"
       discount_codes     true
       cross_selling      true
       custom_branding    true
@@ -548,23 +528,7 @@ FactoryBot.define do
       order_printables   true
       packing_labels     true
       sellers_edit_orders     true
-      stripe_id 'AUTOMATE'
-    end
-
-    trait :localeyes do
-      name "LocalEyes"
-      discount_codes     true
-      cross_selling      true
-      custom_branding    true
-      automatic_payments false
-      advanced_pricing   false
-      advanced_inventory false
-      promotions         false
-      order_printables   true
-      packing_labels     true
-      sellers_edit_orders     false
-      has_procurement_managers true
-      stripe_id 'LOCALEYES'
+      stripe_id 'ACCELERATE'
     end
   end
 
@@ -781,9 +745,4 @@ FactoryBot.define do
     user
     delivery
   end
-
-  factory :consignment_transaction do
-
-  end
-
 end

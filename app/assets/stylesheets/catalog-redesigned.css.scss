@@ -260,9 +260,6 @@
     top: 0;
   }
 }
-.product-listing.mobile{
-  // display:none !important;
-}
 
 .featured-product{
   margin: 0;
@@ -270,16 +267,6 @@
   border-radius: 4px;
   padding: 20px 20px 24px;
   border: 1px solid #E0E0E0;
-}
-
-.committed-table {
-  thead th {
-    font-size: 10pt;
-  }
-  tbody td {
-    font-size: 10pt;
-    color: #333
-  }
 }
 
 @media (max-width: 786px) {

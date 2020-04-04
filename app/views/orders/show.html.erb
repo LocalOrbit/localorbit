@@ -1,2 +1,2 @@
-<%= link_to "< Return to Purchase History", send(@order.order_type == 'purchase' ? 'purchase_order_path' : 'order_path'), class: "redundant-nav" %>
+<%= link_to "< Return to Purchase History", send('order_path'), class: "redundant-nav" %>
 <%= render "shared/order", {order: @order} %>

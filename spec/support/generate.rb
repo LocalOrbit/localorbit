@@ -11,7 +11,7 @@ module Generate
     paid_with = opts[:paid_with]
     delivered = opts[:delivered]
     num_order_items = opts[:items] || 1
-    plan_sym = opts[:plan] || :automate
+    plan_sym = opts[:plan] || :accelerate
     num_market_bank_accounts = opts[:num_market_bank_accounts] || 1
     delivery_fee_percent = opts[:delivery_fee_percent] || 0
 

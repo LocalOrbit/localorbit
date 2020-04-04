@@ -37,8 +37,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # Hoping that this is the embryo of a RESTful API for future development in
-  # the app, especially LocalEyes features.
   namespace :api do
     namespace :v1 do
       resources :orders, only: [] do
@@ -49,9 +47,6 @@ Rails.application.routes.draw do
       resources :order_templates, only: [:index, :create, :destroy]
       resources :dashboards, only: [:index]
     end
-    # namespace :v2 do
-    #   resources :products
-    # end
   end
 
   get "update_organizations" => "admin#update_organizations"
@@ -72,14 +67,6 @@ Rails.application.routes.draw do
       resources :category_fees, only: [:index, :new, :create, :destroy]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
-      resource :qb_profile, controller: :market_qb_profile do
-        collection do
-          get :authenticate
-          get :oauth_callback
-          get :sync
-          get :disconnect
-        end
-      end
       resources :storage_locations, controller: :market_storage_locations
       get :payment_options
       patch :toggle_self_enabled_cross_sell
@@ -125,10 +112,8 @@ Rails.application.routes.draw do
 
       scope path: :admin do
         resources :market_payments,  only: [:index, :create]
-        resources :automate_market_payments,  only: [:index, :create]
         resources :service_payments, only: [:index, :create]
         resources :lo_payments,      only: [:index, :create]
-        resources :automate_seller_payments,  only: [:index, :create]
       end
     end
 
@@ -141,12 +126,6 @@ Rails.application.routes.draw do
         get :progress
       end
     end
-
-    get "purchase_orders" => "orders#purchase_orders"
-    resources :purchase_orders, only: [:show], :path => "purchase_order", :as => "purchase_order", :controller => 'orders'
-
-    get "/sales_orders" => "orders#index", :path => "sales_orders", :as => "sales_orders"
-    resources :sales_orders, only: [:show, :update, :create], :path => "sales_order", :as => "sales_order", :controller => 'orders'
 
     resources :organizations, concerns: [:bank_account, :activatable] do
       resources :organization_users, as: :users, path: :users do
@@ -201,16 +180,9 @@ Rails.application.routes.draw do
         end
       end
       collection do
-        post :split
-        post :undo_split
         get :update_supplier_products
       end
     end
-
-    resources :consignment_transactions
-
-    get "consignment_inventory" => "consignment_inventory#index"
-    put "consignment_inventory" => "consignment_inventory#update"
 
     resources :order_items, only: [:index, :update], path: :sold_items do
       collection do
@@ -246,21 +218,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :batch_consignment_printables, only: :show do
-      member do
-        get :progress
-      end
-    end
-
     resources :activities, only: :index
     resources :categories, only: [:index, :show, :new, :create], path: :taxonomy
     resource :unit_request, only: :create
     resource :category_request, only: :create
 
     resources :reports, only: [:index, :show]
-
-    resources :consignment_partial_po_report, only: [:show]
-    resources :consignment_qb_report, only: [:show]
 
     resources :metrics, only: [:index, :show] do
       collection do
@@ -318,12 +281,6 @@ Rails.application.routes.draw do
     resources :table_tents_and_posters, :controller=>"table_tents_and_posters", only: [:index, :show, :create]
 
   end
-
-  get "/purchase_orders" => "orders#purchase_orders"
-  resources :purchase_orders, only: [:show], :path => "purchase_order", :as => "purchase_order", :controller => 'orders'
-
-  get "/sales_orders" => "orders#index", :path => "sales_orders", :as => "sales_orders"
-  resources :sales_orders, only: [:show, :update, :create], :path => "sales_order", :as => "sales_order", :controller => 'orders'
 
   resource :registration, only: [:show, :create]
 

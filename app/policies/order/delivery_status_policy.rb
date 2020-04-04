@@ -13,13 +13,7 @@ class Order::DeliveryStatusPolicy
   end
 
   def mark_undelivered?
-    if order.market.is_buysell_market?
-      !order.undelivered_for_user?(user) && user.can_manage_market?(order.market)
-    else
-      user.can_manage_market?(order.market) &&
-        (order.delivery_status == 'delivered' || order.delivery_status == 'partially delivered') &&
-          Inventory::Utils.consignment_can_undeliver?(order)
-    end
+    !order.undelivered_for_user?(user) && user.can_manage_market?(order.market)
   end
 
   private

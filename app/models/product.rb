@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
   default_scope { includes(:general_product) }
 
   # transient properties for conveniently adding sibling (product) units
-  attr_accessor :sibling_id, :sibling_name, :sibling_short_description, :sibling_long_description, :sibling_organic, :sibling_unit_id, :sibling_unit_description, :sibling_product_code, :sibling_unit_quantity, :skip_validation, :consignment_market
+  attr_accessor :sibling_id, :sibling_name, :sibling_short_description, :sibling_long_description, :sibling_organic, :sibling_unit_id, :sibling_unit_description, :sibling_product_code, :sibling_unit_quantity, :skip_validation
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("organization_id, market_id, expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
@@ -40,8 +40,6 @@ class Product < ActiveRecord::Base
   has_many :cross_selling_list_products
   has_many :cross_selling_lists, through: :cross_selling_list_products
 
-  # p.parent_product.orders.includes(:items).po.not_sold_through.map{|o| [o.id, o.items.where('product_id = ?', p.parent_product.id).map{|i| i.quantity}]}
-
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end
@@ -55,7 +53,7 @@ class Product < ActiveRecord::Base
   validates :unit, presence: true
   validates :category_id, presence: true
   validates :organization_id, presence: true
-  validates :short_description, presence: true, length: {maximum: 50}, :unless => :consignment_market
+  validates :short_description, presence: true, length: {maximum: 50}
   validates :long_description, length: {maximum: 500}
 
   validates :location, presence: true, if: :overrides_organization?, :unless => :skip_validation
@@ -363,75 +361,6 @@ class Product < ActiveRecord::Base
     joins(arel_table.create_join(Lot.arel_table, join_on))
   end
 
-  def self.with_available_so_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
-    lot_table = Lot.arel_table
-
-    lot_join_cond = arel_table[:id].eq(lot_table[:product_id]).
-        and(lot_table[:good_from].eq(nil).or(lot_table[:good_from].lt(deliver_on_date))).
-        and(lot_table[:expires_at].eq(nil).or(lot_table[:expires_at].gt(deliver_on_date))).
-        and(lot_table[:quantity].gt(0)).
-        and(lot_table[:number].not_eq(nil)).
-        and(lot_table[:market_id].eq(nil).or(lot_table[:market_id].eq(market_id))).
-        and(lot_table[:organization_id].eq(nil).or(lot_table[:organization_id].eq(organization_id)))
-    lot_join_on = arel_table.create_on(lot_join_cond)
-
-    joins(arel_table.create_join(Lot.arel_table, lot_join_on))
-  end
-
-  def self.with_pending_so_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
-    lot_table = Lot.arel_table
-
-    lot_join_cond = arel_table[:id].eq(lot_table[:product_id]).
-        and(lot_table[:good_from].eq(nil).or(lot_table[:good_from].lt(deliver_on_date))).
-        and(lot_table[:expires_at].eq(nil).or(lot_table[:expires_at].gt(deliver_on_date))).
-        and(lot_table[:quantity].eq(0)).
-        and(lot_table[:number].not_eq(nil)).
-        and(lot_table[:market_id].eq(nil).or(lot_table[:market_id].eq(market_id))).
-        and(lot_table[:organization_id].eq(nil).or(lot_table[:organization_id].eq(organization_id)))
-    lot_join_on = arel_table.create_on(lot_join_cond)
-
-    order_item_lot_table = OrderItemLot.arel_table
-
-    order_item_lot_join_cond = lot_table[:id].eq(order_item_lot_table[:lot_id])
-    order_item_lot_join_on = order_item_lot_table.create_on(order_item_lot_join_cond)
-
-    order_item_table = OrderItem.arel_table
-
-    order_item_join_cond = order_item_lot_table[:order_item_id].eq(order_item_table[:id]).
-        and(order_item_table[:delivery_status].eq('pending'))
-    order_item_join_on = order_item_table.create_on(order_item_join_cond)
-
-    joins(arel_table.create_join(Lot.arel_table, lot_join_on)).
-    joins(arel_table.create_join(OrderItemLot.arel_table, order_item_lot_join_on)).
-    joins(arel_table.create_join(OrderItem.arel_table, order_item_join_on))
-
-  end
-
-  def self.with_waiting_so_inventory
-
-    awaiting_delivery = ConsignmentTransaction
-                            .visible
-                            .joins("JOIN orders ON consignment_transactions.order_id = orders.id")
-                            .where("orders.delivery_status = 'pending' AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL AND consignment_transactions.market_id = ? AND consignment_transactions.product_id = ?", current_market.id, product.id).select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
-
-    ct_table = ConsignmentTransaction.visible.arel_table
-    order_table = Order.arel_table
-
-    ct_join_cond = arel_table[:id].eq(ct_table[:product_id]).
-      and(arel_table['markets.id'].eq(ct_table[:market_id]))
-    ct_join_on = arel_table.create_on(ct_join_cond)
-
-    order_join_cond = ct_table[:order_id].eq(order_table[:id])
-    order_join_on = ct_table.create_on(order_join_cond)
-
-    joins(arel_table.create_join(ConsignmentTransaction.visible.arel_table, ct_join_on)).
-    joins(arel_table.create_join(Order.arel_table, order_join_on))
-    .where(order_table[:delivery_status].eq("pending")
-    .and(ct_table[:transaction_type].eq("PO"))
-    .and(ct_table[:lot_id].eq(nil)))
-
-  end
-
   def can_use_simple_inventory?
     use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current.end_of_minute).exists?
   end
@@ -448,18 +377,15 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
-  def available_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil, lot_id=nil)
-    if lot_id.present? && lot_id > 0
-      qty = lots.find(lot_id).quantity
+  def available_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
+    if lots.loaded?
+      qty = lots.to_a.sum {|l| l.available_specific?(deliver_on_date, market_id, organization_id) ? l.quantity : 0 }
+      qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
     else
-      if lots.loaded?
-        qty = lots.to_a.sum {|l| l.available_specific?(deliver_on_date, market_id, organization_id) ? l.quantity : 0 }
-        qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
-      else
-        qty = lots.available_specific(deliver_on_date, market_id, organization_id).sum(:quantity)
-        qty += lots.available_general(deliver_on_date).sum(:quantity)
-      end
+      qty = lots.available_specific(deliver_on_date, market_id, organization_id).sum(:quantity)
+      qty += lots.available_general(deliver_on_date).sum(:quantity)
     end
+
     qty
   end
 
@@ -535,8 +461,6 @@ class Product < ActiveRecord::Base
   def ensure_product_has_a_general_product
     unless self.general_product
       self.general_product = GeneralProduct.new
-      self.general_product.consignment_market = self.consignment_market
-      self.general_product.sales_market = !self.consignment_market
       self.general_product.skip_validation = self.skip_validation
       self.general_product.use_all_deliveries = true
       self.general_product.product << self
@@ -545,8 +469,6 @@ class Product < ActiveRecord::Base
 
   def update_general_product
     ensure_product_has_a_general_product
-    self.general_product.consignment_market = self.consignment_market
-    self.general_product.sales_market = !self.consignment_market
     self.general_product.skip_validation = self.skip_validation
     self.general_product.save!
   end

@@ -1,3 +1,0 @@
-class MarketQuickbooksPolicy < ApplicationPolicy
-
-end

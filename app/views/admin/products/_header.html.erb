@@ -2,12 +2,10 @@
   <div class="l-constraint">
     <% if @product.persisted? %>
         <%= link_to "< Return to Products List", admin_products_path, class: "redundant-nav" %>
-        <% if current_market.is_buysell_market? %>
         <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, @product],
                     class: "delete product-header-delete font-icon",
                     data: {method: :delete, confirm: "Are you sure you want to permanently delete #{@product.plural_units_with_name}?"},
                     title: "Delete" %>
-        <% end %>
         <div class="l-page-header">
           <h1>Update <%= @product.name %></h1>
         </div>
@@ -22,18 +20,14 @@
       <ul class="tabs">
         <% if @product.persisted? %>
             <%= content_tag(:li, link_to_or_span("Product Info", [:admin, @product]), class: "completed tab") %>
-            <% if current_market.is_buysell_market? || (current_market.is_consignment_market? && policy(:lot).index?) %>
             <%= content_tag(:li, link_to_or_span("Inventory", [:admin, @product, :lots]),
                             id: 'product-inventory-nav', class: (inventory_tab_complete? ? 'completed tab' : 'tab')) %>
-            <% end %>
             <%= content_tag(:li, link_to_or_span("Pricing", [:admin, @product, :prices]),
                             id: 'product-pricing-nav', class: (pricing_tab_complete? ? 'completed tab' : 'tab')) %>
         <% else %>
             <li class="tab"><span>Product Info</span></li>
-            <% if current_market.is_buysell_market? %>
             <%= content_tag :li, raw('<span class="is-disabled" data-error="Save this product to add inventory.">Inventory</span>'),
                             id: 'product-inventory-nav', class: 'tab' %>
-            <% end %>
             <%= content_tag :li, raw('<span class="is-disabled" data-error="Save this product to add pricing.">Pricing</span>'),
                             id: 'product-pricing-nav', class: 'tab' %>
         <% end %>

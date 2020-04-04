@@ -14,9 +14,6 @@
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       supplierInfo: React.PropTypes.string,
-      purchaseOrder: React.PropTypes.bool,
-      salesOrder: React.PropTypes.bool,
-      consignmentMarket: React.PropTypes.bool,
       currentSupplier: React.PropTypes.number,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
@@ -54,14 +51,7 @@
             divStyle = ({});
         }
 
-        if (this.props.consignmentMarket)
-            stickFilters = ('stickable');
-        else
-            stickFilters = ('');
-
-        if(this.props.currentSupplier > 0 && this.props.purchaseOrder) {
-            window.lo.ProductActions.newFilters(null, this.props.currentSupplier);
-        }
+        stickFilters = ('');
 
         if (this.props.orderId > 0)
             productFilter = ('');
@@ -72,11 +62,9 @@
             orderCutoff={this.props.orderCutoff}
             buyerInfo={this.props.buyerInfo}
             supplierInfo={this.props.supplierInfo}
-            purchaseOrder={this.props.purchaseOrder}
             useTemplates={this.props.useTemplates}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
-            salesOrder={this.props.salesOrder}
             orderMinimum={this.props.orderMinimum}
             />);
 
@@ -87,12 +75,9 @@
             url={this.props.baseUrl + '/products'}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
-            purchaseOrder={this.props.purchaseOrder}
-            salesOrder={this.props.salesOrder}
-            consignmentMarket={this.props.consignmentMarket}
             supplierView={this.props.supplierView}
         />);
-        
+
         return (
         <div id='supplierCatalog' className={divClass} style={divStyle}>
           {orderTemplates}

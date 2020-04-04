@@ -17,8 +17,7 @@ class OrderHistoryPresenter
     audits = Audit.includes(:user, :masquerader).where("(associated_type = 'Order' AND associated_id = :order_id) OR
     (auditable_type = 'Order' AND auditable_id = :order_id) OR
     (auditable_type = 'Credit' AND auditable_id = :order_id) OR
-    (auditable_type = 'Payment' AND auditable_id IN (:payment_ids) OR
-    (auditable_type = 'ConsignmentTransaction' AND auditable_id = :order_id)
+    (auditable_type = 'Payment' AND auditable_id IN (:payment_ids)
     )",
       order_id: @order.id,
       payment_ids: @order.payment_ids

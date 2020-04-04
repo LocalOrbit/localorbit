@@ -41,11 +41,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def human_delivery_date
-    if object.delivery_schedule.market.is_consignment_market?
-      "#{buyer_display_date}"
-    else
-      "#{buyer_display_date} #{buyer_time_range}"
-    end
+    "#{buyer_display_date} #{buyer_time_range}"
   end
 
   def checkout_date

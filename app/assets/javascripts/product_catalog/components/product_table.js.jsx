@@ -9,10 +9,7 @@
   var ProductTable = React.createClass({
     propTypes: {
       url: React.PropTypes.string.isRequired,
-      cartUrl: React.PropTypes.string,
-      purchaseOrder: React.PropTypes.bool,
-      salesOrder: React.PropTypes.bool,
-      consignmentMarket: React.PropTypes.bool
+      cartUrl: React.PropTypes.string
     },
 
     getInitialState: function() {
@@ -62,43 +59,40 @@
 
     buildRow: function(product, isMobile, promo) {
         var addTopCategory=null, addSecondCategory=null;
-        if (!this.props.consignmentMarket) {
-            current_top_level_category = product.top_level_category_name;
-            if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
-                previous_top_level_category = current_top_level_category;
+        current_top_level_category = product.top_level_category_name;
+        if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
+            previous_top_level_category = current_top_level_category;
 
-                addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
-                isFirstTopCategory = false;
-            }
-            else
-                addTopCategory = null;
+            addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
+            isFirstTopCategory = false;
         }
+        else
+            addTopCategory = null;
 
-        if (!this.props.consignmentMarket) {
-            current_second_level_category = product.second_level_category_name;
-            if (previous_second_level_category != current_second_level_category || isFirstSecondCategory) {
-                previous_second_level_category = current_second_level_category;
+        current_second_level_category = product.second_level_category_name;
+        if (previous_second_level_category != current_second_level_category || isFirstSecondCategory) {
+            previous_second_level_category = current_second_level_category;
 
-                addSecondCategory = (<lo.ProductSecondCategoryRow category={current_second_level_category}/>);
-                isFirstSecondCategory = false;
-            }
-            else
-                addSecondCategory = null;
+            addSecondCategory = (<lo.ProductSecondCategoryRow category={current_second_level_category}/>);
+            isFirstSecondCategory = false;
         }
+        else
+            addSecondCategory = null;
+
         is_promo = (promo == product.id);
 
         if (isMobile) {
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
+                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} />
             </div> );
         }
         else {
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} />
             </div> );
         }
     },
@@ -111,7 +105,7 @@
 
       var isMobile = self.state.width <= MOBILE_WIDTH;
       var promo = null;
-      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly && this.props.salesOrder) {
+      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly) {
           promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={self.state.featuredPromotion} />)
       }
       var rows = self.state.products.map(function(product) {
@@ -124,9 +118,6 @@
 
       var fullWindow = !this.props.orderId;
       var scrollThreshold = fullWindow ? 1000 : 50;
-
-      if (this.props.consignmentMarket)
-          this.state.hideImages = true;
 
       return (
         <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl} >

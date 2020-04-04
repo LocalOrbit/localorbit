@@ -34,17 +34,6 @@ describe "Editing an order" do
       sign_in_as(user)
     end
 
-    context "as a buyer" do
-      let(:user) { create(:user, :buyer, organizations: [buyer]) }
-
-      xit "returns a 404" do
-        visit admin_order_path(order)
-        if not user.is_localeyes_buyer?
-          expect(page.status_code).to eql(404)
-        end
-      end
-    end
-
     context "multiple order items" do
       let!(:order_item2) { create(:order_item, product: product2, quantity: 10, unit_price: 3.00) }
 

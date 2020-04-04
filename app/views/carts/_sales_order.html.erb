@@ -2,16 +2,8 @@
             <tbody class="item-group">
               <tr class="<%= index == 0 ? "" : "is-hidden" %>">
                 <th class="subheading-cart">Your Order</th>
-                <% if current_market.is_consignment_market? %>
-                <td class="cart-lot-column">Lot</td>
-                <% end %>
                 <td class="cart-quantity-column">Quantity</td>
-                <% if current_market.is_buysell_market? %>
                 <td class="cart-quantity-column">Price</td>
-                <% else %>
-                <td class="cart-quantity-column">Sale</td>
-                <td class="cart-quantity-column">Net</td>
-                <% end %>
                 <td class="cart-total-column">Total</td>
                 <td class="product-clear"></td>
               </tr>
@@ -21,16 +13,8 @@
               <% items.each do |item| %>
                 <%= content_tag_for(:tr, item, id: "cart_item_#", supplier: seller_name.gsub(/[^a-zA-Z]/, ''), class: "product supplier-#{seller_name.gsub(/[^a-zA-Z]/, '')}", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
                   <td class="name"><%= item.product.name %> (<%= item.product.unit_plural %>)</td>
-                  <% if current_market.is_consignment_market? %>
-                  <td class="lot"><%= item.lot.present? ? item.lot.number : '' %></td>
-                  <% end %>
-                    <td class="quantity math"><input class="cart-input app-product-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
-                  <% if current_market.is_buysell_market? %>
+                  <td class="quantity math"><input class="cart-input app-product-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
                   <td class="price-for-quantity math"><%= number_to_currency(item.unit_sale_price) %></td>
-                  <% else %>
-                  <td class="sale-price math"><input class="cart-input app-sale-price-input in-cart" type="text" size="3" name="sale-price" autocomplete="off" value="<%= item.sale_price %>" /></td>
-                  <td class="net-price math"><input class="cart-input app-net-price-input in-cart" type="text" size="3" name="net-price" autocomplete="off" value="<%= item.net_price %>" /></td>
-                  <% end %>
                   <td class="price math"><%= number_to_currency(item.total_price)%></td>
                   <td class="product-clear"><%= link_to "", "#", class: "in-cart font-icon icon-clear" %></td>
                   <input type="hidden" class="lot-id" name="lot-id" value="<%=item.lot_id %>" />
@@ -42,29 +26,25 @@
           <% end %>
             <tbody class="math" id="totals">
               <tr class="cart_total">
-                <th scope="row" colspan="<%= current_market.is_consignment_market? ? "5" : "3" %>">Item Subtotal</th>
+                <th scope="row" colspan="3">Item Subtotal</th>
                 <td class="subtotal" data-order-min="<%= @ignore_minimum_order ? 0 : current_delivery.delivery_schedule.order_minimum %>" data-subtotal="<%=current_cart.subtotal %>"><%= current_cart.display_subtotal %></td>
                 <td></td>
               </tr>
 
               <tr class="cart_total <%= "is-hidden" unless current_cart.discount_amount > 0%>">
-                <th scope="row" colspan="<%= current_market.is_consignment_market? ? "5" : "3" %>">Discount</th>
+                <th scope="row" colspan="3">Discount</th>
                 <td class="discount"><%= current_cart.display_discount %></td>
                 <td></td>
               </tr>
 
               <tr class="cart_total">
-                <th scope="row" colspan="<%= current_market.is_consignment_market? ? "5" : "3" %>"><%= current_cart.delivery.delivery_schedule.fee_label %></th>
-                <% if current_market.is_consignment_market? && @order_type == 'sales' %>
-                <td><%= f.number_field :delivery_fees, value: current_cart.display_delivery_fees(current_market), size: 3, style: 'text-align: right' %></td>
-                <% else %>
+                <th scope="row" colspan="3"><%= current_cart.delivery.delivery_schedule.fee_label %></th>
                 <td class="delivery_fees"><%= current_cart.display_delivery_fees(current_market) %></td>
-                <% end %>
                 <td></td>
               </tr>
 
               <tr class="cart_total">
-                <th scope="row" colspan="<%= current_market.is_consignment_market? ? "5" : "3" %>"><strong>Total</strong></th>
+                <th scope="row" colspan="3"><strong>Total</strong></th>
                 <td class="total"><strong><%= current_cart.display_total %></strong></td>
                 <td></td>
               </tr>

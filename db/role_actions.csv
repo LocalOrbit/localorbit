@@ -61,6 +61,5 @@
 "Taxonomy:Index","{A}","taxonomy","index","{1,2,3}","t","",""
 "Internal_Financial:Index","{A}","internal_financial","index","{1,2,3}","t","",""
 "Segmented_Inventory:Index","{A,M,S}","segmented_inventory","index","{3}","t","",""
-"Market_Quickbooks:Index","{A,M}","market_quickbooks","index","{0}","t","",""
 "Market_Storage_Locations:Index","{A,M}","market_storage_locations","index","{0}","t","",""
 "Lot:Index","{A}","lot","index","{0}","t","",""

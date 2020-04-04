@@ -4,9 +4,8 @@
 
   <div class="field">
     <%= f.label :delivery_cycle %><br>
-    <%= f.select :delivery_cycle, [["Manual", "manual"]] if current_market.is_consignment_market? %>
-    <%= f.select :delivery_cycle, [["Weekly", "weekly"]] if current_market.is_buysell_market? && !policy(:advanced_delivery_cycles).index? %>
-    <%= f.select :delivery_cycle, [["Weekly", "weekly"], ["Bi-Weekly", "biweekly"], ["Monthly (by Day)", "monthly_day"], ["Monthly (by Date)", "monthly_date"], ["Manual", "manual"]] if current_market.is_buysell_market? && policy(:advanced_delivery_cycles).index?%>
+    <%= f.select :delivery_cycle, [["Weekly", "weekly"]] if !policy(:advanced_delivery_cycles).index? %>
+    <%= f.select :delivery_cycle, [["Weekly", "weekly"], ["Bi-Weekly", "biweekly"], ["Monthly (by Day)", "monthly_day"], ["Monthly (by Date)", "monthly_date"], ["Manual", "manual"]] if policy(:advanced_delivery_cycles).index?%>
   </div
   ><div class="field conditional" id="buyer_day_option">
   <%= f.label :buyer_day %><br>

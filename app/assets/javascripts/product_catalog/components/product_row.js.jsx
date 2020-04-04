@@ -2,12 +2,6 @@
 
 (function() {
   var ProductRow = React.createClass({
-    propTypes: {
-        purchaseOrder: React.PropTypes.bool,
-        salesOrder: React.PropTypes.bool,
-        consignmentMarket: React.PropTypes.bool
-    },
-
     mixins: [window.lo.ProductRowMixin],
 
     render: function() {
@@ -20,11 +14,9 @@
       var lot_qty_header;
       var sale_price_header;
       var net_price_header;
-      var consignment_qty_header;
       var order_qty_header;
       var whowherewhy;
       var img;
-      var committed_count;
       var cmt;
 
 
@@ -37,93 +29,65 @@
       // The long description HTML
       var long_description = <div className="long-description-info is-hidden with-anchor top-anchor popup" id={product_id}><div className="popup-header">Details <button className="close"><i className="font-icon icon-close"></i></button></div><div className="popup-body">{gp.long_description}</div></div>
 
-      if (self.props.salesOrder && self.props.consignmentMarket) {
-          _.map(gp.available, function (p) {
-              lots = _.map(p.lots, function (l) {
-                  committed_count = 0;
-                  cmt = _.map(p.committed, function (c) {
-                      if (l.number === c.number) {
-                          committed_count = committed_count + (c.quantity * 1);
-                      }
-                  });
-                  if (l.status == 'awaiting_delivery' || (l.quantity > 0 || (l.quantity == 0 && committed_count > 0))) {
-                      return <lo.ProductLots key={l.id} product={p} lot={l} orderId={self.props.orderId}
-                                             purchaseOrder={self.props.purchaseOrder}
-                                             salesOrder={self.props.salesOrder}/>
-                  }
-              })
-          });
-          total_cost_header = ('');
-          lot_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Lot / Quantity</th>);
-          sale_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Sale Price</th>);
-          net_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Net Price</th>);
-          consignment_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Order QTY</th>);
-      }
-      else {
-          lots = ('');
-          consignment_qty_header = ('');
-          lot_qty_header = ('');
-          sale_price_header = (<th></th>);
-          net_price_header = (<th></th>);
-          order_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Order QTY</th>);
-          total_cost_header = (<th style={{
-              width: 100,
-              textAlign: "center",
-              color: "#727070",
-              textTransform: "uppercase",
-              fontWeight: "bold",
-              fontSize: "11px"
-          }}>
-              {(this.props.purchaseOrder) ? "" : "Total Cost"}
-          </th>);
-      }
 
-      //var unit_prices = '';
-      if (self.props.purchaseOrder || !self.props.consignmentMarket)
-          unit_prices = _.map(gp.available, function(p) {
-            return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder} salesOrder={self.props.salesOrder} consignmentMarket={self.props.consignmentMarket} /> });
-      else
-          unit_prices = ('');
+      lots = ('');
+      lot_qty_header = ('');
+      sale_price_header = (<th></th>);
+      net_price_header = (<th></th>);
+      order_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Order QTY</th>);
+      total_cost_header = (<th style={{
+        width: 100,
+        textAlign: "center",
+        color: "#727070",
+        textTransform: "uppercase",
+        fontWeight: "bold",
+        fontSize: "11px"
+      }}>
+        Total Cost
+      </th>);
 
-      if (!self.props.consignmentMarket)
-          whowherewhy = (
-              <ul className="meta list-naked l-inline-list clear-before">
-                  <li className="organization-name">
-                      <a className="popup-toggle" href={'#product-'+gp.id+'-who'} tabIndex="-1"><i className="font-icon icon-credit"></i>&nbsp;Who</a>
-                      <div className="who-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-who'}>
-                          <div className="popup-header">
-                              Who <button className="close"><i className="font-icon icon-close"></i></button>
-                          </div>
-                          <div className="popup-body">
-                              {gp.who_story}
-                          </div>
+
+      unit_prices = _.map(gp.available, function(p) {
+        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} /> });
+
+
+
+      whowherewhy = (
+          <ul className="meta list-naked l-inline-list clear-before">
+              <li className="organization-name">
+                  <a className="popup-toggle" href={'#product-'+gp.id+'-who'} tabIndex="-1"><i className="font-icon icon-credit"></i>&nbsp;Who</a>
+                  <div className="who-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-who'}>
+                      <div className="popup-header">
+                          Who <button className="close"><i className="font-icon icon-close"></i></button>
                       </div>
-                  </li>
-                  <li className="how-story">
-                      <a className="popup-toggle" href={'#product-'+gp.id+'-how'} tabIndex="-1"><i className="font-icon icon-archive"></i> How</a>
-                      <div className="how-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-how'}>
-                          <div className="popup-header">
-                              How <button className="close"><i className="font-icon icon-close"></i></button>
-                          </div>
-                          <div className="popup-body">
-                              {gp.how_story}
-                          </div>
+                      <div className="popup-body">
+                          {gp.who_story}
                       </div>
-                  </li>
-                  <li className="where">
-                      <a className="popup-toggle" href={'#product-'+gp.id+'-where'} tabIndex="-1"><i className="font-icon icon-direction"></i> Where</a>
-                      <div className="where-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-where'}>
-                          <div className="popup-header">
-                              {gp.location_label}
-                              <button className="close"><i className="font-icon icon-close"></i></button>
-                          </div>
-                          <img className="location-map" alt="" src="" data-src={gp.location_map_url}/>
+                  </div>
+              </li>
+              <li className="how-story">
+                  <a className="popup-toggle" href={'#product-'+gp.id+'-how'} tabIndex="-1"><i className="font-icon icon-archive"></i> How</a>
+                  <div className="how-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-how'}>
+                      <div className="popup-header">
+                          How <button className="close"><i className="font-icon icon-close"></i></button>
                       </div>
-                  </li>
-              </ul>
-          );
-      else
-          whowherewhy = ('');
+                      <div className="popup-body">
+                          {gp.how_story}
+                      </div>
+                  </div>
+              </li>
+              <li className="where">
+                  <a className="popup-toggle" href={'#product-'+gp.id+'-where'} tabIndex="-1"><i className="font-icon icon-direction"></i> Where</a>
+                  <div className="where-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-where'}>
+                      <div className="popup-header">
+                          {gp.location_label}
+                          <button className="close"><i className="font-icon icon-close"></i></button>
+                      </div>
+                      <img className="location-map" alt="" src="" data-src={gp.location_map_url}/>
+                  </div>
+              </li>
+          </ul>
+      );
 
       if (self.props.promo.image_url)
         img = self.props.promo.image_url;
@@ -148,7 +112,6 @@
               <thead>
                 <tr>
                     {lot_qty_header}
-                    {consignment_qty_header}
                     {sale_price_header}
                     {net_price_header}
                     {order_qty_header}

@@ -1,10 +1,6 @@
 (function() {
 
   var ProductUnitPrices = React.createClass({
-    propTypes: {
-      purchaseOrder: React.PropTypes.bool
-    },
-
     mixins: [window.lo.ProductInputMixin],
 
     fullPricingRow: function(prices, showCaret) {
@@ -74,28 +70,18 @@
       var fee_type = ('');
       var fee_type_val;
 
-      if(this.props.purchaseOrder)
-        pricing = '';
-      else
-        pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
+      pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
+      quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
+      unit_desc = (
+          <div><a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/><div
+              style={{fontSize: "11px", color: "#737373"}}>{quantity}</div></div>);
 
-      if(this.props.purchaseOrder)
-        unit_desc = (this.props.product.unit_description);
-      else {
-          quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
-          unit_desc = (
-              <div><a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/><div
-                  style={{fontSize: "11px", color: "#737373"}}>{quantity}</div></div>);
-      }
       var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
       var inputClass = "redesigned app-product-input";
       if (this.props.promo)
         inputClass = "redesigned app-product-input promo";
 
-      if (this.props.consignmentMarket)
-          fee_type_val = 0;
-      else
-          fee_type_val = this.props.product.prices[0].fee_type;
+      fee_type_val = this.props.product.prices[0].fee_type;
 
       if (this.props.orderId) {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
@@ -127,7 +113,7 @@
                   {fee_type}
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>
-                <div className="price" style={{display: (this.props.purchaseOrder) ? "none" : "inherit" }}>{this.props.product.total_price}</div>
+                <div className="price" style={{display: "inherit" }}>{this.props.product.total_price}</div>
                 {deleteButton}
               </div>
             </div>

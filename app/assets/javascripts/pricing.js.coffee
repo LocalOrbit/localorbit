@@ -1,7 +1,6 @@
 $ ->
   return unless $(".pricing-table").length || $(".product-table").length
   product_fee = false
-  consignment = false
 
   formatFieldAsMoney = (field) ->
     field.val(parseFloat(field.val()).toFixed(2))
@@ -22,7 +21,6 @@ $ ->
     netPrice = salePrice.parents('tr').first().find('input.net-price')
     selectedMarket = salePrice.parents('tr').first().find('select.select_market_id')
     has_product_fee = fee.hasClass('has-product-fee')
-    is_consignment = salePrice.hasClass('consignment')
 
     ccRate = netPrice.data('cc-rate')
     productFee = netPrice.data('product-fee')
@@ -193,12 +191,10 @@ $ ->
     updateFeeOps()
 
   $('input.sale-price').each ->
-    if !$(this).hasClass('consignment')
-      bindCalculator(this)
+    bindCalculator(this)
 
   $('input.edit-price').each ->
-    if !$(this).hasClass('consignment')
-      bindCalculator(this)
+    bindCalculator(this)
 
   EditTable.build ".price-form",
     applyErrorValuesCallback: (field) ->

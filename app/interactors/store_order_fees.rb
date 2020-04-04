@@ -2,14 +2,10 @@ class StoreOrderFees
   include Interactor
 
   def perform
-    if order.market.is_buysell_market?
-      @market = order.market
-      order.items.each {|item| update_accounting_fees_for(item) }
-      order.items.each(&:save!)
-    end
+    @market = order.market
+    order.items.each {|item| update_accounting_fees_for(item) }
+    order.items.each(&:save!)
   end
-
-#  protected
 
   def update_accounting_fees_for(item)
     calc = Financials::OrderItemFeeCalculator

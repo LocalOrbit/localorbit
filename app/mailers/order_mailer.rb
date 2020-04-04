@@ -1,7 +1,5 @@
 class OrderMailer < BaseMailer
   def market_manager_order_updated(order)
-    return if order.market.is_consignment_market?
-
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
     mail(
@@ -12,8 +10,6 @@ class OrderMailer < BaseMailer
   end
 
   def market_manager_confirmation(order)
-    return if order.market.is_consignment_market?
-
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
     mail(
@@ -24,7 +20,7 @@ class OrderMailer < BaseMailer
 
   def invoice(order_id)
     @order  = BuyerOrder.new(Order.find(order_id))
-    return if @order.blank? || @order.market.is_consignment_market?
+    return if @order.blank?
     to_list = recipient_list(@order.organization)
     return if to_list.blank?
 
@@ -104,7 +100,6 @@ class OrderMailer < BaseMailer
   private
 
   def ensure_buysell_and_list(order, seller )
-    return if order.market.is_consignment_market?
     send_to_list = recipient_list(seller)
     return if send_to_list.blank?
     @market = order.market

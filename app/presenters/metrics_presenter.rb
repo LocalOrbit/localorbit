@@ -51,7 +51,7 @@ class MetricsPresenter
         :active_markets_percent_growth, :credit_card_markets, :credit_card_markets_percent_growth,
         :ach_markets, :ach_markets_percent_growth, :lo_payment_markets,
         :lo_payment_markets_percent_growth, :start_up_markets, :start_up_markets_percent_growth,
-        :grow_markets, :grow_markets_percent_growth, :automate_markets, :automate_markets_percent_growth
+        :grow_markets, :grow_markets_percent_growth, :accelerate_markets, :accelerate_markets_percent_growth
       ]
     },
     users: {

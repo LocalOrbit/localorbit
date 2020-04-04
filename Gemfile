@@ -102,7 +102,6 @@ gem 'grape-swagger' # API V2, documentation
 
 gem 'rollbar'
 
-gem 'quickbooks-ruby', github: 'ruckus/quickbooks-ruby', ref: 'ba54c446bf37'
 gem "attr_encrypted", '~> 3.0.0'
 
 group :doc do

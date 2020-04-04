@@ -5,7 +5,7 @@ class Admin::UploadController < AdminController
   include Imports
 
   def index
-    @plan = current_market.organization.plan.name # check if LocalEyes plan on market
+    @plan = current_market.organization.plan.name
     @sd = current_market.subdomain
     @current_mkt_id = current_market.id #TODO maybe useful
     # code for mapping organization and ensuring sign-in authenticated upload

@@ -4,8 +4,7 @@ UserOrderContext = ConstructorStruct.new(
     :is_market_manager,
     :is_seller,
     :seller_organization,
-    :is_admin,
-    :is_localeyes_buyer) do
+    :is_admin) do
 
   class << self
     def build(user:, order:)
@@ -22,7 +21,6 @@ UserOrderContext = ConstructorStruct.new(
 
       is_seller = !seller_organization.nil?
       is_admin = user.admin?
-      is_localeyes_buyer = user.is_localeyes_buyer?
       sellers_edit_orders_feature = !!(market.organization.plan.try(:sellers_edit_orders)) && market.sellers_edit_orders
 
       return self.new(
@@ -30,7 +28,6 @@ UserOrderContext = ConstructorStruct.new(
         seller_organization: seller_organization,
         is_seller: is_seller,
         is_admin: is_admin,
-        is_localeyes_buyer: is_localeyes_buyer,
         sellers_edit_orders_feature: sellers_edit_orders_feature
       )
     end

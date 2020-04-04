@@ -41,18 +41,8 @@ module LocalOrbit
 
     config.font_assets.origin = "*"
 
-    config.middleware.use PDFKit::Middleware, {}, only: [%r[/admin/invoices], %r[/admin/consignment_receipts], %r[/admin/labels]]
+    config.middleware.use PDFKit::Middleware, {}, only: [%r[/admin/invoices], %r[/admin/labels]]
 
     config.browserify_rails.commandline_options = "--transform reactify --extension=\".jsx\""
-
-    # add material for Grape RESTful API
-    # config.middleware.use Rack::Cors do
-    #   allow do
-    #     origins "*"
-    #     resource "*", headers: :any, methods: [:get,
-    #         :post, :put, :delete, :options]
-    #   end
-    # end
-    # config.active_record.raise_in_transactional_callbacks = true
   end
 end

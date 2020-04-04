@@ -1,36 +1,23 @@
 <div class="cart-page">
   <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
   <%= form_for :order, url: [:orders], html: {id: "order-form"} do |f| %>
-    <%= f.hidden_field 'order_type', value: (@order_type || 'sales') %>
     <%= render "shared/errors", {resource: @order} if @order %>
     <% if flash[:error] %>
-      <% if current_market.is_consignment_market? %>
-        <div style="width: 50%; font-weight: bold" class="flash--alert">
-          <p><%= flash[:error] %></p>
-        </div>
-      <% else %>
-        <div class="flash flash--warning">
-          <p><%= flash[:error] %></p>
-        </div>
-      <% end %>
+      <div class="flash flash--warning">
+        <p><%= flash[:error] %></p>
+      </div>
     <% end %>
     <div class="row">
       <div class="column column--half column--guttered">
         <div class="cart_items" data-cart-url="<%= cart_path %>">
           <table class="cart">
-          <%= render partial: (@order_type || 'sales')+'_order', locals: {f: f} %>
+          <%= render partial: 'sales_order', locals: {f: f} %>
           </table>
-          <% if policy(:template).index? && @order_type == 'sales' %>
+          <% if policy(:template).index? %>
             <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
           <% end %>
           <h2 class="order-min-msg"></h2>
         </div>
-        <% if @order_type == 'purchase' %>
-            <div style="margin-top: 10px;">
-              <%= f.label :notes %>
-              <%= f.text_area :notes, rows: 5 %>
-            </div>
-        <% end %>
         </div
       ><div class="column column--half column--guttered">
         <div id="additional-information">
@@ -46,7 +33,7 @@
             </address>
           </div>
 
-          <% if current_market.organization.plan.discount_codes? && @order_type == 'sales'%>
+          <% if current_market.organization.plan.discount_codes? %>
           <div id="discount-info">
             <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Discount Information</h2>
           </div>
@@ -72,35 +59,19 @@
 
           <fieldset class="conditional">
             <legend class="haiku">Select Payment Method</legend>
-              <% if current_market.is_consignment_market? && @order_type == 'sales' %>
-                <%= select_tag "order[payment_method]", options_for_select([["Invoice","invoice"], ["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %>
-                <br/><br/>
-                <div class="payment-field">
-                  <%= f.label :payment_note, "Payment Ref. #" %><br>
-                  <%= f.text_field :payment_note, class: "input--short" %>
+              <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
+                <div class="field">
+                  <label>
+                    <%= f.radio_button :payment_method, "purchase order", :class=>"payment-method" %>
+                    Pay by Purchase Order
+                  </label>
+                  <fieldset id="purchase-order-fields" class="payment-fields is-hidden" data-available="true">
+                    <div class="payment-field">
+                      <%= f.label :payment_note, "PO Number" %><br>
+                      <%= f.text_field :payment_note, class: "input--short" %>
+                    </div>
+                  </fieldset>
                 </div>
-              <% elsif current_market.is_consignment_market? && @order_type == 'purchase' %>
-                <%= select_tag "order[payment_method]", options_for_select([["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %>
-                <br/><br/>
-                <div class="payment-field">
-                  <%= f.label :payment_note, "Supplier Inv. #" %><br>
-                  <%= f.text_field :payment_note, class: "input--short" %>
-                </div>
-              <% else %>
-                <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
-                  <div class="field">
-                    <label>
-                      <%= f.radio_button :payment_method, "purchase order", :class=>"payment-method" %>
-                      Pay by Purchase Order
-                    </label>
-                    <fieldset id="purchase-order-fields" class="payment-fields is-hidden" data-available="true">
-                      <div class="payment-field">
-                        <%= f.label :payment_note, "PO Number" %><br>
-                        <%= f.text_field :payment_note, class: "input--short" %>
-                      </div>
-                    </fieldset>
-                  </div>
-                <% end %>
 
                 <% if allow_payment_option?(:credit_card, current_market, current_organization) %>
                   <div class="field">
@@ -181,12 +152,12 @@
           </fieldset>
         </div>
         <div class="form-actions">
-          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: current_market.is_buysell_market?, data: {disable_with: "Please wait..."} %>
+          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: true, data: {disable_with: "Please wait..."} %>
           <span class="pull-left cancel-link">
             <%= link_to "Cancel Order", [:cart], data: {method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive", id: "cancel-button" %>
             <span class="note">(Clear Cart)</span>
           </span>
-          <%= link_to "Continue Ordering", @order_type == 'sales' ? products_path : products_purchase_path, class: "continue-shop" %>  
+          <%= link_to "Continue Ordering", products_path, class: "continue-shop" %>  
         </div>
       </div>
     </div>

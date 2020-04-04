@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200202225047) do
+ActiveRecord::Schema.define(version: 20200305192336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,36 +63,6 @@ ActiveRecord::Schema.define(version: 20200202225047) do
   end
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
-
-  create_table "batch_consignment_printable_errors", force: true do |t|
-    t.integer  "batch_consignment_printable_id"
-    t.string   "task"
-    t.text     "message"
-    t.text     "exception"
-    t.text     "backtrace"
-    t.integer  "order_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "batch_consignment_printables", force: true do |t|
-    t.integer  "user_id"
-    t.string   "pdf_uid"
-    t.string   "pdf_name"
-    t.string   "generation_status",                           default: "not_started", null: false
-    t.decimal  "generation_progress", precision: 5, scale: 2, default: 0.0,           null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "batch_consignment_printables", ["user_id"], name: "index_batch_consignment_printables_on_user_id", using: :btree
-
-  create_table "batch_consignment_printables_orders", force: true do |t|
-    t.integer  "batch_consignment_printable_id"
-    t.integer  "order_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "batch_invoice_errors", force: true do |t|
     t.integer  "batch_invoice_id"
@@ -183,47 +153,6 @@ ActiveRecord::Schema.define(version: 20200202225047) do
     t.decimal  "fee_pct",     precision: 5, scale: 3
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "consignment_printables", force: true do |t|
-    t.integer  "user_id"
-    t.string   "pdf_uid"
-    t.string   "pdf_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "consignment_products", force: true do |t|
-    t.integer  "product_id",                  null: false
-    t.integer  "consignment_product_id",      null: false
-    t.integer  "consignment_organization_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "consignment_transactions", force: true do |t|
-    t.string   "transaction_type"
-    t.integer  "order_id"
-    t.integer  "order_item_id"
-    t.integer  "lot_id"
-    t.datetime "delivery_date"
-    t.integer  "product_id"
-    t.integer  "quantity"
-    t.integer  "assoc_order_id"
-    t.integer  "assoc_order_item_id"
-    t.integer  "assoc_lot_id"
-    t.integer  "assoc_product_id"
-    t.datetime "created_at"
-    t.integer  "market_id"
-    t.integer  "parent_id"
-    t.decimal  "sale_price",          precision: 10, scale: 2, default: 0.0
-    t.decimal  "net_price",           precision: 10, scale: 2, default: 0.0
-    t.integer  "holdover_order_id"
-    t.boolean  "master"
-    t.integer  "child_lot_id"
-    t.integer  "child_product_id"
-    t.datetime "deleted_at"
-    t.text     "notes"
   end
 
   create_table "credits", force: true do |t|
@@ -623,7 +552,6 @@ ActiveRecord::Schema.define(version: 20200202225047) do
     t.boolean  "self_enabled_cross_sell",                                default: false
     t.string   "background_img_uid"
     t.boolean  "allow_signups",                                          default: true
-    t.string   "qb_integration_type"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -700,8 +628,6 @@ ActiveRecord::Schema.define(version: 20200202225047) do
     t.decimal  "category_fee_pct",       precision: 5,  scale: 3
     t.decimal  "net_price",              precision: 10, scale: 2, default: 0.0
     t.integer  "fee"
-    t.integer  "po_lot_id"
-    t.integer  "po_ct_id"
   end
 
   add_index "order_items", ["delivery_status"], name: "index_order_items_dlv_status", using: :btree
@@ -792,10 +718,6 @@ ActiveRecord::Schema.define(version: 20200202225047) do
     t.string   "invoice_pdf_name"
     t.string   "payment_provider"
     t.decimal  "market_seller_fee_pct",     precision: 5,  scale: 3
-    t.integer  "qb_ref_id"
-    t.string   "order_type",                                         default: "sales", null: false
-    t.string   "payment_model"
-    t.boolean  "sold_through"
     t.text     "signature_data"
     t.string   "receipt_pdf_uid"
     t.string   "receipt_pdf_name"
@@ -833,19 +755,16 @@ ActiveRecord::Schema.define(version: 20200202225047) do
     t.string   "org_type"
     t.integer  "plan_id"
     t.datetime "plan_start_at"
-    t.integer  "plan_interval",                                        default: 1,         null: false
-    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,       null: false
+    t.integer  "plan_interval",                                        default: 1,     null: false
+    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
     t.boolean  "subscribed",                                           default: false
     t.string   "subscription_id"
     t.string   "payment_provider"
     t.string   "subscription_status"
-    t.integer  "qb_org_id"
-    t.string   "payment_model",                                        default: "buysell"
     t.string   "contact_first_name"
     t.string   "contact_last_name"
     t.string   "contact_email"
-    t.string   "qb_check_name"
     t.text     "notes"
   end
 
@@ -895,21 +814,20 @@ ActiveRecord::Schema.define(version: 20200202225047) do
 
   create_table "plans", force: true do |t|
     t.string   "name"
-    t.boolean  "discount_codes",           default: false
-    t.boolean  "cross_selling",            default: false
-    t.boolean  "custom_branding",          default: false
-    t.boolean  "automatic_payments",       default: false
+    t.boolean  "discount_codes",      default: false
+    t.boolean  "cross_selling",       default: false
+    t.boolean  "custom_branding",     default: false
+    t.boolean  "automatic_payments",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "promotions",               default: false, null: false
-    t.boolean  "advanced_pricing",         default: false, null: false
-    t.boolean  "advanced_inventory",       default: false, null: false
-    t.boolean  "order_printables",         default: false, null: false
-    t.boolean  "packing_labels",           default: false, null: false
-    t.boolean  "sellers_edit_orders",      default: false, null: false
-    t.boolean  "has_procurement_managers", default: false, null: false
+    t.boolean  "promotions",          default: false, null: false
+    t.boolean  "advanced_pricing",    default: false, null: false
+    t.boolean  "advanced_inventory",  default: false, null: false
+    t.boolean  "order_printables",    default: false, null: false
+    t.boolean  "packing_labels",      default: false, null: false
+    t.boolean  "sellers_edit_orders", default: false, null: false
     t.string   "stripe_id"
-    t.boolean  "ryo_eligible",             default: false, null: false
+    t.boolean  "ryo_eligible",        default: false, null: false
   end
 
   create_table "prices", force: true do |t|
@@ -968,7 +886,6 @@ ActiveRecord::Schema.define(version: 20200202225047) do
     t.integer  "external_product_id"
     t.integer  "general_product_id"
     t.string   "aws_image_url"
-    t.integer  "qb_item_id"
     t.integer  "parent_product_id"
     t.integer  "unit_quantity"
     t.boolean  "organic"
@@ -998,42 +915,6 @@ ActiveRecord::Schema.define(version: 20200202225047) do
   add_index "promotions", ["market_id", "product_id"], name: "index_promotions_on_market_id_and_product_id", using: :btree
   add_index "promotions", ["market_id"], name: "index_promotions_on_market_id", using: :btree
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
-
-  create_table "qb_profiles", force: true do |t|
-    t.integer "organization_id"
-    t.string  "income_account_name"
-    t.integer "income_account_id"
-    t.string  "expense_account_name"
-    t.integer "expense_account_id"
-    t.string  "asset_account_name"
-    t.integer "asset_account_id"
-    t.string  "prefix"
-    t.string  "delivery_fee_item_name"
-    t.integer "delivery_fee_item_id"
-    t.string  "consolidated_supplier_item_name"
-    t.integer "consolidated_supplier_item_id"
-    t.string  "consolidated_buyer_item_name"
-    t.integer "consolidated_buyer_item_id"
-    t.string  "ar_account_name"
-    t.integer "ar_account_id"
-    t.string  "ap_account_name"
-    t.integer "ap_account_id"
-    t.string  "fee_income_account_name"
-    t.integer "fee_income_account_id"
-    t.string  "delivery_fee_account_name"
-    t.integer "delivery_fee_account_id"
-  end
-
-  create_table "qb_tokens", force: true do |t|
-    t.integer  "organization_id"
-    t.string   "encrypted_access_token"
-    t.string   "encrypted_access_secret"
-    t.string   "encrypted_realm_id"
-    t.datetime "token_expires_at"
-    t.string   "encrypted_access_token_iv"
-    t.string   "encrypted_access_secret_iv"
-    t.string   "encrypted_realm_id_iv"
-  end
 
   create_table "qlik_user_attributes", primary_key: "userid", force: true do |t|
     t.string "type",  null: false

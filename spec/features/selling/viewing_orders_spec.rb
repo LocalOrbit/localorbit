@@ -341,7 +341,7 @@ feature "Viewing orders" do
       market2_order2.update_attributes(placed_at: 5.weeks.ago)
       market2_order3.update_attributes(placed_at: 7.weeks.ago)
 
-      visit admin_sales_orders_path
+      visit admin_orders_path
 
       # Tests default date filter of the past month
       expect(page).to have_content(market1_order1.order_number)

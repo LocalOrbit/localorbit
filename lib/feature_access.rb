@@ -1,10 +1,6 @@
 
 class FeatureAccess
   class << self
-    def order_templates?(market:)
-      market.organization.plan.name == "LocalEyes"
-    end
-
     def can_edit_order?(user:, order:)
       return (user.admin? || user.managed_markets.include?(order.market))
     end
@@ -54,16 +50,12 @@ class FeatureAccess
       end
     end
 
-    def has_procurement_managers?(market:)
-      !!market.organization.plan.try(:has_procurement_managers?)
-    end
-
     private
+
     def edit_order_stuff?(context)
       return true if context.is_admin
       return true if context.is_market_manager
       return true if context.is_seller && context.sellers_edit_orders_feature
-      return true if context.is_localeyes_buyer
       false
     end
   end

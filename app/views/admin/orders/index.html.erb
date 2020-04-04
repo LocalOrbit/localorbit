@@ -1,7 +1,7 @@
 <div>
   <div class="l-constraint">
     <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(q: params[:q], format: :csv), class: 'export todo pull-right', style: 'margin-bottom: 20px' %>
-    <h1><i class="font-icon" data-icon="&#xe025;"></i>&nbsp; Review <%= (@order_type || '').titleize %> Orders</h1>
+    <h1><i class="font-icon" data-icon="&#xe025;"></i>&nbsp; Review Sales Orders</h1>
     <p>This is a list of all orders made in your market.</p>
     <%= render "filters" %>
   </div>
@@ -10,25 +10,14 @@
 <div class="table-wrapper">
   <table class="sort-able">
     <thead class="stick-able">
-    <% if current_market.is_consignment_market? %>
-    <th><input type="checkbox" class="select-all"></th>
-    <% end %>
     <% if current_user.admin? %>
       <%= content_tag :th, sort_link(@q, :market, "Market") %>
       <% end %>
       <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
-      <% if @order_type == 'sales' %>
       <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
-      <% end %>
       <%= content_tag :th, sort_link(@q, :delivery_buyer_deliver_on, "Delivery Date") %>
-      <% if current_market.is_buysell_market? %>
       <%= content_tag :th, sort_link(@q, :total_cost, "Amount Owed") %>
-      <% end %>
-      <% if @order_type == 'sales' %>
       <%= content_tag :th, sort_link(@q, :organization_name, "Buyer") %>
-      <% else %>
-      <th>Supplier</th>
-      <% end %>
       <th>Delivery</th>
       <%= content_tag :th, sort_link(@q, :payment_status, "Payment Status") %>
     </thead>
@@ -39,49 +28,28 @@
           items = Orders::OrderItems.items_for_seller(order, current_user)
       %>
       <tr class="order-row">
-        <% if current_market.is_consignment_market? %>
-        <td><%= check_box_tag "order_id[]", order.id %></td>
-        <% end %>
         <% if current_user.admin? %>
         <td class="market"><%= order.market.name %></td>
         <% end %>
         <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %><%= order.decorate.note_indicator %></td>
-        <% if @order_type == 'sales' %>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-        <% end %>
         <td class="deliver-on"><%= order.delivery.buyer_deliver_on.strftime("%m/%d/%Y") %></td>
-        <% if current_market.is_buysell_market? %>
-          <% if current_user.admin? || current_user.market_manager? || current_user.buyer_only? %>
-          <td class="amount-owed"><%= number_to_currency(order.total_cost) %></td>
-          <% else %>
-          <td class="amount-owed"><%= number_to_currency(items.map(&:seller_net_total).reduce(:+)||0) %></td>
-          <% end %>
-        <% end %>
-        <% if @order_type == 'sales' %>
-        <td class="buyer-name"><%= order.organization.name %></td>
+        <% if current_user.admin? || current_user.market_manager? || current_user.buyer_only? %>
+        <td class="amount-owed"><%= number_to_currency(order.total_cost) %></td>
         <% else %>
-        <td class="seller-name"><%= order.items[0].product.organization.name %></td>
+        <td class="amount-owed"><%= number_to_currency(items.map(&:seller_net_total).reduce(:+)||0) %></td>
         <% end %>
+        <td class="buyer-name"><%= order.organization.name %></td>
         <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
-        <td class="buyer-status"><%= order.payment_status.titleize %><%= order.sold_through ? '&nbsp;<i style="color: #559955" class="fa fa-check"></i>'.html_safe : '' %></td>
+        <td class="buyer-status"><%= order.payment_status.titleize %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
 </div>
 
-<% if current_market.is_consignment_market? %>
-<div class="pull-right">
-  <%= label_tag :order_batch_action, 'Multiple Action:' %>
-  <% option_list = (@order_type=='purchase' ? Order::BATCH_PO_ACTIONS : Order::BATCH_SO_ACTIONS) %>
-  <%= select_tag :order_batch_action, options_for_select(option_list.map { |op| [op[1], op[0]] }), {include_blank: 'Select:'} %>
-  <%= button_tag "Go", id: 'submit-multi-button', class: 'btn btn--primary' %>
-</div>
-<% end %>
 <% end %>
 
 <%= paginate @orders %>
 
-<% if current_market.is_buysell_market? %>
 <%= render "shared/total_sales", totals: @totals, is_market_manager: current_user.can_manage_market?(current_market), buyer_only: current_user.buyer_only? %>
-<% end %>

@@ -45,7 +45,7 @@ module Admin
       org_type = update_org_type(params[:organization][:can_sell])
       auto_activate = Market.find(params[:initial_market_id]).try(:auto_activate_organizations) unless params[:initial_market_id].empty?
 
-      op = organization_params.merge({:org_type => org_type, :payment_model => current_market.is_consignment_market? ? 'consignment' : 'buysell'})
+      op = organization_params.merge({:org_type => org_type})
       op.merge!({active: '1'}) if (org_type == Organization::TYPE_BUYER && auto_activate)
       op.except!(:markets)
 
@@ -159,10 +159,8 @@ module Admin
         :professional_organizations,
         :org_type,
         :plan_id,
-        :qb_check_name,
         :notes,
         locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :email, :country, :contact_name],
-        qb_profile_attributes: [:organization_id, :income_account_name, :expense_account_name, :asset_account_name, :prefix],
         markets: []
       )
     end

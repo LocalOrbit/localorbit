@@ -16,9 +16,7 @@
       useTemplates: React.PropTypes.bool.isRequired,
       supplierOnly: React.PropTypes.bool,
       orderId: React.PropTypes.number,
-      orderMinimum: React.PropTypes.string,
-      purchaseOrder: React.PropTypes.bool,
-      salesOrder: React.PropTypes.bool
+      orderMinimum: React.PropTypes.string
     },
 
     getInitialState: function() {
@@ -116,7 +114,7 @@
       var orderTemplates, filterText, orderMinimum, headerInformation, editDeliveryOptions;
       var buyerSeller, entityInfo;
 
-        if(this.props.useTemplates && this.props.salesOrder)
+        if(this.props.useTemplates)
             orderTemplates = (<a href="#templatePicker" className="app-apply-template modal-toggle">Apply an order template to the cart</a>);
         else
             orderTemplates = ('');
@@ -131,19 +129,9 @@
         else
             orderMinimum = ('');
 
-        if(this.props.purchaseOrder)
-          editDeliveryOptions = (<span><a href="/sessions/suppliers/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts/purchase">Change purchase order options</a><br/></span>);
-        else
-          editDeliveryOptions = (<span><a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/></span>);
-
-        if (this.props.purchaseOrder) {
-            buyerSeller = 'Supplier';
-            entityInfo = this.props.supplierInfo;
-        }
-        else {
-            buyerSeller = 'Buyer';
-            entityInfo = this.props.buyerInfo;
-        }
+        editDeliveryOptions = (<span><a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/></span>);
+        buyerSeller = 'Buyer';
+        entityInfo = this.props.buyerInfo;
 
         if (this.props.orderId > 0)
             headerInformation = ('');

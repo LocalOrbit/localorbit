@@ -16,11 +16,7 @@ module Api
           user_type = nil
 
           if current_user.admin_or_mm?
-            if current_market.organization.plan.name == 'LocalEyes'
-              user_type = "P"
-            else
-              user_type = "M"
-            end
+            user_type = "M"
           elsif current_user.seller?
             user_type = "S"
           elsif !current_user.admin_or_mm? && current_user.buyer_only?
@@ -54,15 +50,15 @@ module Api
           end
 
           if user_type == "M"
-            orders = Order.so_orders.orders_for_seller(current_user).where(market: current_market).order(:created_at)
+            orders = Order.orders_for_seller(current_user).where(market: current_market).order(:created_at)
             payments_due_orders = orders.paid_with("purchase order").delivered.payment_overdue + orders.paid_with("purchase order").invoiced.unpaid.payment_due
             @presenter = DashboardMarketManagerPresenter.new(orders, payments_due_orders, date_param, interval).generate
           elsif user_type == "B"
-            orders = Order.so_orders.orders_for_buyer(current_user).where(market: current_market).order(:created_at)
+            orders = Order.orders_for_buyer(current_user).where(market: current_market).order(:created_at)
             payments_due_orders = orders.paid_with("purchase order").payment_overdue + orders.paid_with("purchase order").payment_due
             @presenter = DashboardBuyerPresenter.new(orders, payments_due_orders, date_param, interval).generate
           else
-            orders = Order.so_orders.orders_for_seller(current_user).where(market: current_market).order(:created_at)
+            orders = Order.orders_for_seller(current_user).where(market: current_market).order(:created_at)
             @presenter = DashboardSellerPresenter.new(orders, interval, date_param, current_user).generate
           end
 

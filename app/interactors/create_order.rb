@@ -2,9 +2,6 @@ class CreateOrder
   include Interactor
 
   def perform
-    if !cart.market.qb_integration_type.nil? && cart.market.qb_integration_type == 'journal entry'
-      check_order_for_je_limit(cart)
-    end
     context[:order] = create_order_from_cart(order_params, cart, user)
     context.fail! if context[:order].errors.any?
   end
@@ -45,10 +42,9 @@ class CreateOrder
       payment_method: params[:payment_method],
       payment_note: params[:payment_note],
       notes: params[:notes],
-      delivery_fees: cart.market.is_consignment_market? && !params[:delivery_fees].nil? ? Float(params[:delivery_fees]) : cart.delivery_fees,
-      total_cost: cart.market.is_consignment_market? && !params[:delivery_fees].nil? ? Float(params[:delivery_fees]) + cart.total : cart.total,
+      delivery_fees: cart.delivery_fees,
+      total_cost: cart.total,
       placed_at: Time.current,
-      order_type: cart.market.is_buysell_market? ? 'sales' : params[:order_type],
     )
 
     order.apply_delivery_address(cart.delivery_location)

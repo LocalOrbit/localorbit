@@ -4,8 +4,7 @@ UserDeliveryContext = ConstructorStruct.new(
     :is_market_manager,
     :is_seller,
     :is_buyer_only,
-    :is_admin,
-    :is_localeyes_buyer) do
+    :is_admin) do
 
   class << self
     def build(user:, delivery:)
@@ -17,15 +16,13 @@ UserDeliveryContext = ConstructorStruct.new(
       end
       is_buyer_only = (user.buyer_only?)
       is_admin = user.admin?
-      is_localeyes_buyer = user.is_localeyes_buyer?
 
       return self.new(
         packing_labels_feature: !!(market.organization.plan.packing_labels?),
-        is_market_manager: is_market_manager, 
-        is_seller: is_seller, 
-        is_buyer_only: is_buyer_only, 
+        is_market_manager: is_market_manager,
+        is_seller: is_seller,
+        is_buyer_only: is_buyer_only,
         is_admin: is_admin,
-        is_localeyes_buyer: is_localeyes_buyer,
       )
     end
   end

@@ -32,12 +32,6 @@ BI_DASHBOARD_URL: <url to BI dashboard>
 USE_UPLOAD_QUEUE: 'true'
 API_ADMIN_USER_ID: <admin user id>
 MAX_POOL_SIZE: '10'
-QB_APP_TOKEN: <QB app token>
-QB_CONSUMER_KEY: <QB consumer key>
-QB_CONSUMER_SECRET: <QB consumer secret>
-QB_ACCESS_TOKEN: <QB access token>
-QB_ACCESS_TOKEN_SECRET: <QB access token secret>
-QB_REALM_ID: <QB realm id>
 # Use staging DRAGONFLY_HOST for dev and test
 DRAGONFLY_HOST: 'https://d3jv177czn6wv2.cloudfront.net'
 development:

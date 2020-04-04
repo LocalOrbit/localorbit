@@ -51,8 +51,6 @@ class OrderHistoryActivityPresenter
           process_payment(item)
         when "Credit"
           process_credit(item)
-        when "ConsignmentTransaction"
-          process_consignment_transaction(item)
         else
           nil
       end
@@ -144,31 +142,6 @@ class OrderHistoryActivityPresenter
           "Credit Changed: #{amount}"
         end
       end
-    end
-  end
-
-  def process_consignment_transaction(item)
-    transaction_type = last_value_for_change(item, "transaction_type")
-    if transaction_type == 'Shrink'
-      qty = last_value_for_change(item, "quantity")
-      cost = last_value_for_change(item, "net_price")
-      "Shrink - Quantity: #{qty}, Cost: #{cost}"
-    elsif transaction_type == 'Undo Shrink'
-      "Undo Shrink"
-    elsif transaction_type == 'Holdover'
-      qty = last_value_for_change(item, "quantity")
-      order_id = last_value_for_change(item, "holdover_order_id")
-      delivery_date = last_value_for_change(item, "holdover_delivery_date")
-      "Holdover - Quantity: #{qty}, Order: #{order_id}, Delivery Date: #{delivery_date}"
-    elsif transaction_type == 'Undo Shrink'
-      "Undo Holdover"
-    elsif transaction_type == 'Repack'
-      qty = last_value_for_change(item, "quantity")
-      repack_product_id = last_value_for_change(item, "repack_product_id")
-      product = Product.find(repack_product_id)
-      "Repack - #{qty} into #{product.name}"
-    elsif transaction_type == 'Undo Repack'
-      "Undo Repack"
     end
   end
 
