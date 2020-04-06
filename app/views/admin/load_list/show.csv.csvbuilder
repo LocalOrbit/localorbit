@@ -1,4 +1,5 @@
-csv << ["Delivery Date",
+csv << ["Order ID",
+        "Delivery Date",
         "Delivery Method",
         "Delivery Address Label",
         "Delivery Address",
@@ -16,6 +17,7 @@ csv << ["Delivery Date",
 @load_lists.each_with_index do |load_list, index|
   load_list.order_items.each do |order_item|
     csv << [
+      order_item.order.id,
       load_list.delivery.get_buyer_deliver_on,
       load_list.buyer_delivery_method,
       load_list.buyer_pickup? ? load_list.buyer_delivery_location_label : '',
