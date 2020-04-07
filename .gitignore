@@ -27,6 +27,8 @@ dragonfly.log
 
 # Ignore application configuration
 .env
+.env.local
+.env.*.local
 /config/application.yml
 /dragonfly
 public/system/dragonfly/development
