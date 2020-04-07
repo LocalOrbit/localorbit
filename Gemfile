@@ -80,12 +80,13 @@ gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
 
-install_if -> { RUBY_PLATFORM =~ /darwin/ } do
+install_if -> { ENV['ON_HEROKU'] != 'true' } do
   # Maybe try 0.12.5.4 if run into issues
   gem 'wkhtmltopdf-binary', '0.12.5.1'
 end
 install_if -> { ENV['ON_HEROKU'] == 'true' } do
   gem 'wkhtmltopdf-heroku'
+  gem 'rails_12factor'
 end
 
 # Product import/export
@@ -98,6 +99,7 @@ gem 'grape' # API v2
 gem 'grape-active_model_serializers' # API v2
 gem 'rack-cors', :require => 'rack/cors' # API v2
 gem 'grape-swagger' # API V2, documentation
+gem 'puma'
 
 gem 'rollbar'
 
@@ -120,7 +122,6 @@ group :development do
   gem 'rails_view_annotator'
   gem 'rubycritic', require: false
   gem 'mailcatcher'
-  gem 'unicorn'
 
   # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
   gem 'rack-mini-profiler'
@@ -172,10 +173,5 @@ group :production, :staging do
   gem 'newrelic-dragonfly'
   #gem 'passenger'
   gem 'rack-cache', require: 'rack/cache'
-  gem 'rails_12factor'
   gem 'platform-api'
-end
-
-group :production, :staging, :development do
-  gem 'puma'
 end

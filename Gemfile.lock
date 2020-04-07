@@ -475,7 +475,6 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kgio (2.10.0)
     kiba (0.6.1)
     konacha (4.0.0)
       actionpack (>= 4.1, < 5)
@@ -638,7 +637,6 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.2)
       rake
-    raindrops (0.17.0)
     rake (13.0.1)
     ransack (1.6.4)
       actionpack (>= 3.0)
@@ -801,10 +799,6 @@ GEM
       json (>= 1.8.0)
     underscore-rails (1.7.0)
     unicode-display_width (1.6.1)
-    unicorn (4.9.0)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
     uniform_notifier (1.11.0)
     vcr (4.0.0)
     virtus (1.0.5)
@@ -953,7 +947,6 @@ DEPENDENCIES
   uglifier (~> 2.7.2)
   ultrahook
   underscore-rails
-  unicorn
   vcr
   webdrivers
   webmock
