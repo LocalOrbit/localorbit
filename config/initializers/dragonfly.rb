@@ -27,7 +27,7 @@ Dragonfly.app.configure do
       secret_access_key: ENV.fetch('UPLOADS_SECRET_ACCESS_KEY'),
       region:            ENV.fetch('UPLOADS_REGION'),
       url_scheme:        "https",
-      url_host:          ENV.fetch('UPLOADS_HOST'),
+      url_host:          ENV.fetch('UPLOADS_HOST', nil),
       headers:           s3_headers
   end
 
