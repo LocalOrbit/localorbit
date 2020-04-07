@@ -561,7 +561,6 @@ GEM
       activerecord (>= 3, < 5)
       periscope (~> 2.1.0)
     pg (0.21.0)
-    pg_array_parser (0.0.9)
     pg_search (0.7.8)
       activerecord (>= 3.1)
       activesupport (>= 3.1)
@@ -571,10 +570,6 @@ GEM
       moneta (~> 0.8.1)
     polyamorous (1.1.0)
       activerecord (>= 3.0)
-    postgres_ext (3.0.1)
-      activerecord (~> 4.0)
-      arel (>= 4.0.1)
-      pg_array_parser (~> 0.0.9)
     powerpack (0.1.2)
     pry (0.11.3)
       coderay (~> 1.1.0)
@@ -911,7 +906,6 @@ DEPENDENCIES
   pg (~> 0.21.0)
   pg_search
   platform-api
-  postgres_ext
   pry-byebug
   pry-rails
   pry-remote

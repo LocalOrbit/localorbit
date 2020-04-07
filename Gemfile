@@ -51,7 +51,6 @@ gem 'kaminari'                      # Paginator
 gem 'pdfkit'
 gem 'periscope-activerecord'
 gem 'pg_search'
-gem 'postgres_ext'
 gem 'rack-canonical-host'
 gem 'ransack'
 gem 'recaptcha'
