@@ -19,7 +19,7 @@ set :aws_ec2_regions, [AWSConfig.lo_production.region]
 
 # Application name to match application tag.
 # set :aws_ec2_application, (proc { fetch(:application) })
-set :aws_ec2_application, 'localorbit'
+set :aws_ec2_application, 'lo'
 
 # Stage to match stage tag.
 set :aws_ec2_stage, (proc { fetch(:stage) })
