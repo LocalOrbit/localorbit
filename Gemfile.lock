@@ -93,8 +93,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_geocodable (2.0.3)
-      graticule (>= 2.0.0)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     arel (6.0.4)
@@ -423,10 +421,6 @@ GEM
     grape-swagger (0.10.4)
       grape (>= 0.8.0)
       grape-entity (< 0.5.0)
-    graticule (2.7.2)
-      activesupport
-      i18n
-      nokogiri-happymapper (>= 0.5.9)
     guard (2.14.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -536,8 +530,6 @@ GEM
     newrelic_rpm (5.2.0.345)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
-    nokogiri-happymapper (0.8.1)
-      nokogiri (~> 1.5)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -856,7 +848,6 @@ DEPENDENCIES
   active_record_query_trace
   active_record_union
   activerecord-import
-  acts_as_geocodable
   attr_encrypted (~> 3.0.0)
   audited-activerecord
   awesome_nested_set
@@ -894,7 +885,6 @@ DEPENDENCIES
   grape
   grape-active_model_serializers
   grape-swagger
-  graticule
   groupdate!
   guard-konacha-rails
   guard-rspec

@@ -28,7 +28,6 @@ gem 'wysihtml5-rails'
 gem 'active_model_serializers'
 gem 'active_record_query_trace'
 gem 'active_record_union'
-gem 'acts_as_geocodable'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
 gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
@@ -43,7 +42,6 @@ gem 'dragonfly-s3_data_store'
 gem 'draper'
 gem 'figaro'
 gem 'font_assets'
-gem 'graticule'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
 gem 'interactor-rails', '< 3.0'
 gem 'interactor', '< 3.0' # We are not ready for 3 yet
@@ -57,6 +55,7 @@ gem 'postgres_ext'
 gem 'rack-canonical-host'
 gem 'ransack'
 gem 'recaptcha'
+# RAILS42 TODO: gem 'responders', '~> 2.0'
 gem 'simpleidn'
 gem 'stripe', '5.14.0'
 gem 'stripe_event', '2.3.0'
@@ -83,6 +82,7 @@ gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 gem 'turbolinks'
 
 install_if -> { RUBY_PLATFORM =~ /darwin/ } do
+  # Maybe try 0.12.5.4 if run into issues
   gem 'wkhtmltopdf-binary', '0.12.5.1'
 end
 install_if -> { ENV['ON_HEROKU'] == 'true' } do
