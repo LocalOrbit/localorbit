@@ -91,7 +91,7 @@ describe ProductsController do
 
     def search(query)
       get :search, q: query
-      JSON.parse(response.body)["products"]
+      JSON.parse(response.body)
     end
 
     it "requires at least four characters" do
