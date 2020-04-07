@@ -568,7 +568,7 @@ GEM
     platform-api (2.0.0)
       heroics (~> 0.0.22)
       moneta (~> 0.8.1)
-    polyamorous (1.1.0)
+    polyamorous (1.3.3)
       activerecord (>= 3.0)
     powerpack (0.1.2)
     pry (0.11.3)
@@ -640,7 +640,7 @@ GEM
       rake
     raindrops (0.17.0)
     rake (13.0.1)
-    ransack (1.3.0)
+    ransack (1.6.4)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -921,7 +921,7 @@ DEPENDENCIES
   rails (~> 4.2.11.1)
   rails_12factor
   rails_view_annotator
-  ransack
+  ransack (= 1.6.4)
   react-rails
   recaptcha
   rollbar
