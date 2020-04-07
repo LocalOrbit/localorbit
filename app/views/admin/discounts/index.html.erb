@@ -19,12 +19,12 @@
     <thead class="stickable">
       <tr>
         <% if current_user.multi_market_membership? %>
-          <th><%= sort_link(@q, "market_name", "Market") %></th>
+          <th><%= sort_link(@q, "market_name", "Market", hide_indicator: true) %></th>
         <% end %>
-        <th><%= sort_link(@q, :name, "Name") %></th>
-        <th><%= sort_link(@q, :code, "Code") %></th>
-        <th><%= sort_link(@q, :type, "Type") %></th>
-        <th><%= sort_link(@q, :discount, "Amount") %></th>
+        <th><%= sort_link(@q, :name, "Name", hide_indicator: true) %></th>
+        <th><%= sort_link(@q, :code, "Code", hide_indicator: true) %></th>
+        <th><%= sort_link(@q, :type, "Type", hide_indicator: true) %></th>
+        <th><%= sort_link(@q, :discount, "Amount", hide_indicator: true) %></th>
         <th>Uses</th>
         <th>Available</th>
         <th></th>
