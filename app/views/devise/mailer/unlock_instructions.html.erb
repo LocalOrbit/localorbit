@@ -10,4 +10,4 @@
 
 <p>Click the link below to unlock your account:</p>
 
-<p><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @token, host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %></p>
+<p><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @token, host: (@market ? @market.domain : "app.#{ENV.fetch('DOMAIN')}")) %></p>

@@ -13,7 +13,7 @@
 <p>Here's the information you'll need to access your site:</p>
 
 <table>
-	<tr><th>Website</th><td><a class="lo_bigger_bolder" href="<%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %>"><%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %></a></td></tr>
+	<tr><th>Website</th><td><a class="lo_bigger_bolder" href="<%= root_url(host: (@market ? @market.domain : "app.#{ENV.fetch('DOMAIN')}")) %>"><%= root_url(host: (@market ? @market.domain : "app.#{ENV.fetch('DOMAIN')}")) %></a></td></tr>
 	<tr><th>Username</th><td><%= @market.contact_email %></td></tr>
 </table>
 

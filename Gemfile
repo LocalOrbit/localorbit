@@ -7,6 +7,9 @@ end
 
 ruby '2.4.10'
 
+# This needs to load before other gems
+gem 'dotenv-rails', require: 'dotenv/rails-now'
+
 gem 'rails', '~> 4.2.11.1'
 
 gem 'pg', '~> 0.21.0'
@@ -40,7 +43,6 @@ gem 'devise_invitable'
 gem 'devise_masquerade'
 gem 'dragonfly-s3_data_store'
 gem 'draper'
-gem 'figaro'
 gem 'font_assets'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
 gem 'interactor-rails', '< 3.0'
