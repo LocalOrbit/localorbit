@@ -15,6 +15,7 @@ See the `docs/` directory for more documentation.
 1. `bundle`
 1. `cp config/application.yml{.example,}` and modify if needed, see [Environment variables](#environment_variables) below
 1. `cp config/database.yml{.example,}` and modify if needed (Some modification is probably necessary. Try adding `template: template0`)
+1. `cp .env.sample .env` and customize with your own api keys, etc.
 1. `yarn`
 1. `rake db:setup` - runs `db:create`, `db:schema:load` and `db:seed`
 1. `rake db:seed:development` - See [Test Accounts](#test-accounts) section for usernames and passwords

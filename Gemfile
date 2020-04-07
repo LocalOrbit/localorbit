@@ -7,6 +7,9 @@ end
 
 ruby '2.4.10'
 
+# This needs to load before other gems
+gem 'dotenv-rails', require: 'dotenv/rails-now'
+
 gem 'rails', '~> 4.2.11.1'
 
 gem 'pg', '~> 0.21.0'
