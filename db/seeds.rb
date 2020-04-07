@@ -9,7 +9,7 @@
 #
 
 # Admin
-ap 'creating admin organization...'
+puts 'creating admin organization...'
 admin_org = Organization.find_or_initialize_by(name: 'Admin Org', org_type: Organization::TYPE_ADMIN)
 admin_org.allow_purchase_orders = true
 admin_org.can_sell = false
@@ -17,7 +17,7 @@ admin_org.active = true
 admin_org.needs_activated_notification = false
 admin_org.save!
 
-ap 'creating admin user... (email : admin@example.com)'
+puts 'creating admin user... (email : admin@example.com)'
 admin_user = User.find_or_create_by!(email: "admin@example.com") {|user|
   user.password = "password1"
   user.password_confirmation = "password1"
@@ -25,34 +25,34 @@ admin_user = User.find_or_create_by!(email: "admin@example.com") {|user|
   user.confirmed_at = Time.current
 }
 
-ap 'associating admin user to organization...'
+puts 'associating admin user to organization...'
 unless admin_org.users.include?(admin_user)
   admin_org.users << admin_user
   admin_org.save!
 end
 
-ap 'creating Springfield market'
+puts 'creating Springfield market'
 Market.where(subdomain:"springfield").exists? || Market.create(
   name:"Springfield Market",
   subdomain:"springfield"
 )
 
-ap 'importing taxonomy...'
+puts 'importing taxonomy...'
 ImportLegacyTaxonomy.run(File.expand_path('../taxonomy.csv', __FILE__))
-ap 'importing role actions...'
+puts 'importing role actions...'
 ImportRoleActions.run(File.expand_path('../role_actions.csv', __FILE__))
 
-ap 'creating base units...'
+puts 'creating base units...'
 Unit.find_or_create_by!(singular: 'Pound', plural: 'Pounds')
 Unit.find_or_create_by!(singular: 'Bushel', plural: 'Bushels')
 Unit.find_or_create_by!(singular: 'Crate', plural: 'Crates')
 Unit.find_or_create_by!(singular: 'Bunch', plural: 'Bunches')
 Unit.find_or_create_by!(singular: 'Box', plural: 'Boxes')
 
-ap 'creating base plans...'
+puts 'creating base plans...'
 Plan.create(name: "Start Up")
 Plan.create(name: "Grow",     cross_selling: true, discount_codes: true, custom_branding: true)
 Plan.create(name: "Accelerate", cross_selling: true, discount_codes: true, custom_branding: true, advanced_pricing: true,
   advanced_inventory: true, promotions: true, order_printables: true, packing_labels: true, sellers_edit_orders: true)
 
-ap '...and done seeding!'
+puts '...and done seeding!'
