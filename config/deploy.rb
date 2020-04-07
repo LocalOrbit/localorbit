@@ -13,7 +13,7 @@ set :passenger_restart_command, 'PASSENGER_INSTANCE_REGISTRY_DIR=/var/run/passen
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"
-set :deploy_to, '/srv/www/localorbit.com'
+set :deploy_to, '/srv/www/app.localorbit.com'
 set :release_path, deploy_path.join('localorbit')
 
 set :migration_role, :migrator
