@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   get '*path', constraints: NonMarketDomain.new, format: false,
     to: redirect {|params, request|
-      "#{request.protocol}app.#{Figaro.env.domain}/#{params[:path]}"
+      "#{request.protocol}app.#{ENV.fetch('DOMAIN')}/#{params[:path]}"
     }
 
   devise_for :users, skip: [:registrations],

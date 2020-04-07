@@ -35,7 +35,7 @@ See the `docs/` directory for more documentation.
 
 ### Environment variables
 
-`ENV` is generally accessed via [figaro](https://github.com/laserlemon/figaro) in application code. Figaro enforces presence of required `ENV` vars via [`config/initializers/figaro.rb`](./config/figaro.rb). In `development` and local `test` environments we populate/customize `ENV` via figaro with `config/application.yml` (see an [example application.yml](./config/application.yml.example)). For Heroku `staging` and `production` environments the `ENV` vars are populated with [Heroku cli](https://devcenter.heroku.com/articles/config-vars). For [CircleCI](https://circleci.com/gh/LocalOrbit), sensitive `ENV` vars like API keys and other secrets are managed via the [Circle CI web application](https://circleci.com/gh/LocalOrbit/localorbit/edit#env-vars), and non-sensitive `ENV` vars are managed via the [`.circleci/config.yml`](./.circleci/config.yml).
+`ENV` is generally accessed via [dotenv](https://github.com/bkeepers/dotenv). For Heroku `staging` and `production` environments the `ENV` vars are populated with [Heroku cli](https://devcenter.heroku.com/articles/config-vars). For [CircleCI](https://circleci.com/gh/LocalOrbit), sensitive `ENV` vars like API keys and other secrets are managed via the [Circle CI web application](https://circleci.com/gh/LocalOrbit/localorbit/edit#env-vars), and non-sensitive `ENV` vars are managed via the [`.circleci/config.yml`](./.circleci/config.yml).
 
 ### Production Setup
 

@@ -26,6 +26,7 @@ dragonfly.log
 /tempfiles/*
 
 # Ignore application configuration
+.env
 /config/application.yml
 /dragonfly
 public/system/dragonfly/development

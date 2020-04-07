@@ -52,7 +52,7 @@
         <% if market.managers.first.nil?  || !current_user.admin? %>
         <td class="contact"><%= market.contact_name %></td>
         <% else %>
-        <td class="contact"><%= link_to market.contact_name, user_masquerade_url(id: market.managers.first.id, host: market.try(:domain) || Figaro.env.domain), class: "contact" %></td>
+        <td class="contact"><%= link_to market.contact_name, user_masquerade_url(id: market.managers.first.id, host: market.try(:domain) || ENV.fetch('DOMAIN')), class: "contact" %></td>
         <% end %>
         <td><%= market.contact_phone %></td>
         <% if current_user.admin? %>

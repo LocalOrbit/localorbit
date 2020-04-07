@@ -272,6 +272,8 @@ describe OrderMailer do
 
       it 'no email is sent' do
         expect(notification).to be_kind_of(ActionMailer::Base::NullMail)
+
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
       end
     end
 

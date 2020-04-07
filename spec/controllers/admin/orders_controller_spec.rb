@@ -14,7 +14,7 @@ describe Admin::OrdersController do
     let(:upload_queue) { 'true' }
 
     before do
-      allow(Figaro.env).to receive(:use_upload_queue).and_return(upload_queue)
+      allow(ENV).to receive(:fetch).with('UPLOAD_QUEUE').and_return(upload_queue)
       params = {
         format: format,
         q: {
