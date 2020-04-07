@@ -1,7 +1,7 @@
 require 'aws_config'
 
 set :stage, :staging
-set :branch, :aws_deploy
+set :branch, :build
 set :rails_env, :staging
 
 set :deploy_to, '/srv/www/localorbit.com'
@@ -19,7 +19,7 @@ set :aws_ec2_regions, [AWSConfig.lo_staging.region]
 
 # Application name to match application tag.
 # set :aws_ec2_application, (proc { fetch(:application) })
-set :aws_ec2_application, 'localorbit'
+set :aws_ec2_application, 'lo'
 
 # Stage to match stage tag.
 set :aws_ec2_stage, (proc { fetch(:stage) })
