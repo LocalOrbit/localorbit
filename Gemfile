@@ -5,9 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.3.8'
+ruby '2.4.10'
 
-gem 'rails', '~> 4.1.11'
+gem 'rails', '~> 4.2.11.1'
 
 gem 'pg', '~> 0.21.0'
 
@@ -36,7 +36,7 @@ gem 'color'
 gem 'countries'
 gem 'csv_builder'
 gem 'delayed_job_active_record'
-gem 'devise', '~> 3.5.10'
+gem 'devise'
 gem 'devise_invitable'
 gem 'devise_masquerade'
 gem 'dragonfly-s3_data_store'
