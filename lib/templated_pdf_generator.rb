@@ -9,7 +9,7 @@ class TemplatedPdfGenerator
         locals: locals)
 
       # pdf_settings = pdf_settings.merge(ZeroMargins)
-      if Figaro.env.debug == 'ON'
+      if ENV.fetch('DEBUG') == 'ON'
         pref = ">>> DEBUG TemplatedPdfGenerator:"
         puts "#{pref} HTML FROM template=#{template}, request=#{request.inspect} (base_url=#{request.base_url}) locals=#{locals.inspect}"
         puts html

@@ -14,7 +14,7 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
 
-    success = verify_recaptcha(action: 'registration', minimum_score: 0.2, secret_key: Figaro.env.recaptcha_secret_key_v3)
+    success = verify_recaptcha(action: 'registration', minimum_score: 0.2, secret_key: ENV.fetch('RECAPTCHA_SECRET_KEY_V3'))
     checkbox_success = verify_recaptcha(model: @registration) unless success
 
     if (success || checkbox_success) && @registration.save

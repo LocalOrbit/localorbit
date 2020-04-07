@@ -7,6 +7,9 @@ end
 
 ruby '2.4.10'
 
+# This needs to load before other gems
+gem 'dotenv-rails', require: 'dotenv/rails-now'
+
 gem 'rails', '~> 4.2.11.1'
 
 gem 'pg', '~> 0.21.0'
@@ -40,7 +43,6 @@ gem 'devise_invitable'
 gem 'devise_masquerade'
 gem 'dragonfly-s3_data_store'
 gem 'draper'
-gem 'figaro'
 gem 'font_assets'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
 gem 'interactor-rails', '< 3.0'
@@ -80,12 +82,13 @@ gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
 
-install_if -> { RUBY_PLATFORM =~ /darwin/ } do
+install_if -> { ENV['ON_HEROKU'] != 'true' } do
   # Maybe try 0.12.5.4 if run into issues
   gem 'wkhtmltopdf-binary', '0.12.5.1'
 end
 install_if -> { ENV['ON_HEROKU'] == 'true' } do
   gem 'wkhtmltopdf-heroku'
+  gem 'rails_12factor'
 end
 
 # Product import/export
@@ -98,6 +101,7 @@ gem 'grape' # API v2
 gem 'grape-active_model_serializers' # API v2
 gem 'rack-cors', :require => 'rack/cors' # API v2
 gem 'grape-swagger' # API V2, documentation
+gem 'puma'
 
 gem 'rollbar'
 
@@ -109,7 +113,14 @@ group :doc do
 end
 
 group :development do
+  gem 'aws_config'
   gem 'bullet'
+  gem 'capistrano'
+  gem 'capistrano-aws', require: false
+  gem 'capistrano-bundler'
+  gem 'capistrano-git_deploy', github: 'thermistor/capistrano-git_deploy', require: false
+  gem 'capistrano-passenger'
+  gem 'capistrano-rails'
   gem 'ultrahook'
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -120,7 +131,6 @@ group :development do
   gem 'rails_view_annotator'
   gem 'rubycritic', require: false
   gem 'mailcatcher'
-  gem 'unicorn'
 
   # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
   gem 'rack-mini-profiler'
@@ -172,10 +182,5 @@ group :production, :staging do
   gem 'newrelic-dragonfly'
   #gem 'passenger'
   gem 'rack-cache', require: 'rack/cache'
-  gem 'rails_12factor'
   gem 'platform-api'
-end
-
-group :production, :staging, :development do
-  gem 'puma'
 end

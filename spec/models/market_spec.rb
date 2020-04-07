@@ -344,7 +344,7 @@ describe Market do
     let(:market) { build(:market) }
 
     it "is is the subdomain with the canonical domain" do
-      expect(market.domain).to eq("#{market.subdomain}.#{Figaro.env.domain!}")
+      expect(market.domain).to eq("#{market.subdomain}.#{ENV.fetch('DOMAIN')!}")
     end
   end
 
