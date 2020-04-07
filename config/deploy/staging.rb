@@ -4,9 +4,6 @@ set :stage, :staging
 set :branch, :build
 set :rails_env, :staging
 
-set :deploy_to, '/srv/www/localorbit.com'
-set :release_path, deploy_path.join('localorbit')
-
 Aws.config.update(
   credentials: Aws::Credentials.new(
     AWSConfig.lo_staging.aws_access_key_id,

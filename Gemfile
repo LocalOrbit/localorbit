@@ -49,7 +49,8 @@ gem 'interactor-rails', '< 3.0'
 gem 'interactor', '< 3.0' # We are not ready for 3 yet
 gem 'jbuilder'
 gem 'jwt'
-gem 'kaminari'                      # Paginator
+gem 'kaminari'
+gem 'mini_racer'
 gem 'pdfkit'
 gem 'periscope-activerecord'
 gem 'pg_search'
