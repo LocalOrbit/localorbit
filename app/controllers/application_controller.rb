@@ -348,8 +348,8 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:accept_invitation).concat [:name, :email]
-    devise_parameter_sanitizer.permit(:account_update).concat [:name]
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:name, :email])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
 
   def redirect_to_url

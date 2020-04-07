@@ -36,11 +36,11 @@
   <table class="sortable">
     <thead class="stickable">
     <tr>
-      <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
-      <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
-      <%= content_tag :th, sort_link(@q, :delivery_status, "Delivery Status") %>
-      <%= content_tag :th, sort_link(@q, :payment_status, "Payment") %>
-      <%= content_tag :th, sort_link(@q, :total_cost, "Order Total") %>
+      <%= content_tag :th, sort_link(@q, :order_number, "Order #", hide_indicator: true) %>
+      <%= content_tag :th, sort_link(@q, :placed_at, "Order Date", hide_indicator: true) %>
+      <%= content_tag :th, sort_link(@q, :delivery_status, "Delivery Status", hide_indicator: true) %>
+      <%= content_tag :th, sort_link(@q, :payment_status, "Payment", hide_indicator: true) %>
+      <%= content_tag :th, sort_link(@q, :total_cost, "Order Total", hide_indicator: true) %>
     </tr>
     </thead>
     <tbody>
