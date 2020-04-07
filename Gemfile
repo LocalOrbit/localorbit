@@ -111,7 +111,14 @@ group :doc do
 end
 
 group :development do
+  gem 'aws_config'
   gem 'bullet'
+  gem 'capistrano'
+  gem 'capistrano-aws', require: false
+  gem 'capistrano-bundler'
+  gem 'capistrano-git_deploy', github: 'thermistor/capistrano-git_deploy', require: false
+  gem 'capistrano-passenger'
+  gem 'capistrano-rails'
   gem 'ultrahook'
   gem 'spring'
   gem 'spring-commands-rspec'
