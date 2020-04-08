@@ -1,0 +1,5 @@
+Welcome to <%= @market.name %>. You are all set.
+
+The <%= @market.name %> Market Manager has taken you off the waiting list and you are officially ready to shop the market when it's open next.
+
+Log in to Your Account: <%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %>

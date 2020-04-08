@@ -13,7 +13,11 @@
     <td class="can-sell"><%= organization.can_sell? ? "Supplier" : "Buyer" %></td>
     <td class="action">
       <% if current_user.admin? || current_user.can_manage_market?(current_market) %>
-      <%= toggle_active_button(organization) %>
+        <%= toggle_active_button(organization) %>
+      <% end %>
+
+      <% if current_market.waiting_list_enabled? && (current_user.admin? || current_user.can_manage_market?(current_market)) %>
+        <%= toggle_waiting_list_button(organization) %>
       <% end %>
 
       <% if organization.markets.managed_by(current_user).count > 1 %>

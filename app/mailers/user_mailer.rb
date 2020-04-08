@@ -45,6 +45,17 @@ class UserMailer < BaseMailer
     )
   end
 
+  def organization_off_waiting_list(organization, market)
+    @market = market || organization.markets.last
+    @organization = organization
+    @recipients = @organization.users.map(&:email)
+
+    mail(
+      to: @recipients,
+      subject: "You're off the #{@market.name} waiting list"
+    )
+  end
+
   def market_request_confirmation(market)
     @market = market
 

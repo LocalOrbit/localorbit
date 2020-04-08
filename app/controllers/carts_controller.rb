@@ -1,4 +1,5 @@
 class CartsController < ApplicationController
+  before_action :require_not_on_waiting_list
   before_action :require_market_open
   before_action :require_current_organization
   before_action :require_organization_location

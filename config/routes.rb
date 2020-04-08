@@ -164,6 +164,7 @@ Rails.application.routes.draw do
         get :delivery_schedules
         get :market_memberships
         get :available_inventory
+        patch :update_waiting_list
       end
     end
 

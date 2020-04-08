@@ -132,6 +132,16 @@
         </div>
       </div>
 
+      <% if current_market.waiting_list_enabled? %>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <label>Waiting List Status</label><br>
+            <%= f.check_box :on_waiting_list %>
+            <%= f.label :on_waiting_list, "Organization is on waiting list to shop" %>
+          </div>
+        </div>
+      <% end %>
+
       <% if current_market.is_buysell_market? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered" id="allowed-payment-methods">

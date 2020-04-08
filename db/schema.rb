@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200202225047) do
+ActiveRecord::Schema.define(version: 20200408034038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -624,6 +624,8 @@ ActiveRecord::Schema.define(version: 20200202225047) do
     t.string   "background_img_uid"
     t.boolean  "allow_signups",                                          default: true
     t.string   "qb_integration_type"
+    t.boolean  "waiting_list_enabled",                                   default: false
+    t.text     "waiting_list_note"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -847,6 +849,7 @@ ActiveRecord::Schema.define(version: 20200202225047) do
     t.string   "contact_email"
     t.string   "qb_check_name"
     t.text     "notes"
+    t.boolean  "on_waiting_list",                                      default: false
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree

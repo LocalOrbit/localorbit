@@ -315,6 +315,17 @@ class ApplicationController < ActionController::Base
     redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
   end
 
+  def require_not_on_waiting_list
+    return if !current_market.waiting_list_enabled?
+    return if current_user.try(:market_manager?)
+    return if adding_items_to_existing_order?
+
+    if current_organization.try(:on_waiting_list?)
+      render "shared/waiting_list"
+      return
+    end
+  end
+
   def require_current_supplier
     return unless current_supplier.nil?
     redirect_to new_sessions_supplier_path(redirect_back_to: request.original_url)

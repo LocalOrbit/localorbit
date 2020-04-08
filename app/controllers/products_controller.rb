@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   before_action :check_order_id, only: [:purchase, :index]
   before_action :require_current_supplier, only: [:purchase]
   before_action :require_selected_market
+  before_action :require_not_on_waiting_list
   before_action :require_market_open
   before_action :require_current_organization
   before_action :require_organization_location

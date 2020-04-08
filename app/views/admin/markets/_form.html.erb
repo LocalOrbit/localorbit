@@ -112,9 +112,22 @@
 
   <div class="field">
     <%= f.label :store_closed_note %>
-    <span class="tooltip pull-right" data-tooltip="This information will appear on the Market Closed page"></span>
+    <span class="tooltip pull-right" data-tooltip="This note will appear when a buyer visits the Order page when the store is not open"></span>
     <br>
     <%= f.text_area :store_closed_note, rows: 2, class: "column--full"  %>
+  </div>
+
+  <div class="row row--field">
+    <label>Waiting List</label><br>
+    <%= f.check_box :waiting_list_enabled %>
+    <%= f.label :waiting_list_enabled, "Automatically put newly requested accounts on the waiting list" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :waiting_list_note %>
+    <span class="tooltip pull-right" data-tooltip="This note will appear when a buyer on the waiting list visits the Order page"></span>
+    <br>
+    <%= f.text_area :waiting_list_note, rows: 2, class: "column--full"  %>
   </div>
 
   <% if @market.new_record? || policy(:market_cross_selling).index? %>
@@ -196,7 +209,7 @@
         <% end %>
       </div>
     </div>
-  <% end %>  
+  <% end %>
   <% if current_user.admin? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">

@@ -112,6 +112,8 @@ class Admin::MarketsController < AdminController
       :auto_activate_organizations,
       :closed,
       :store_closed_note,
+      :waiting_list_enabled,
+      :waiting_list_note,
       :sellers_edit_orders,
       :country,
       :product_label_format,

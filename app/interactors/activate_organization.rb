@@ -8,5 +8,9 @@ class ActivateOrganization
     if market.auto_activate_organizations?
       organization.update!(active: true, needs_activated_notification: false)
     end
+
+    if market.waiting_list_enabled?
+      organization.update!(on_waiting_list: true)
+    end
   end
 end

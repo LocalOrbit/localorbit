@@ -1,7 +1,7 @@
 module ToggleActiveHelper
   def toggle_active_button(resource, parent: nil)
     return unless resource.respond_to?(:active?)
-    
+
     link_to_opts = {
       method: :patch,
       class: "btn btn--small btn--save"
@@ -29,5 +29,16 @@ module ToggleActiveHelper
     end
 
     link_to(title, path, link_to_opts)
+  end
+
+  def toggle_waiting_list_button(organization)
+    if (organization.on_waiting_list?)
+      title = "Remove From Waiting List"
+    else
+      title = "Add To Waiting List"
+    end
+
+    path = [:update_waiting_list, :admin, organization, on_waiting_list: !organization.on_waiting_list?]
+    link_to(title, path, { method: :patch, class: "btn btn--small btn--save"})
   end
 end

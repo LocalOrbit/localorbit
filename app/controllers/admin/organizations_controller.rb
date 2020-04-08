@@ -96,6 +96,13 @@ module Admin
       redirect_to :back, notice: "Updated #{@organization.name}"
     end
 
+    def update_waiting_list
+      @organization.update_attribute(:on_waiting_list, params[:on_waiting_list])
+
+      NotifyOrganizationOffWaitingList.perform(organization: @organization)
+      redirect_to :back, notice: "Updated #{@organization.name}"
+    end
+
     def update_org_type(can_sell)
       if can_sell == true || can_sell == 'true' || can_sell == '1'
         Organization::TYPE_SUPPLIER
@@ -153,6 +160,7 @@ module Admin
         :allow_credit_cards,
         :allow_ach,
         :active,
+        :on_waiting_list,
         :buyer_org_type,
         :ownership_type,
         :non_profit,
