@@ -59,7 +59,7 @@ gem 'ransack', '1.6.4'
 gem 'recaptcha'
 # RAILS42 TODO: gem 'responders', '~> 2.0'
 gem 'simpleidn'
-gem 'skylight'
+# gem 'skylight'
 gem 'stripe', '5.14.0'
 gem 'stripe_event', '2.3.0'
 gem 'font-awesome-rails'
@@ -91,6 +91,7 @@ end
 # install_if -> { ENV['ON_HEROKU'] == 'true' } do
 #   gem 'wkhtmltopdf-heroku'
 #   gem 'rails_12factor'
+#   gem 'platform-api'
 # end
 
 # Product import/export
@@ -180,5 +181,4 @@ group :production, :staging do
   gem 'newrelic-dragonfly'
   #gem 'passenger'
   # gem 'rack-cache', require: 'rack/cache'
-  gem 'platform-api'
 end
