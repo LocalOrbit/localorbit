@@ -670,11 +670,6 @@ GEM
       loofah (~> 2.3)
     rails-observers (0.1.2)
       activemodel (~> 4.0)
-    rails_12factor (0.0.2)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.2)
-    rails_stdout_logging (0.0.3)
     rails_view_annotator (0.0.10)
     railties (4.2.11.1)
       actionpack (= 4.2.11.1)
@@ -868,7 +863,6 @@ GEM
       crack (>= 0.3.2)
       hashdiff
     wkhtmltopdf-binary (0.12.5.1)
-    wkhtmltopdf-heroku (2.12.3.0)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
     wysiwyg-rails (1.2.8)
@@ -971,7 +965,6 @@ DEPENDENCIES
   rack-mini-profiler
   railroady
   rails (~> 4.2.11.1)
-  rails_12factor
   rails_view_annotator
   ransack (= 1.6.4)
   react-rails
@@ -1009,7 +1002,6 @@ DEPENDENCIES
   webdrivers
   webmock
   wkhtmltopdf-binary (= 0.12.5.1)
-  wkhtmltopdf-heroku
   wysihtml5-rails
   wysiwyg-rails
 

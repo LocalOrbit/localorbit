@@ -87,10 +87,10 @@ install_if -> { ENV['ON_HEROKU'] != 'true' } do
   # Maybe try 0.12.5.4 if run into issues
   gem 'wkhtmltopdf-binary', '0.12.5.1'
 end
-install_if -> { ENV['ON_HEROKU'] == 'true' } do
-  gem 'wkhtmltopdf-heroku'
-  gem 'rails_12factor'
-end
+# install_if -> { ENV['ON_HEROKU'] == 'true' } do
+#   gem 'wkhtmltopdf-heroku'
+#   gem 'rails_12factor'
+# end
 
 # Product import/export
 gem 'rubyXL', require: false # XLSX
