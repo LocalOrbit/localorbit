@@ -175,9 +175,9 @@ group :test do
   gem 'stripe-ruby-mock', '~> 2.5.8', :require => 'stripe_mock'
 end
 
-# group :production, :staging do
-  # gem 'newrelic_rpm'
-  # gem 'newrelic-dragonfly'
+group :production, :staging do
+  gem 'newrelic_rpm'
+  gem 'newrelic-dragonfly'
   #gem 'passenger'
   # gem 'rack-cache', require: 'rack/cache'
-# end
+end
