@@ -142,7 +142,7 @@ group :development do
   gem 'stackprof'
 end
 
-group :development, :test do
+group :development, :test, :build do
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'
