@@ -440,8 +440,6 @@ GEM
       nokogiri (>= 1.5.11, < 2.0.0)
     font-awesome-rails (4.4.0.0)
       railties (>= 3.2, < 5.0)
-    font_assets (0.1.11)
-      rack
     formatador (0.2.5)
     fssm (0.2.10)
     globalid (0.4.2)
@@ -566,6 +564,10 @@ GEM
     net-scp (2.0.0)
       net-ssh (>= 2.6.5, < 6.0.0)
     net-ssh (5.2.0)
+    newrelic-dragonfly (0.0.4)
+      dragonfly
+      newrelic_rpm
+    newrelic_rpm (5.2.0.345)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     notiffany (0.1.1)
@@ -781,6 +783,10 @@ GEM
     skinny (0.2.3)
       eventmachine (~> 1.0.0)
       thin (~> 1.5.0)
+    skylight (4.2.3)
+      skylight-core (= 4.2.3)
+    skylight-core (4.2.3)
+      activesupport (>= 4.2.0)
     slop (3.6.0)
     spreadsheet (1.0.3)
       ruby-ole (>= 1.0)
@@ -908,7 +914,6 @@ DEPENDENCIES
   fire_poll (= 1.2.0)
   flamegraph
   font-awesome-rails
-  font_assets
   grape
   grape-active_model_serializers
   grape-swagger
@@ -931,6 +936,8 @@ DEPENDENCIES
   memory_profiler
   migration_data
   mini_racer
+  newrelic-dragonfly
+  newrelic_rpm
   omniauth-stripe-connect
   pdfkit
   periscope-activerecord
@@ -966,6 +973,7 @@ DEPENDENCIES
   selenium-webdriver (= 3.141.0)
   simplecov
   simpleidn
+  skylight
   slop (~> 3.0)
   spreadsheet
   spring

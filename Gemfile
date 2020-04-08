@@ -43,7 +43,6 @@ gem 'devise_invitable'
 gem 'devise_masquerade'
 gem 'dragonfly-s3_data_store'
 gem 'draper'
-gem 'font_assets'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
 gem 'interactor-rails', '< 3.0'
 gem 'interactor', '< 3.0' # We are not ready for 3 yet
@@ -59,7 +58,7 @@ gem 'ransack', '1.6.4'
 gem 'recaptcha'
 # RAILS42 TODO: gem 'responders', '~> 2.0'
 gem 'simpleidn'
-# gem 'skylight'
+gem 'skylight'
 gem 'stripe', '5.14.0'
 gem 'stripe_event', '2.3.0'
 gem 'font-awesome-rails'
@@ -176,9 +175,9 @@ group :test do
   gem 'stripe-ruby-mock', '~> 2.5.8', :require => 'stripe_mock'
 end
 
-# group :production, :staging do
-  # gem 'newrelic_rpm'
-  # gem 'newrelic-dragonfly'
+group :production, :staging do
+  gem 'newrelic_rpm'
+  gem 'newrelic-dragonfly'
   #gem 'passenger'
   # gem 'rack-cache', require: 'rack/cache'
-# end
+end
