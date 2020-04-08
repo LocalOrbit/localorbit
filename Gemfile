@@ -182,6 +182,6 @@ group :production, :staging do
   gem 'newrelic_rpm'
   gem 'newrelic-dragonfly'
   #gem 'passenger'
-  gem 'rack-cache', require: 'rack/cache'
+  # gem 'rack-cache', require: 'rack/cache'
   gem 'platform-api'
 end
