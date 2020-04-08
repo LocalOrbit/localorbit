@@ -638,8 +638,6 @@ GEM
     rack (1.6.13)
     rack-accept (0.4.5)
       rack (>= 0.4)
-    rack-cache (1.2)
-      rack (>= 0.4)
     rack-canonical-host (0.1.0)
       addressable
       rack (~> 1.0)
@@ -968,7 +966,6 @@ DEPENDENCIES
   pundit
   quickbooks-ruby!
   quiet_assets
-  rack-cache
   rack-canonical-host
   rack-cors
   rack-mini-profiler
