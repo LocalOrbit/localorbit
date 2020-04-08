@@ -4,9 +4,6 @@ set :stage, :production
 set :branch, :CHANGEME
 set :rails_env, :production
 
-set :deploy_to, '/srv/www/localorbit.com'
-set :release_path, deploy_path.join('localorbit')
-
 Aws.config.update(
   credentials: Aws::Credentials.new(
     AWSConfig.lo_production.aws_access_key_id,
@@ -19,7 +16,7 @@ set :aws_ec2_regions, [AWSConfig.lo_production.region]
 
 # Application name to match application tag.
 # set :aws_ec2_application, (proc { fetch(:application) })
-set :aws_ec2_application, 'localorbit'
+set :aws_ec2_application, 'lo'
 
 # Stage to match stage tag.
 set :aws_ec2_stage, (proc { fetch(:stage) })
