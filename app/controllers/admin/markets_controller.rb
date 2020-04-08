@@ -110,6 +110,7 @@ class Admin::MarketsController < AdminController
       :photo,
       :allow_cross_sell,
       :auto_activate_organizations,
+      :organization_inactive_note,
       :closed,
       :store_closed_note,
       :sellers_edit_orders,
