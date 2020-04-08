@@ -1,3 +1,5 @@
+require 'dotenv/tasks'
+
 task notify_rollbar: :dotenv do
   on roles(:app) do |_h|
     revision = `git log -n 1 --pretty=format:"%H"`
