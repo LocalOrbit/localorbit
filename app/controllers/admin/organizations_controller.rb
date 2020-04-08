@@ -99,8 +99,11 @@ module Admin
     def update_waiting_list
       @organization.update_attribute(:on_waiting_list, params[:on_waiting_list])
 
-      NotifyOrganizationOffWaitingList.perform(organization: @organization)
-      redirect_to :back, notice: "Updated #{@organization.name}"
+      if NotifyOrganizationOffWaitingList.perform(organization: @organization)
+        redirect_to :back, notice: "Updated #{@organization.name}"
+      else
+        redirect_to :back, alert: "Could not update organization #{@organization.name}"
+      end
     end
 
     def update_org_type(can_sell)

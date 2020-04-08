@@ -322,7 +322,6 @@ class ApplicationController < ActionController::Base
 
     if current_organization.try(:on_waiting_list?)
       render "shared/waiting_list"
-      return
     end
   end
 
