@@ -59,6 +59,7 @@ gem 'ransack', '1.6.4'
 gem 'recaptcha'
 # RAILS42 TODO: gem 'responders', '~> 2.0'
 gem 'simpleidn'
+gem 'skylight'
 gem 'stripe', '5.14.0'
 gem 'stripe_event', '2.3.0'
 gem 'font-awesome-rails'
@@ -172,10 +173,6 @@ group :test do
   gem 'fire_poll', '1.2.0'
   gem 'capybara-screenshot'
   gem 'stripe-ruby-mock', '~> 2.5.8', :require => 'stripe_mock'
-end
-
-group :staging do
-  gem 'skylight'
 end
 
 group :production, :staging do
