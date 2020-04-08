@@ -23,7 +23,7 @@ feature "A user navagating markets" do
       switch_to_subdomain "not-real-ever"
       visit "/"
       host = URI.parse(page.current_host).host
-      expect(host).to eq("app.#{Figaro.env.domain}")
+      expect(host).to eq("app.#{ENV.fetch('DOMAIN')}")
     end
 
     scenario "a visitor to a market subdomain sees the sign in page" do

@@ -232,7 +232,7 @@
   <div class="overlay"></div>
 
   <script>RAILS_ENV = '<%= Rails.env %>';</script>
-  <script>DEBUG = <%= Figaro.env.debug == 'ON' ? "true" : "false" %>;</script>
+  <script>DEBUG = <%= ENV.fetch('DEBUG') == 'ON' ? "true" : "false" %>;</script>
 
   <%= javascript_include_tag "application" %>
   <%# FYI The includes below include js stubbed out of application.js and allow supression of same singletons in website-bridge.html.erb %>

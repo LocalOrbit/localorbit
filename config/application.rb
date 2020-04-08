@@ -27,10 +27,8 @@ module LocalOrbit
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
 
-    Figaro.load
-
-    config.action_mailer.asset_host = Figaro.env.asset_host
-    config.action_mailer.default_url_options = {host: Figaro.env.domain}
+    config.action_mailer.asset_host = ENV.fetch('ASSET_HOST')
+    config.action_mailer.default_url_options = {host: ENV.fetch('DOMAIN')}
 
     config.to_prepare do
       Devise::Mailer.layout "email"
