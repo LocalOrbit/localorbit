@@ -49,6 +49,10 @@ set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 
 namespace :deploy do
   desc 'Restart application'
+
+  task :restart do
+    invoke 'delayed_job:restart'
+  end
 end
 
 after :deploy, :notify_rollbar
