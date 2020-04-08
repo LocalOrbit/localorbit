@@ -82,17 +82,21 @@ Rails.application.configure do
   # SSL config
   config.force_ssl = true
 
-  config.action_mailer.default_url_options = {protocol: 'https', host: "app.#{ENV.fetch('DOMAIN')}"}
+  config.action_mailer.default_url_options = {protocol: 'https', host: ENV.fetch('DOMAIN')}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.mandrillapp.com",
-    port: 587,
-    domain: "localorb.it",
-    authentication: :login,
-    user_name: ENV.fetch('SMTP_USERNAME'),
-    password: ENV.fetch('SMTP_PASSWORD'),
-    enable_starttls_auto: true
+    user_name:      ENV.fetch('MAILTRAP_USERNAME'),
+    password:       ENV.fetch('MAILTRAP_PASSWORD'),
+    address:        'smtp.mailtrap.io',
+    domain:         'smtp.mailtrap.io',
+    port:           '2525',
+    authentication: :cram_md5
   }
+
+  # Enable mailer previews on build
+  # TODO: uncomment this when we get to rails 4.2+
+  # config.action_mailer.show_previews = true
+  # config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
   config.react.variant = :production
 end
