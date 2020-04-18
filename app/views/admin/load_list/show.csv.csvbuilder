@@ -11,7 +11,8 @@ csv << ["Order ID",
         "Buyer",
         "Item",
         "Quantity",
-        "Units",
+        "Unit",
+        "Unit Net Price",
         "Supplier"]
 
 @load_lists.each_with_index do |load_list, index|
@@ -31,6 +32,7 @@ csv << ["Order ID",
       order_item.name,
       order_item.quantity,
       order_item.unit,
+      order_item.quantity.zero? ? 0.0 : (order_item.seller_net_total / order_item.quantity).ceil(2),
       order_item.product.organization.name
     ]
   end
