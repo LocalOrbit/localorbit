@@ -85,7 +85,7 @@ gem 'turbolinks'
 
 install_if -> { ENV['ON_HEROKU'] != 'true' } do
   # Maybe try 0.12.5.4 if run into issues
-  gem 'wkhtmltopdf-binary', '0.12.5.1'
+  gem 'wkhtmltopdf-binary', '0.12.5.4'
 end
 # install_if -> { ENV['ON_HEROKU'] == 'true' } do
 #   gem 'wkhtmltopdf-heroku'
