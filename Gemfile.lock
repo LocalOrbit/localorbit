@@ -855,6 +855,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff
     wkhtmltopdf-binary (0.12.5.4)
+    wkhtmltopdf-heroku (2.12.5.0)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
     wysiwyg-rails (1.2.8)
@@ -992,6 +993,7 @@ DEPENDENCIES
   webdrivers
   webmock
   wkhtmltopdf-binary (= 0.12.5.4)
+  wkhtmltopdf-heroku
   wysihtml5-rails
   wysiwyg-rails
 

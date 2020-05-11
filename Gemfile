@@ -83,10 +83,13 @@ gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
 
-install_if -> { ENV['ON_HEROKU'] != 'true' } do
-  # Maybe try 0.12.5.4 if run into issues
+group :build, :staging, :production do
   gem 'wkhtmltopdf-binary', '0.12.5.4'
 end
+install_if -> { ENV['CI'] } do
+  gem 'wkhtmltopdf-heroku'
+end
+
 # install_if -> { ENV['ON_HEROKU'] == 'true' } do
 #   gem 'wkhtmltopdf-heroku'
 #   gem 'rails_12factor'
