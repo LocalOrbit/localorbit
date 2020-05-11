@@ -9,7 +9,7 @@ See the `docs/` directory for more documentation.
 
 ## Developer Setup
 
-1. Install `ruby 2.3.8` (use a ruby version manage like [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/))
+1. Install `ruby 2.4.10` (use a ruby version manage like [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/))
 1. Clone this repo `git clone git@github.com:LocalOrbit/localorbit.git`, `cd localorbit` into it
 1. Install dependencies (for MacOs) via [Homebrew](https://brew.sh/) with `brew bundle`. Other platforms see requirements in [`Brewfile`](./Brewfile).
 1. `bundle`
@@ -33,11 +33,12 @@ See the `docs/` directory for more documentation.
   2. Configure an API key and secret
   3. [Configure the AWS cli tools](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) (which should already be installed via `brew bundle`.)
 
-### Environment variables
+## Environment variables
 
-`ENV` is generally accessed via [dotenv](https://github.com/bkeepers/dotenv). For Heroku `staging` and `production` environments the `ENV` vars are populated with [Heroku cli](https://devcenter.heroku.com/articles/config-vars). For [CircleCI](https://circleci.com/gh/LocalOrbit), sensitive `ENV` vars like API keys and other secrets are managed via the [Circle CI web application](https://circleci.com/gh/LocalOrbit/localorbit/edit#env-vars), and non-sensitive `ENV` vars are managed via the [`.circleci/config.yml`](./.circleci/config.yml).
+`ENV` is accessed via [dotenv](https://github.com/bkeepers/dotenv). For `build`, `staging` and `production` environments the `ENV` vars are populated via ansible automation, see [localorbit-ansible](https://github.com/thermistor/localorbit-ansible). For [CircleCI](https://circleci.com/gh/LocalOrbit), sensitive `ENV` vars like API keys and other secrets are managed via the [Circle CI web application](https://circleci.com/gh/LocalOrbit/localorbit/edit#env-vars), and non-sensitive `ENV` vars are managed via the [`.circleci/config.yml`](./.circleci/config.yml).
 
-### Production Setup
+
+## Data Setup
 
 * At least one Market must be created before creating Organizations
 
@@ -60,54 +61,44 @@ Password: password1
 Email: admin@example.com
 Password: password1
 
+## Testing
+
+To run rspec tests:
+
+    rspec
+
+or
+
+    rake
+
+[CircleCI](https://circleci.com/gh/LocalOrbit/localorbit/tree/master) auatomatically runs tests on every commit.
+
 ### Javascript Specs
 
 Specs live in spec/javascripts/\*.js.coffee
 
-Run suite on command line:  bundle exec rake konacha:run
-Run suite via browser:  bundle exec rake konacha:serve (then visit http://localhost:3500)
+Run suite on command line:  `bundle exec rake konacha:run`
+Run suite via browser:  `bundle exec rake konacha:serve (then visit http://localhost:3500)`
 Run suite automatically on changes to javascript sources or specs:  bundle exec guard
 
+## Deployment
 
-### Cloning staging for local development
+We have a `build` environment that is setup via the [localorbit-ansible](https://github.com/thermistor/localorbit-ansible) project with Vagrant.
 
-Run `rake db:dump:staging`
+As well there are `staging` and `production` environments which are hosted on AWS. You will need your ssh keys configured and pre-installed on the target environments servers by a colleague as per the `localorbit-ansible` project's instructions before you can deploy.
 
-**WARNING: This will replace EVERYTHING in your development db with what is currently on staging**
+To deploy changes to the the `staging` environment, do the following command from the project directlry. This will deploy new code from the `staging` branch, and restart `passenger` and `delayed_job`.
 
-### Load production data into development or staging
+    bundle exec cap staging deploy
 
-Below is a quick overview, for more granular tasks see [production-copy.rake](lib/tasks/production-copy.rake).
+The command is similar for `build` and `production`, just change the environment, eg.
 
-#### Into development
+    bundle exec cap production deploy
 
-If no existing cleansed production dump, all-in-one go:
+### Error reporting
 
-    rake production_copy:stomp_dev_db DOWNLOAD_NEW=YES REALLY=YES
+Errors are logged at [Rollbar](https://rollbar.com/LocalOrbit/all/items/).
 
-If an existing dump:
-
-    rake production_copy:stomp_dev_db REALLY=YES
-
-Or two step
-
-    rake production_copy:bring_down
-    rake production_copy:stomp_dev_db REALLY=YES
-
-#### Into staging
-
-Load production data into staging via development, will also sync s3 from production to staging:
-
-    rake production_copy:to[staging]
-
-Or if you already have a recent copy of production in development do:
-
-    rake production_copy:push_out[staging]
-
-
-### Heroku Notes
-
-There are _binstub_ helpers in `$RAILS_ROOT/bin` that allow for shortcuts when dealing with Heroku environments. See [binstubs plugin](https://github.com/tpope/heroku-binstubs) for usage & more info.
 ## Contributing
 
 See [development process](docs/development_process.md).
