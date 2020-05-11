@@ -1,7 +1,7 @@
 require 'aws_config'
 
 set :stage, :staging
-set :branch, :build
+set :branch, :staging
 set :rails_env, :staging
 
 Aws.config.update(
