@@ -11,16 +11,23 @@ describe Admin::Financials::InvoicesController do
   describe "#create" do
     context 'sends two invoices' do
       before do
-        post :create, invoice_list_batch_action: "send-selected-invoices", order_id: [order1.id,order2.id]
+        allow(CreateInvoice).to receive(:perform)
+                                  .and_return(instance_double(Interactor::Context, success?: true))
       end
 
       it 'redirects back to list' do
-        # expect(response).to be_success
+        post :create, invoice_list_batch_action: "send-selected-invoices", order_id: [order1.id,order2.id]
         expect(request).to redirect_to("/admin/financials/invoices")
       end
 
       it 'shows right message' do
+        post :create, invoice_list_batch_action: "send-selected-invoices", order_id: [order1.id,order2.id]
         expect(flash[:notice]).to eq('Successfully sent 2 invoices. Sent invoices can be downloaded from the Enter Receipts page.')
+      end
+
+      it 'calls CreateInvoice twice' do
+        expect(CreateInvoice).to receive(:perform).twice
+        post :create, invoice_list_batch_action: "send-selected-invoices", order_id: [order1.id,order2.id]
       end
     end
 
