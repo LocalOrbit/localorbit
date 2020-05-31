@@ -349,7 +349,7 @@ describe "Adding a product", chosen_js: true do
         click_button "Save and Continue"
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
-        expect(page).to have_checked_field("Use Supplier info from my account.")
+        expect(page).not_to have_checked_field("Use Supplier info from my account.")
 
         within(".tabs") do
           expect(page).to have_content("Inventory")
