@@ -123,8 +123,8 @@ feature "sending invoices" do
         # See that we've been redirected to the PDF uri for a BatchInvoice...
         batch_invoice = nil
         patiently do
-          uid = current_path[1..-1]
-          batch_invoice = BatchInvoice.find_by(pdf_uid: uid)
+          pdfid = current_path[-1]
+          batch_invoice = BatchInvoice.find(pdfid)
           expect(batch_invoice).to be
           expect(batch_invoice.pdf).to be
           expect(batch_invoice.pdf.file).to be
