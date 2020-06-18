@@ -1,7 +1,7 @@
 require 'aws_config'
 
 set :stage, :production
-set :branch, :CHANGEME
+set :branch, 'ruby_upgrade_2.4.10'
 set :rails_env, :production
 
 Aws.config.update(
