@@ -101,12 +101,6 @@
       <%= f.check_box :closed, {checked: !f.object.closed?}, 0, 1 %>
       <%= f.label :closed, "This market is open" %>
       <span class="tooltip" data-tooltip="Please contact your administrator if you want to change this status."></span>
-    </div
-    ><div class="field column column--half column--guttered">
-      <label>Organization registration</label><br>
-      <%= f.check_box :auto_activate_organizations %>
-      <%= f.label :auto_activate_organizations, "Auto-activate organizations" %>
-      <span class="tooltip" data-tooltip="Check this box if you want organizations to be automatically activated upon registration."></span>
     </div>
   </div>
 
@@ -115,6 +109,22 @@
     <span class="tooltip pull-right" data-tooltip="This information will appear on the Market Closed page"></span>
     <br>
     <%= f.text_area :store_closed_note, rows: 2, class: "column--full"  %>
+  </div>
+
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <label>Organization registration</label><br>
+      <%= f.check_box :auto_activate_organizations %>
+      <%= f.label :auto_activate_organizations, "Auto-activate organizations" %>
+      <span class="tooltip" data-tooltip="Check this box if you want organizations to be automatically activated upon registration."></span>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :organization_inactive_note %>
+    <span class="tooltip pull-right" data-tooltip="This information will appear when an inactive user logs in"></span>
+    <br>
+    <%= f.text_area :organization_inactive_note, rows: 2, class: "column--full"  %>
   </div>
 
   <% if @market.new_record? || policy(:market_cross_selling).index? %>
@@ -196,7 +206,7 @@
         <% end %>
       </div>
     </div>
-  <% end %>  
+  <% end %>
   <% if current_user.admin? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">

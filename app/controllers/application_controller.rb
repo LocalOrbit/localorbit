@@ -138,7 +138,7 @@ class ApplicationController < ActionController::Base
     return if current_user.nil?
     return if current_user.admin? || current_user.can_manage_market?(market_for_current_subdomain)
     if current_user.organizations.active.empty?
-      render file: Rails.root.join("public/organization_disabled.html"), status: :forbidden
+      render "shared/organization_inactive"
     end
   end
 
