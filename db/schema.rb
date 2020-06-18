@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
 
-  create_table "audits", force: true do |t|
+  create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
     t.string   "auditable_type"
     t.integer  "associated_id"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.string   "masquerader_username"
   end
 
-  add_index "audits", ["action", "associated_type"], name: "action_associated_type", using: :btree
   add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
   add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
@@ -44,7 +43,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "audits", ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
-  create_table "bank_accounts", force: true do |t|
+  create_table "bank_accounts", force: :cascade do |t|
     t.string   "bank_name"
     t.string   "last_four"
     t.string   "account_type"
@@ -64,7 +63,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
 
-  create_table "batch_consignment_printable_errors", force: true do |t|
+  create_table "batch_consignment_printable_errors", force: :cascade do |t|
     t.integer  "batch_consignment_printable_id"
     t.string   "task"
     t.text     "message"
@@ -75,7 +74,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.datetime "updated_at"
   end
 
-  create_table "batch_consignment_printables", force: true do |t|
+  create_table "batch_consignment_printables", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "pdf_uid"
     t.string   "pdf_name"
@@ -87,14 +86,14 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "batch_consignment_printables", ["user_id"], name: "index_batch_consignment_printables_on_user_id", using: :btree
 
-  create_table "batch_consignment_printables_orders", force: true do |t|
+  create_table "batch_consignment_printables_orders", force: :cascade do |t|
     t.integer  "batch_consignment_printable_id"
     t.integer  "order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "batch_invoice_errors", force: true do |t|
+  create_table "batch_invoice_errors", force: :cascade do |t|
     t.integer  "batch_invoice_id"
     t.string   "task"
     t.text     "message"
@@ -105,7 +104,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.datetime "updated_at"
   end
 
-  create_table "batch_invoices", force: true do |t|
+  create_table "batch_invoices", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "pdf_uid"
     t.string   "pdf_name"
@@ -117,7 +116,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "batch_invoices", ["user_id"], name: "index_batch_invoices_on_user_id", using: :btree
 
-  create_table "batch_invoices_orders", force: true do |t|
+  create_table "batch_invoices_orders", force: :cascade do |t|
     t.integer  "batch_invoice_id"
     t.integer  "order_id"
     t.datetime "created_at"
@@ -128,7 +127,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "batch_invoices_orders", ["order_id", "batch_invoice_id"], name: "index_batch_invoices_orders_on_order_id_and_batch_invoice_id", using: :btree
   add_index "batch_invoices_orders", ["order_id"], name: "index_batch_invoices_orders_on_order_id", using: :btree
 
-  create_table "cart_items", force: true do |t|
+  create_table "cart_items", force: :cascade do |t|
     t.integer  "cart_id"
     t.integer  "product_id"
     t.integer  "quantity",                            default: 0,   null: false
@@ -144,7 +143,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "cart_items", ["cart_id"], name: "index_cart_items_on_cart_id", using: :btree
   add_index "cart_items", ["product_id"], name: "index_cart_items_on_product_id", using: :btree
 
-  create_table "carts", force: true do |t|
+  create_table "carts", force: :cascade do |t|
     t.integer  "market_id"
     t.integer  "organization_id"
     t.integer  "delivery_id"
@@ -160,7 +159,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "carts", ["market_id"], name: "index_carts_on_market_id", using: :btree
   add_index "carts", ["organization_id"], name: "index_carts_on_organization_id", using: :btree
 
-  create_table "categories", force: true do |t|
+  create_table "categories", force: :cascade do |t|
     t.integer  "parent_id"
     t.string   "name"
     t.datetime "created_at"
@@ -177,7 +176,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
   add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
 
-  create_table "category_fees", force: true do |t|
+  create_table "category_fees", force: :cascade do |t|
     t.integer  "category_id"
     t.integer  "market_id"
     t.decimal  "fee_pct",     precision: 5, scale: 3
@@ -185,7 +184,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.datetime "updated_at"
   end
 
-  create_table "consignment_printables", force: true do |t|
+  create_table "consignment_printables", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "pdf_uid"
     t.string   "pdf_name"
@@ -193,7 +192,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.datetime "updated_at"
   end
 
-  create_table "consignment_products", force: true do |t|
+  create_table "consignment_products", force: :cascade do |t|
     t.integer  "product_id",                  null: false
     t.integer  "consignment_product_id",      null: false
     t.integer  "consignment_organization_id", null: false
@@ -201,7 +200,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.datetime "updated_at"
   end
 
-  create_table "consignment_transactions", force: true do |t|
+  create_table "consignment_transactions", force: :cascade do |t|
     t.string   "transaction_type"
     t.integer  "order_id"
     t.integer  "order_item_id"
@@ -226,7 +225,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.text     "notes"
   end
 
-  create_table "credits", force: true do |t|
+  create_table "credits", force: :cascade do |t|
     t.integer  "order_id",      null: false
     t.integer  "user_id",       null: false
     t.string   "amount_type",   null: false
@@ -240,7 +239,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.datetime "deleted_at"
   end
 
-  create_table "cross_selling_list_products", force: true do |t|
+  create_table "cross_selling_list_products", force: :cascade do |t|
     t.integer "cross_selling_list_id"
     t.integer "product_id"
     t.boolean "active",                default: true
@@ -250,13 +249,13 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "cross_selling_list_products", ["cross_selling_list_id"], name: "index_cross_selling_list_products_on_cross_selling_list_id", using: :btree
   add_index "cross_selling_list_products", ["product_id"], name: "index_cross_selling_list_products_on_product_id", using: :btree
 
-  create_table "cross_selling_lists", force: true do |t|
-    t.string   "name",                           null: false
-    t.integer  "entity_id",                      null: false
-    t.string   "entity_type",                    null: false
+  create_table "cross_selling_lists", force: :cascade do |t|
+    t.string   "name",         limit: 255,                   null: false
+    t.integer  "entity_id",                                  null: false
+    t.string   "entity_type",  limit: 255,                   null: false
     t.integer  "parent_id"
-    t.boolean  "creator",      default: false
-    t.string   "status",       default: "Draft", null: false
+    t.boolean  "creator",                  default: false
+    t.string   "status",       limit: 255, default: "Draft", null: false
     t.datetime "published_at"
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -266,7 +265,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "cross_selling_lists", ["parent_id", "entity_id"], name: "cross_selling_lists_unique_parent_entity_ids", unique: true, using: :btree
   add_index "cross_selling_lists", ["parent_id"], name: "index_cross_selling_lists_on_parent_id", using: :btree
 
-  create_table "delayed_jobs", force: true do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
     t.text     "handler",                null: false
@@ -282,7 +281,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "deliveries", force: true do |t|
+  create_table "deliveries", force: :cascade do |t|
     t.integer  "delivery_schedule_id"
     t.datetime "deliver_on"
     t.datetime "cutoff_time"
@@ -296,7 +295,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "deliveries", ["deliver_on"], name: "index_deliveries_on_deliver_on", using: :btree
   add_index "deliveries", ["delivery_schedule_id"], name: "index_deliveries_on_delivery_schedule_id", using: :btree
 
-  create_table "delivery_notes", force: true do |t|
+  create_table "delivery_notes", force: :cascade do |t|
     t.datetime "updated_at"
     t.datetime "created_at"
     t.datetime "deleted_at"
@@ -310,7 +309,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "delivery_notes", ["cart_id", "supplier_org"], name: "index_delivery_notes_on_cart_id_and_supplier_org", unique: true, using: :btree
   add_index "delivery_notes", ["cart_id"], name: "index_delivery_notes_on_cart_id", using: :btree
 
-  create_table "delivery_schedules", force: true do |t|
+  create_table "delivery_schedules", force: :cascade do |t|
     t.integer  "market_id"
     t.integer  "day"
     t.decimal  "fee"
@@ -336,14 +335,14 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0,            null: false
     t.string   "delivery_cycle"
     t.integer  "day_of_month"
-    t.integer  "week_interval",                                           default: 1
+    t.integer  "week_interval"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
   add_index "delivery_schedules", ["market_id", "deleted_at"], name: "index_delivery_schedules_on_market_id_and_deleted_at", using: :btree
   add_index "delivery_schedules", ["market_id"], name: "index_delivery_schedules_on_market_id", using: :btree
 
-  create_table "discounts", force: true do |t|
+  create_table "discounts", force: :cascade do |t|
     t.string   "name",                                                             null: false
     t.string   "code",                                                             null: false
     t.integer  "market_id"
@@ -367,7 +366,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "discounts", ["code"], name: "index_discounts_on_code", using: :btree
 
-  create_table "events", force: true do |t|
+  create_table "events", force: :cascade do |t|
     t.string   "event_id"
     t.text     "payload"
     t.datetime "successful_at"
@@ -379,7 +378,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "events", ["event_id"], name: "index_events_on_event_id", unique: true, using: :btree
 
-  create_table "external_products", force: true do |t|
+  create_table "external_products", force: :cascade do |t|
     t.string   "contrived_key",    null: false
     t.integer  "organization_id",  null: false
     t.text     "source_data"
@@ -391,7 +390,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "external_products", ["contrived_key", "organization_id"], name: "index_external_products_on_contrived_key_and_organization_id", unique: true, using: :btree
   add_index "external_products", ["organization_id", "batch_updated_at"], name: "index_external_products_on_organization_id_and_batch_updated_at", using: :btree
 
-  create_table "fresh_sheets", force: true do |t|
+  create_table "fresh_sheets", force: :cascade do |t|
     t.integer  "market_id"
     t.integer  "user_id"
     t.text     "note"
@@ -401,7 +400,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "fresh_sheets", ["market_id", "user_id"], name: "index_fresh_sheets_on_market_id_and_user_id", using: :btree
 
-  create_table "general_products", force: true do |t|
+  create_table "general_products", force: :cascade do |t|
     t.text     "name"
     t.integer  "category_id"
     t.integer  "organization_id"
@@ -420,10 +419,10 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.datetime "updated_at"
   end
 
-  add_index "general_products", ["name"], name: "gp_index_on_name", using: :btree
-  add_index "general_products", ["organization_id"], name: "gp_index_on_organization", using: :btree
+  add_index "general_products", ["location_id"], name: "index_general_products_on_location_id", using: :btree
+  add_index "general_products", ["top_level_category_id"], name: "index_general_products_on_top_level_category_id", using: :btree
 
-  create_table "geocodes", force: true do |t|
+  create_table "geocodes", force: :cascade do |t|
     t.decimal "latitude",    precision: 15, scale: 12
     t.decimal "longitude",   precision: 15, scale: 12
     t.string  "query"
@@ -444,7 +443,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "geocodes", ["query"], name: "geocodes_query_index", unique: true, using: :btree
   add_index "geocodes", ["region"], name: "geocodes_region_index", using: :btree
 
-  create_table "geocodings", force: true do |t|
+  create_table "geocodings", force: :cascade do |t|
     t.integer "geocodable_id"
     t.integer "geocode_id"
     t.string  "geocodable_type"
@@ -454,7 +453,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "geocodings", ["geocodable_type"], name: "geocodings_geocodable_type_index", using: :btree
   add_index "geocodings", ["geocode_id"], name: "geocodings_geocode_id_index", using: :btree
 
-  create_table "locations", force: true do |t|
+  create_table "locations", force: :cascade do |t|
     t.string   "name",                             null: false
     t.string   "address",                          null: false
     t.string   "city",                             null: false
@@ -478,7 +477,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "locations", ["organization_id", "deleted_at"], name: "index_locations_on_organization_id_and_deleted_at", using: :btree
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
 
-  create_table "lots", force: true do |t|
+  create_table "lots", force: :cascade do |t|
     t.integer  "product_id"
     t.datetime "good_from"
     t.datetime "expires_at"
@@ -498,7 +497,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "lots", ["product_id", "good_from", "expires_at"], name: "index_lots_on_product_id_and_good_from_and_expires_at", using: :btree
   add_index "lots", ["product_id"], name: "index_lots_on_product_id", using: :btree
 
-  create_table "managed_markets", force: true do |t|
+  create_table "managed_markets", force: :cascade do |t|
     t.integer  "market_id"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -509,7 +508,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "managed_markets", ["user_id", "market_id"], name: "index_managed_markets_on_user_id_and_market_id", using: :btree
   add_index "managed_markets", ["user_id"], name: "index_managed_markets_on_user_id", using: :btree
 
-  create_table "market_addresses", force: true do |t|
+  create_table "market_addresses", force: :cascade do |t|
     t.string   "name",                       null: false
     t.string   "address",                    null: false
     t.string   "city",                       null: false
@@ -531,7 +530,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "market_addresses", ["market_id", "deleted_at"], name: "index_market_addresses_on_market_id_and_deleted_at", using: :btree
   add_index "market_addresses", ["market_id"], name: "index_market_addresses_on_market_id", using: :btree
 
-  create_table "market_cross_sells", force: true do |t|
+  create_table "market_cross_sells", force: :cascade do |t|
     t.integer  "source_market_id"
     t.integer  "destination_market_id"
     t.datetime "created_at"
@@ -542,7 +541,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "market_cross_sells", ["source_market_id", "destination_market_id"], name: "index_market_cross_sells_on_src_market_id_and_dest_market_id", using: :btree
   add_index "market_cross_sells", ["source_market_id"], name: "index_market_cross_sells_on_source_market_id", using: :btree
 
-  create_table "market_organizations", force: true do |t|
+  create_table "market_organizations", force: :cascade do |t|
     t.integer  "market_id"
     t.integer  "organization_id"
     t.datetime "created_at"
@@ -555,7 +554,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "market_organizations", ["market_id"], name: "index_market_organizations_on_market_id", using: :btree
   add_index "market_organizations", ["organization_id"], name: "index_market_organizations_on_organization_id", using: :btree
 
-  create_table "markets", force: true do |t|
+  create_table "markets", force: :cascade do |t|
     t.string   "name"
     t.string   "subdomain"
     t.string   "timezone"
@@ -589,8 +588,8 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.boolean  "default_allow_credit_cards",                             default: true
     t.boolean  "default_allow_ach",                                      default: true
     t.integer  "legacy_id"
-    t.string   "background_color",                                       default: "#FFFFFF"
-    t.string   "text_color",                                             default: "#46639C"
+    t.string   "background_color",                                       default: "#ffffff"
+    t.string   "text_color",                                             default: "#46639c"
     t.boolean  "allow_cross_sell",                                       default: false
     t.boolean  "auto_activate_organizations",                            default: false
     t.integer  "plan_id"
@@ -610,29 +609,27 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.boolean  "pending",                                                default: false
+    t.integer  "organization_id"
     t.text     "zpl_logo"
     t.string   "zpl_printer"
-    t.boolean  "self_directed_creation",                                 default: false
     t.string   "legacy_stripe_account_id"
+    t.boolean  "self_directed_creation",                                 default: false
     t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "allow_product_fee"
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
-    t.integer  "organization_id"
-    t.boolean  "add_item_pricing",                                       default: true
     t.boolean  "self_enabled_cross_sell",                                default: false
+    t.boolean  "add_item_pricing",                                       default: true
     t.string   "background_img_uid"
     t.boolean  "allow_signups",                                          default: true
     t.string   "qb_integration_type"
-    t.boolean  "waiting_list_enabled",                                   default: false
-    t.text     "waiting_list_note"
     t.text     "organization_inactive_note"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
 
-  create_table "metrics", force: true do |t|
+  create_table "metrics", force: :cascade do |t|
     t.string   "metric_code"
     t.date     "effective_on"
     t.string   "model_type"
@@ -646,7 +643,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "metrics", ["metric_code", "model_type"], name: "index_metrics_on_metric_code_and_model_type", using: :btree
   add_index "metrics", ["metric_code"], name: "index_metrics_on_metric_code", using: :btree
 
-  create_table "newsletters", force: true do |t|
+  create_table "newsletters", force: :cascade do |t|
     t.string   "subject"
     t.text     "body"
     t.integer  "market_id"
@@ -663,7 +660,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "newsletters", ["market_id"], name: "index_newsletters_on_market_id", using: :btree
 
-  create_table "order_item_lots", force: true do |t|
+  create_table "order_item_lots", force: :cascade do |t|
     t.integer  "order_item_id"
     t.integer  "lot_id"
     t.integer  "quantity"
@@ -676,7 +673,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "order_item_lots", ["order_item_id", "lot_id"], name: "index_order_item_lots_on_order_item_id_and_lot_id", using: :btree
   add_index "order_item_lots", ["order_item_id"], name: "index_order_item_lots_on_order_item_id", using: :btree
 
-  create_table "order_items", force: true do |t|
+  create_table "order_items", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "product_id"
     t.string   "name"
@@ -707,13 +704,11 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.integer  "po_ct_id"
   end
 
-  add_index "order_items", ["delivery_status"], name: "index_order_items_dlv_status", using: :btree
-  add_index "order_items", ["order_id", "product_id", "delivery_status"], name: "index_order_items_o_p_d", using: :btree
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
   add_index "order_items", ["product_id"], name: "index_order_items_on_product_id", using: :btree
 
-  create_table "order_payments", force: true do |t|
+  create_table "order_payments", force: :cascade do |t|
     t.integer  "payment_id"
     t.integer  "order_id"
     t.datetime "created_at"
@@ -724,7 +719,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "order_payments", ["order_id"], name: "index_order_payments_on_order_id", using: :btree
   add_index "order_payments", ["payment_id"], name: "index_order_payments_on_payment_id", using: :btree
 
-  create_table "order_printables", force: true do |t|
+  create_table "order_printables", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "order_id"
     t.boolean  "include_product_names"
@@ -735,7 +730,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.datetime "updated_at"
   end
 
-  create_table "order_template_items", force: true do |t|
+  create_table "order_template_items", force: :cascade do |t|
     t.integer  "order_template_id",                                        null: false
     t.integer  "product_id",                                               null: false
     t.integer  "quantity",                                                 null: false
@@ -744,11 +739,11 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.decimal  "sale_price",        precision: 10, scale: 2, default: 0.0
     t.decimal  "net_price",         precision: 10, scale: 2, default: 0.0
     t.integer  "lot_id"
-    t.integer  "fee"
     t.integer  "ct_id"
+    t.integer  "fee"
   end
 
-  create_table "order_templates", force: true do |t|
+  create_table "order_templates", force: :cascade do |t|
     t.string   "name",       null: false
     t.integer  "market_id",  null: false
     t.datetime "created_at"
@@ -758,7 +753,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "order_templates", ["market_id", "name"], name: "index_order_templates_on_market_id_and_name", unique: true, using: :btree
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.integer  "organization_id"
     t.integer  "market_id"
     t.integer  "delivery_id"
@@ -809,7 +804,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "orders", ["organization_id"], name: "index_orders_on_organization_id", using: :btree
   add_index "orders", ["placed_by_id"], name: "index_orders_on_placed_by_id", using: :btree
 
-  create_table "organizations", force: true do |t|
+  create_table "organizations", force: :cascade do |t|
     t.string   "name"
     t.boolean  "can_sell"
     t.datetime "created_at"
@@ -829,16 +824,16 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.boolean  "active",                                               default: false
     t.boolean  "needs_activated_notification",                         default: true
     t.string   "stripe_customer_id"
-    t.string   "buyer_org_type"
-    t.string   "ownership_type"
-    t.boolean  "non_profit"
-    t.string   "professional_organizations"
     t.string   "org_type"
     t.integer  "plan_id"
     t.datetime "plan_start_at"
     t.integer  "plan_interval",                                        default: 1,         null: false
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,       null: false
     t.integer  "plan_bank_account_id"
+    t.string   "buyer_org_type"
+    t.string   "ownership_type"
+    t.boolean  "non_profit"
+    t.string   "professional_organizations"
     t.boolean  "subscribed",                                           default: false
     t.string   "subscription_id"
     t.string   "payment_provider"
@@ -850,12 +845,11 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.string   "contact_email"
     t.string   "qb_check_name"
     t.text     "notes"
-    t.boolean  "on_waiting_list",                                      default: false
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
 
-  create_table "packing_labels_printables", force: true do |t|
+  create_table "packing_labels_printables", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "delivery_id"
     t.string   "pdf_uid"
@@ -867,7 +861,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.string   "deliver_on"
   end
 
-  create_table "payments", force: true do |t|
+  create_table "payments", force: :cascade do |t|
     t.integer  "payee_id"
     t.string   "payee_type"
     t.string   "payment_type",                                default: "order"
@@ -897,7 +891,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "payments", ["payee_id", "payee_type"], name: "index_payments_on_payee_id_and_payee_type", using: :btree
   add_index "payments", ["payer_id", "payer_type"], name: "index_payments_on_payer_id_and_payer_type", using: :btree
 
-  create_table "plans", force: true do |t|
+  create_table "plans", force: :cascade do |t|
     t.string   "name"
     t.boolean  "discount_codes",           default: false
     t.boolean  "cross_selling",            default: false
@@ -916,7 +910,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.boolean  "ryo_eligible",             default: false, null: false
   end
 
-  create_table "prices", force: true do |t|
+  create_table "prices", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "market_id"
     t.integer  "organization_id"
@@ -932,13 +926,11 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
-  add_index "prices", ["organization_id", "min_quantity"], name: "index_prices_on_qty_org", using: :btree
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
-  add_index "prices", ["product_id", "market_id", "organization_id", "updated_at", "deleted_at"], name: "index_prices_on_product_market_organization_updated_deleted", using: :btree
   add_index "prices", ["product_id", "market_id", "organization_id"], name: "index_prices_on_product_id_and_market_id_and_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
-  create_table "product_deliveries", force: true do |t|
+  create_table "product_deliveries", force: :cascade do |t|
     t.integer "product_id"
     t.integer "delivery_schedule_id"
   end
@@ -947,7 +939,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "product_deliveries", ["product_id", "delivery_schedule_id"], name: "index_product_deliveries_on_product_id_and_delivery_schedule_id", using: :btree
   add_index "product_deliveries", ["product_id"], name: "index_product_deliveries_on_product_id", using: :btree
 
-  create_table "products", force: true do |t|
+  create_table "products", force: :cascade do |t|
     t.text     "name"
     t.integer  "category_id"
     t.integer  "organization_id"
@@ -969,8 +961,8 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
     t.string   "code"
-    t.integer  "external_product_id"
     t.integer  "general_product_id"
+    t.integer  "external_product_id"
     t.string   "aws_image_url"
     t.integer  "qb_item_id"
     t.integer  "parent_product_id"
@@ -981,12 +973,11 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["general_product_id"], name: "index_products_on_general_product_id", using: :btree
   add_index "products", ["location_id"], name: "index_products_on_location_id", using: :btree
-  add_index "products", ["name"], name: "index_products_on_name", using: :btree
   add_index "products", ["organization_id"], name: "index_products_on_organization_id", using: :btree
   add_index "products", ["second_level_category_id"], name: "index_products_on_second_level_category_id", using: :btree
   add_index "products", ["top_level_category_id"], name: "index_products_on_top_level_category_id", using: :btree
 
-  create_table "promotions", force: true do |t|
+  create_table "promotions", force: :cascade do |t|
     t.integer  "market_id"
     t.integer  "product_id"
     t.string   "name"
@@ -1003,7 +994,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "promotions", ["market_id"], name: "index_promotions_on_market_id", using: :btree
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
 
-  create_table "qb_profiles", force: true do |t|
+  create_table "qb_profiles", force: :cascade do |t|
     t.integer "organization_id"
     t.string  "income_account_name"
     t.integer "income_account_id"
@@ -1028,7 +1019,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.integer "delivery_fee_account_id"
   end
 
-  create_table "qb_tokens", force: true do |t|
+  create_table "qb_tokens", force: :cascade do |t|
     t.integer  "organization_id"
     t.string   "encrypted_access_token"
     t.string   "encrypted_access_secret"
@@ -1039,16 +1030,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.string   "encrypted_realm_id_iv"
   end
 
-  create_table "qlik_user_attributes", primary_key: "userid", force: true do |t|
-    t.string "type",  null: false
-    t.string "value"
-  end
-
-  create_table "qlik_users", primary_key: "userid", force: true do |t|
-    t.string "name"
-  end
-
-  create_table "role_actions", force: true do |t|
+  create_table "role_actions", force: :cascade do |t|
     t.string  "description"
     t.string  "org_types",   default: [],   array: true
     t.string  "section"
@@ -1059,28 +1041,28 @@ ActiveRecord::Schema.define(version: 20200408211228) do
     t.string  "grouping"
   end
 
-  create_table "roles", force: true do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name"
-    t.string   "org_type",        default: "M"
+    t.string   "org_type"
     t.integer  "organization_id"
-    t.string   "activities",      default: [],  array: true
+    t.string   "activities",      default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "sequences", force: true do |t|
+  create_table "sequences", force: :cascade do |t|
     t.string  "name"
     t.integer "value", default: 0, null: false
   end
 
   add_index "sequences", ["name"], name: "index_sequences_on_name", unique: true, using: :btree
 
-  create_table "storage_locations", force: true do |t|
+  create_table "storage_locations", force: :cascade do |t|
     t.integer "market_id"
     t.string  "name"
   end
 
-  create_table "subscription_types", force: true do |t|
+  create_table "subscription_types", force: :cascade do |t|
     t.string   "keyword"
     t.string   "name"
     t.datetime "created_at"
@@ -1089,7 +1071,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "subscription_types", ["keyword"], name: "index_subscription_types_on_keyword", using: :btree
 
-  create_table "subscriptions", force: true do |t|
+  create_table "subscriptions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "subscription_type_id"
     t.string   "token"
@@ -1104,7 +1086,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "subscriptions", ["user_id", "subscription_type_id"], name: "index_subscriptions_on_user_id_and_subscription_type_id", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
-  create_table "units", force: true do |t|
+  create_table "units", force: :cascade do |t|
     t.string   "singular"
     t.string   "plural"
     t.datetime "created_at"
@@ -1113,7 +1095,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
 
   add_index "units", ["plural"], name: "index_units_on_plural", using: :btree
 
-  create_table "user_organizations", force: true do |t|
+  create_table "user_organizations", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "organization_id"
     t.datetime "created_at"
@@ -1125,7 +1107,7 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "user_organizations", ["user_id", "organization_id"], name: "index_user_organizations_on_user_id_and_organization_id", using: :btree
   add_index "user_organizations", ["user_id"], name: "index_user_organizations_on_user_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                          default: "", null: false
     t.string   "encrypted_password",             default: ""
     t.string   "reset_password_token"
@@ -1164,20 +1146,12 @@ ActiveRecord::Schema.define(version: 20200408211228) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "users_roles", id: false, force: true do |t|
+  create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
 
   add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id", using: :btree
   add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id", using: :btree
-
-  create_table "zipcodes", primary_key: "zip", force: true do |t|
-    t.decimal "latitude",             precision: 9, scale: 6
-    t.decimal "longitude",            precision: 9, scale: 6
-    t.string  "city"
-    t.string  "state",     limit: 2
-    t.string  "county",    limit: 64
-  end
 
 end
