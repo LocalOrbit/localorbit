@@ -193,9 +193,9 @@ Rails.application.routes.draw do
       end
     end
 
-    # For some reason the Rails 4.1 -> 4.2 upgrade didn't like our wonky way of adding a new
+    # FIXME: For some reason the Rails 4.1 -> 4.2 upgrade didn't like our wonky way of adding a new
     # product ("unit") via the edit product form. It was sending a POST instead of an expected
-    # PATCH, thus 404ing. Hack to get it going again.
+    # PATCH, thus 404ing. edit_table.js.coffee is changing _method.
     post 'products/:id' => 'products#update'
 
     resources :products do
