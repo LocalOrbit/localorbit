@@ -380,9 +380,9 @@ describe DeliverySchedule do
 
       it "ensures the buyer_deliver_on date is consistent with a SELLER-time-based cutoff" do
         nd = delivery_schedule.next_delivery
-        expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 10 2014, 9:00 AM"))
-        expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October 14, 2014")
-        expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October 14, 2014")
+        expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 03 2014, 9:00 AM"))
+        expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October  7, 2014")
+        expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October  7, 2014")
       end
     end
 
