@@ -123,6 +123,7 @@ group :development do
   gem 'capistrano-git_deploy', github: 'thermistor/capistrano-git_deploy', require: false
   gem 'capistrano-passenger'
   gem 'capistrano-rails'
+  gem 'capistrano-yarn'
   gem 'ultrahook'
   gem 'spring'
   gem 'spring-commands-rspec'
