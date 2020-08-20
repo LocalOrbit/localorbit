@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   get '*path', constraints: NonMarketDomain.new, format: false,
     to: redirect {|params, request|
-      "#{request.protocol}app.#{Figaro.env.domain}/#{params[:path]}"
+      "#{request.protocol}app.#{ENV.fetch('DOMAIN')}/#{params[:path]}"
     }
 
   devise_for :users, skip: [:registrations],
@@ -192,6 +192,11 @@ Rails.application.routes.draw do
         resources :individual_packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
       end
     end
+
+    # FIXME: For some reason the Rails 4.1 -> 4.2 upgrade didn't like our wonky way of adding a new
+    # product ("unit") via the edit product form. It was sending a POST instead of an expected
+    # PATCH, thus 404ing. edit_table.js.coffee is changing _method.
+    post 'products/:id' => 'products#update'
 
     resources :products do
       resources :lots

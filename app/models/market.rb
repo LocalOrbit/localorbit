@@ -157,7 +157,7 @@ class Market < ActiveRecord::Base
   end
 
   def domain
-    "#{subdomain}.#{Figaro.env.domain!}"
+    "#{subdomain}.#{ENV.fetch('DOMAIN')}"
   end
 
   def seller_net_percent

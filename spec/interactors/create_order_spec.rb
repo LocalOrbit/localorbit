@@ -11,7 +11,7 @@ describe CreateOrder do
   let(:billing_address)   { organization.locations.default_billing }
   let(:cart)              { create(:cart, :with_items, organization: organization, delivery: delivery, location: delivery_location, market: market) }
   let(:params)            { {payment_method: "purchase order"} }
-  let(:payment_provider)  { PaymentProvider::Stripe.id }
+  let(:payment_provider)  { 'stripe' }
 
   subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, user: buyer).order }
 

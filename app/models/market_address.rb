@@ -6,8 +6,6 @@ class MarketAddress < ActiveRecord::Base
 
   validates :address, :city, :state, :zip, :market, :country, presence: true
 
-  acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip, country: :country}
-
   before_save :ensure_single_default
   before_save :ensure_single_billing
   before_save :ensure_single_remit_to
@@ -34,7 +32,7 @@ class MarketAddress < ActiveRecord::Base
   end
 
   def falsify_all_others_billing(mkt_addr_id)
-    MarketAddress.where( billing:true ).where(market_id:"#{mkt_addr_id}".to_i).each do |ma| 
+    MarketAddress.where( billing:true ).where(market_id:"#{mkt_addr_id}".to_i).each do |ma|
       if ma.id != self.id
         ma.billing = false
         ma.save!
@@ -58,7 +56,7 @@ class MarketAddress < ActiveRecord::Base
   end
 
   def ensure_single_billing
-    if self.billing 
+    if self.billing
       falsify_all_others_billing(self.market_id)
     end
   end

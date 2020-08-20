@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe NonMarketDomain do
-  let(:base_domain) { Figaro.env.domain }
+  let(:base_domain) { ENV.fetch('DOMAIN') }
   let(:request) { double("request") }
   let(:constraint) { NonMarketDomain.new }
 

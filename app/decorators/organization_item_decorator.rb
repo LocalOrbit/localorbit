@@ -28,11 +28,12 @@ class OrganizationItemDecorator < Draper::Decorator
   end
 
   def location_map(w=300, h=200)
-    if location && location.geocode
-      google_static_map([location.geocode], location.geocode, w, h, 11)
-    else
-      ""
-    end
+    # if location && location.geocode
+    #   google_static_map([location.geocode], location.geocode, w, h, 11)
+    # else
+    #   ""
+    # end
+    ""
   end
 
   def location_label

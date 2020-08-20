@@ -15,11 +15,11 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = {host: "app.#{Figaro.env.domain}", port: 3000}
+  config.action_mailer.default_url_options = {host: "app.#{ENV.fetch('DOMAIN')}", port: 3000}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name:      Figaro.env.mailtrap_username,
-    password:       Figaro.env.mailtrap_password,
+    user_name:      ENV.fetch('MAILTRAP_USERNAME'),
+    password:       ENV.fetch('MAILTRAP_PASSWORD'),
     address:        'smtp.mailtrap.io',
     domain:         'smtp.mailtrap.io',
     port:           '2525',
@@ -45,7 +45,7 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  Delayed::Worker.delay_jobs = Figaro.env.use_delayed_job == 'true'
+  Delayed::Worker.delay_jobs = ENV.fetch('USE_DELAYED_JOB') == 'true'
 
   config.react.variant = :development
 

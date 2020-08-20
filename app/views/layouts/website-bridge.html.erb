@@ -51,7 +51,7 @@
 
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <!-- ================================================= -->
-  <%= tag :meta, name: 'stripe-key', content: Figaro.env.stripe_publishable_key %>
+  <%= tag :meta, name: 'stripe-key', content: ENV.fetch('STRIPE_PUBLISHABLE_KEY') %>
 
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= stylesheet_link_tag "divi_styles", media: "all" %>
@@ -169,7 +169,7 @@
     <div id="top-header">
       <div class="container clearfix">
         <div id="et-info">
-          <span id=""><%= Figaro.env.support_phone_number %></span>&nbsp;&nbsp;
+          <span id=""><%= ENV.fetch('SUPPORT_PHONE_NUMBER') %></span>&nbsp;&nbsp;
           <a href="mailto:service@localorbit.com"><span id="">service@localorbit.com</span></a>
         </div> <!-- #et-info -->
         <div id="et-secondary-menu">
@@ -250,7 +250,7 @@
   <style type="text/css" id="et-builder-advanced-style"> .et_pb_pricing_tables_0 .et_pb_sum { font-size: 30px; line-height: 1px; } .et_pb_pricing_tables_0 .et_pb_dollar_sign, .et_pb_pricing_tables_0 .et_pb_frequency { font-family: 'Open Sans', Helvetica, Arial, Lucida, sans-serif;font-size: 18px; line-height: 1.5em; } .et_pb_pricing_tables_0 .et_pb_best_value { font-family: 'Open Sans', Helvetica, Arial, Lucida, sans-serif; font-weight: bold;font-size: 18px; } .et_pb_pricing_tables_0 .et_pb_pricing li { line-height: 18px; } body #page-container .et_pb_pricing_tables_0 .et_pb_button { color:#ffffff !important; background:#7ebec5; border-width:0px !important; border-radius:3px; letter-spacing:0px; font-size:16px; padding-left:0.7em; padding-right: 2em; } body #page-container .et_pb_pricing_tables_0 .et_pb_button:after {line-height:1.7em; font-size:16px !important; opacity:1; margin-left:.3em;left:auto; display: inline-block; } body #page-container .et_pb_pricing_tables_0 .et_pb_button:hover:after { margin-left:.3em; left:auto;margin-left:.3em; } body #page-container .et_pb_pricing_tables_0 .et_pb_button:hover {background:#670000 !important; border-radius:3px; letter-spacing:0px; } .et_pb_pricing_tables_0 .et_pb_pricing_heading h2 { font-size: 34px !important; } .et_pb_pricing_tables_0 .et_pb_pricing li span:before { border-color: #7ebec5; } .et_pb_row_0 { background-color:#7ebec5; } .et_pb_blurb_0.et_pb_blurb h4, .et_pb_blurb_0.et_pb_blurb h4 a { font-size: 50px; } .et_pb_blurb_0 .et-pb-icon { font-size: 96px; } .et_pb_section_1 { background-color:#f3f3f3; } .et_pb_text_1 p { line-height: 2.2em; } .et_pb_pricing_tables_0 .et_pb_pricing_heading { background-color: #7ebec5; } .et_pb_text_1 { line-height: 2.2em; } .et_pb_section_0 { background-color:#7ebec5; } </style>
 
   <script>RAILS_ENV = '<%= Rails.env %>';</script>
-  <script>DEBUG = <%= Figaro.env.debug == 'ON' ? "true" : "false" %>;</script>
+  <script>DEBUG = <%= ENV.fetch('DEBUG', 'OFF') == 'ON' ? "true" : "false" %>;</script>
   <%= javascript_include_tag "application" %>
   <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
   <%= include_payment_provider_scripts(@market.payment_provider || 'stripe') %>

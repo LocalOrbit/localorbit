@@ -9,7 +9,7 @@
       <br/>
       Stripe is the credit card processing technology that is integrated into the Local Orbit platform and lets you accept credit card payments.<br/><br/>To set up your Stripe account, click the button below and follow the instructions.<br/><br/>
     </div>
-      <%= link_to image_tag('light-on-light.png'), user_omniauth_authorize_path(:stripe_connect, scope: 'read_write', state: current_market.subdomain)  %>
+      <%= link_to image_tag('light-on-light.png'), user_stripe_connect_omniauth_authorize_path(scope: 'read_write', state: current_market.subdomain)  %>
   <% else %>
       <div class="row">
         <div>

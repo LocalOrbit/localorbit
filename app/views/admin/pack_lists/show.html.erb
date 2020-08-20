@@ -3,11 +3,11 @@
 <div class="print-page">
 
   <%
-  orig_geocode = current_market.addresses.visible.first.geocode
-  if !orig_geocode.nil?
-    @orig = "#{orig_geocode.latitude},#{orig_geocode.longitude}"
-    @dest = @orig
-  end
+  # orig_geocode = current_market.addresses.visible.first.geocode
+  # if !orig_geocode.nil?
+  #   @orig = "#{orig_geocode.latitude},#{orig_geocode.longitude}"
+  #   @dest = @orig
+  # end
 
   @wp = ""
   @orders.decorate.each_with_index do |order, index|

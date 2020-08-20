@@ -7,7 +7,7 @@ Dragonfly.app.configure do
   protect_from_dos_attacks true
   secret "c8583e781acd7fdbb14323520b44d98d1b29c345cfcbcb0003078a6bc4da670b"
 
-  url_host   Figaro.env.dragonfly_host
+  url_host   ENV.fetch('DRAGONFLY_HOST')
   url_format "/media/:job/:name"
 
   s3_headers = {
@@ -22,12 +22,12 @@ Dragonfly.app.configure do
       server_root: Rails.root.join('public')
   else
     datastore :s3,
-      bucket_name:       Figaro.env.uploads_bucket,
-      access_key_id:     Figaro.env.uploads_access_key_id,
-      secret_access_key: Figaro.env.uploads_secret_access_key,
-      region:            Figaro.env.uploads_region,
+      bucket_name:       ENV.fetch('UPLOADS_BUCKET'),
+      access_key_id:     ENV.fetch('UPLOADS_ACCESS_KEY_ID'),
+      secret_access_key: ENV.fetch('UPLOADS_SECRET_ACCESS_KEY'),
+      region:            ENV.fetch('UPLOADS_REGION'),
       url_scheme:        "https",
-      url_host:          Figaro.env.uploads_host,
+      url_host:          ENV.fetch('UPLOADS_HOST', nil),
       headers:           s3_headers
   end
 

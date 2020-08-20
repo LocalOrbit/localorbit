@@ -1,3 +1,3 @@
-Geocode.geocoder = Graticule.service(:multi).new(
-  Graticule.service(:google).new(Figaro.env.google_maps_key)
-)
+# Geocode.geocoder = Graticule.service(:multi).new(
+#   Graticule.service(:google).new(ENV.fetch('GOOGLE_MAPS_KEY'))
+# )

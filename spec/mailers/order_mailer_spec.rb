@@ -262,7 +262,7 @@ describe OrderMailer do
       let(:supplier_org) { create(:organization, :seller, markets: [market]) }
 
       it 'no email is sent' do
-        expect(notification).to be_kind_of(ActionMailer::Base::NullMail)
+        expect { notification }.to change { ActionMailer::Base.deliveries.count }.by(0)
       end
     end
 
@@ -271,7 +271,7 @@ describe OrderMailer do
       let!(:unconfirmed_users) { create_list(:user, 2, confirmed_at: nil, organizations: [supplier_org]) }
 
       it 'no email is sent' do
-        expect(notification).to be_kind_of(ActionMailer::Base::NullMail)
+        expect { notification }.to change { ActionMailer::Base.deliveries.count }.by(0)
       end
     end
 

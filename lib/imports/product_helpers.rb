@@ -1,7 +1,7 @@
 module Imports
 	module ProductHelpers
 
-		$current_user = Figaro.env.api_admin_user_id.to_i
+		$current_user = ENV.fetch('API_ADMIN_USER_ID').to_i
 
 		def self.identify_product_uniqueness(product_params)
 			identity_params_hash = {product_name:product_params["Product Name"].strip, category_id: self.get_category_id_from_name(product_params["Category Name"].strip),organization_id: self.get_organization_id_from_name(product_params["Organization"].strip,product_params["Market Subdomain"],$current_user)}

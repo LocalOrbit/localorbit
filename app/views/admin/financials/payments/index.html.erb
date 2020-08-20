@@ -17,14 +17,14 @@
   <table class="sortable">
     <thead class="stickable">
       <tr>
-        <th><%= sort_link(@payment_history.q, :created_at, "Payment Date") %></th>
+        <th><%= sort_link(@payment_history.q, :created_at, "Payment Date", hide_indicator: true) %></th>
         <th>Description</th>
         <th>Payment Method</th>
         <% if current_user.admin? || current_user.market_manager? %>
         <th>Received From</th>
         <th>Paid To</th>
         <% end %>
-        <th><%= sort_link(@payment_history.q, :amount, "Amount") %></th>
+        <th><%= sort_link(@payment_history.q, :amount, "Amount", hide_indicator: true) %></th>
       </tr>
     </thead>
     <tbody>
