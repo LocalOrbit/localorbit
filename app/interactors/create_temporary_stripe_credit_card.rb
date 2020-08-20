@@ -59,8 +59,11 @@ class CreateTemporaryStripeCreditCard
       bank_account = org.bank_accounts.create!(card_params.merge(stripe_id: card.id))
 
     rescue => e
+      Rails.logger.info "temp credit card"
+      Rails.logger.info e
       error_info = ErrorReporting.interpret_exception(e)
 
+      Rails.logger.info error_info
       Rollbar.info(e)
 
       context[:order].errors.add(:credit_card, ": #{error_info[:application_error_message]}")

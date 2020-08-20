@@ -6,6 +6,8 @@ class CreateOrder
       check_order_for_je_limit(cart)
     end
     context[:order] = create_order_from_cart(order_params, cart, user)
+    Rails.logger.info "order error"
+    Rails.logger.info context[:order].errors
     context.fail! if context[:order].errors.any?
   end
 

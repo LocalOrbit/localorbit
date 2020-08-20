@@ -82,6 +82,8 @@ class AttemptPurchase
       end
 
     rescue => e
+      Rails.logger.info "credit card error"
+      Rails.logger.info e
       Rollbar.info(e)
       raise e if Rails.env.development?
       context[:order].errors.add(:credit_card, "Payment processor error.")

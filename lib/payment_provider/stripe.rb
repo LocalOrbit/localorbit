@@ -130,6 +130,14 @@ module PaymentProvider
           raise message
         end
 
+        Rails.logger.info "stripe details customer"
+        Rails.logger.info customer
+        Rails.logger.info "stripe details source"
+        Rails.logger.info source
+        Rails.logger.info "stripe details destination"
+        Rails.logger.info destination
+
+
         charge = ::Stripe::Charge.create(charge_params)
 
         # Pin some order metadata on the Stripe::Payment object that appears in the managed account:
@@ -141,6 +149,10 @@ module PaymentProvider
 
         return charge
       rescue ::Stripe::StripeError => e
+        Rails.logger.info "stripe charge error"
+        Rails.logger.info e
+        Rails.logger.info e.json_body
+
         data = {
           error_json_body: e.json_body,
           charge_params: charge_params,

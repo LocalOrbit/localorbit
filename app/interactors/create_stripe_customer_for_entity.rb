@@ -16,6 +16,8 @@ class CreateStripeCustomerForEntity
     end
 
   rescue => e
+    Rails.logger.info "stripe customer error"
+    Rails.logger.info e.message
     context.fail!(error: e.message)
   end
 
