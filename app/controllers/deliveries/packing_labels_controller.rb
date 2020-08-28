@@ -27,7 +27,7 @@ class Deliveries::PackingLabelsController < ApplicationController
         delivery_date: dte
       )
     else
-      ProcessPackingLabelsPrintable.delay(queue: :urgent).perform(
+      ProcessPackingLabelsPrintable.delay(queue: :top_priority).perform(
         market_id: market_id,
         packing_labels_printable_id: printable.id,
         request: RequestUrlPresenter.new(request),
