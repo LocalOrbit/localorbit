@@ -104,7 +104,7 @@ gem 'grape-active_model_serializers' # API v2
 gem 'rack-cors', :require => 'rack/cors' # API v2
 gem 'grape-swagger' # API V2, documentation
 gem 'puma'
-
+gem 'daemons'
 gem 'rollbar'
 
 gem 'quickbooks-ruby', github: 'ruckus/quickbooks-ruby', ref: 'ba54c446bf37'
