@@ -72,8 +72,6 @@ gem 'migration_data'
 
 gem "pundit"
 
-gem "daemons"
-
 gem 'httparty'
 gem 'omniauth-stripe-connect'
 
