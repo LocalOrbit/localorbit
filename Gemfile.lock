@@ -1715,7 +1715,6 @@ DEPENDENCIES
   constructor
   countries
   csv_builder
-  daemons
   database_cleaner
   dedent
   delayed_job_active_record
