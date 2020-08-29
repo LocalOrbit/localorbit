@@ -85,15 +85,23 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = {protocol: 'https', host: "app.#{ENV.fetch('DOMAIN')}"}
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: "smtp.mandrillapp.com",
-    port: 587,
-    domain: "localorb.it",
-    authentication: :login,
-    user_name: ENV.fetch('SMTP_USERNAME'),
-    password: ENV.fetch('SMTP_PASSWORD'),
-    enable_starttls_auto: true
-  }
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.mandrillapp.com",
+  #   port: 587,
+  #   domain: "localorb.it",
+  #   authentication: :login,
+  #   user_name: ENV.fetch('SMTP_USERNAME'),
+  #   password: ENV.fetch('SMTP_PASSWORD'),
+  #   enable_starttls_auto: true
+  # }
 
+  config.action_mailer.smtp_settings = {
+      :user_name => ENV.fetch('MAILTRAP_USERNAME'),
+      :password => ENV.fetch('MAILTRAP_PASSWORD'),
+      :address => 'smtp.mailtrap.io',
+      :domain => 'smtp.mailtrap.io',
+      :port => '2525',
+      :authentication => :cram_md5
+  }
   config.react.variant = :production
 end
