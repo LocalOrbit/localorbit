@@ -98,9 +98,10 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
       :user_name => ENV.fetch('MAILTRAP_USERNAME'),
       :password => ENV.fetch('MAILTRAP_PASSWORD'),
+      :enable_starttls_auto => true,
       :address => 'smtp.mailtrap.io',
       :domain => 'smtp.mailtrap.io',
-      :port => '2525',
+      :port => 587,
       :authentication => :cram_md5
   }
   config.react.variant = :production
