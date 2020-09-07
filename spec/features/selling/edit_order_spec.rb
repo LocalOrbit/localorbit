@@ -333,13 +333,15 @@ describe "Editing an order" do
         click_button "Mark all delivered"
         page.driver.browser.switch_to.alert.accept
 
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
+        patiently do
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
 
-        click_button "Undo mark delivery"
-        page.driver.browser.switch_to.alert.accept
+          click_button "Undo mark delivery"
+          page.driver.browser.switch_to.alert.accept
 
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
-        expect(page).to have_button("Mark all delivered")
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
+          expect(page).to have_button("Mark all delivered")
+        end
       end
     end
 
@@ -363,9 +365,12 @@ describe "Editing an order" do
         click_button "Update quantities"
 
         item = Dom::Order::ItemRow.first
-        expect(item.delivery_status).to eql("Canceled")
-        expect(item.payment_status).to eql("Refunded")
-        expect(page).to_not have_button("Mark all delivered")
+        patiently do
+          expect(item.delivery_status).to eql("Canceled")
+          expect(item.payment_status).to eql("Refunded")
+          expect(page).to_not have_button("Mark all delivered")
+        end
+
       end
 
       it "can undo delivery" do
