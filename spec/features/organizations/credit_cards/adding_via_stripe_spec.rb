@@ -61,11 +61,12 @@ feature 'Adding a credit card to an organization', :js, :vcr do
     end
 
     scenario 'duplicate credit card gives an error' do
-      create(:bank_account, :credit_card, name: 'John Doe', bank_name: 'MasterCard', account_type: 'card', last_four: '5100', bankable: org)
+      create(:bank_account, :credit_card, name: 'John Doe', bank_name: 'Visa', account_type: 'card', last_four: '4242', expiration_month: 5, expiration_year: 2029 ,bankable: org)
+
 
       select 'Credit Card', from: 'provider_account_type'
       fill_in 'Name', with: 'John Doe'
-      fill_in 'Card Number', with: '5105105105105100'
+      fill_in 'Card Number', with: '4242424242424242'
       fill_in 'Security Code', with: '123'
       select '5', from: 'expiration_month'
       select '2029', from: 'expiration_year'
