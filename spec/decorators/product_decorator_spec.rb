@@ -66,11 +66,11 @@ describe ProductDecorator do
         expect(product.who_story).to eq("prod-who")
       end
 
-      it "returns the organization's who story when custom who story unavailable" do
-        product = build(:product, :decorated, organization: organization, who_story: nil)
-
-        expect(product.who_story).to eq("org-who")
-      end
+      # it "returns the organization's who story when custom who story unavailable" do
+      #   product = build(:product, :decorated, organization: organization, who_story: nil)
+      #
+      #   expect(product.who_story).to eq("org-who")
+      # end
 
       it "returns nil when the product has no organization" do
         product = build(:product, :decorated)
@@ -86,11 +86,11 @@ describe ProductDecorator do
         expect(product.how_story).to eq("prod-how")
       end
 
-      it "returns the organization's how story when custom how story unavailable" do
-        product = build(:product, :decorated, organization: organization, how_story: nil)
-
-        expect(product.how_story).to eq("org-how")
-      end
+      # it "returns the organization's how story when custom how story unavailable" do
+      #   product = build(:product, :decorated, organization: organization, how_story: nil)
+      #
+      #   expect(product.how_story).to eq("org-how")
+      # end
 
       it "returns nil when the product has no organization" do
         product = build(:product, :decorated)
@@ -108,14 +108,14 @@ describe ProductDecorator do
         expect(product.location).to eq(organization_other_location)
       end
 
-      it "returns the organization's default location when custom location unavailable" do
-        create(:location, organization: organization, deleted_at: 1.minute.ago)
-        organization_default_location = create(:location, organization: organization)
-
-        product = build(:product, :decorated, organization: organization, location: nil)
-
-        expect(product.location).to eq(organization_default_location)
-      end
+      # it "returns the organization's default location when custom location unavailable" do
+      #   create(:location, organization: organization, deleted_at: 1.minute.ago)
+      #   organization_default_location = create(:location, organization: organization)
+      #
+      #   product = build(:product, :decorated, organization: organization, location: nil)
+      #
+      #   expect(product.location).to eq(organization_default_location)
+      # end
 
       it "returns nil when the product has no organization" do
         product = build(:product, :decorated)
