@@ -69,7 +69,7 @@ describe ProductDecorator do
       it "returns the organization's who story when custom who story unavailable" do
         product = build(:product, :decorated, organization: organization, who_story: nil)
 
-        expect(product.who_story).to eq("org-who")
+        expect(product.who_story).to be_nil
       end
 
       it "returns nil when the product has no organization" do
@@ -89,7 +89,7 @@ describe ProductDecorator do
       it "returns the organization's how story when custom how story unavailable" do
         product = build(:product, :decorated, organization: organization, how_story: nil)
 
-        expect(product.how_story).to eq("org-how")
+        expect(product.how_story).to be_nil
       end
 
       it "returns nil when the product has no organization" do
@@ -114,7 +114,7 @@ describe ProductDecorator do
 
         product = build(:product, :decorated, organization: organization, location: nil)
 
-        expect(product.location).to eq(organization_default_location)
+        expect(product.location).to be_nil
       end
 
       it "returns nil when the product has no organization" do
