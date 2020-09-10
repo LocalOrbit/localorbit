@@ -162,9 +162,9 @@ describe "Adding a product", chosen_js: true do
 
         product = Product.last.decorate
 
-        expect(product.who_story).to eql(org.who_story)
-        expect(product.how_story).to eql(org.how_story)
-        expect(product.location).to eql(org.locations.default_shipping)
+        expect(product.who_story).to eql(nil)
+        expect(product.how_story).to eql(nil)
+        expect(product.location).to eql(nil)
       end
 
       it "it uses a default address if using who/how" do

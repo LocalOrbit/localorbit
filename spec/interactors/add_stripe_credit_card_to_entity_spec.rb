@@ -19,7 +19,7 @@ describe AddStripeCreditCardToEntity do
       "stripe_tok"=>stripe_token.id,
       "account_type"=>"card",
       "expiration_month"=>"5",
-      "expiration_year"=>"2020",
+      "expiration_year"=>"2040",
       "notes"=>"primary"
     )
   } 

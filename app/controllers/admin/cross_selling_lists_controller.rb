@@ -191,17 +191,20 @@ class Admin::CrossSellingListsController < AdminController
 
   def update_parent_list(parent_list, id_hash, params)
     subscriber_list = get_subscribing_list(parent_list, id_hash)
-    starting_status = subscriber_list.status
+    if subscriber_list
+      starting_status = subscriber_list.status
 
-    # This updates the list
-    subscriber_list.update_attribute(:name, parent_list.name) if subscriber_list.pending?
-    subscriber_list.manage_status(parent_list.status)
-    subscriber_list.manage_dates(status)
+      # This updates the list
+      subscriber_list.update_attribute(:name, parent_list.name) if subscriber_list.pending?
+      subscriber_list.manage_status(parent_list.status)
+      subscriber_list.manage_dates(status)
 
-    # This updates the products
-    subscriber_list.update_attributes(params)
+      # This updates the products
+      subscriber_list.update_attributes(params)
 
-    SendCrossSellMessages.perform({:publisher => parent_list.entity, :subscriber_list => subscriber_list, :starting_status => starting_status})
+      SendCrossSellMessages.perform({:publisher => parent_list.entity, :subscriber_list => subscriber_list, :starting_status => starting_status})
+    end
+
   end
 
   def update_subscribing_list(subscriber_list)
@@ -280,7 +283,10 @@ class Admin::CrossSellingListsController < AdminController
     # I'm disabling the static processing of top and implementing some 'select all
     # subcategories' JavaScript instead...
     top = []
-    second = category_ids.to_h.fetch("second", []).map{|c| c.to_i}
+    if category_ids == []
+      category_ids = category_ids.to_h
+    end
+    second = category_ids.fetch("second", []).map{|c| c.to_i}
 
     scoped_products.each do |p|
       category_prods.push(p.id.to_s) if (top.include?(p.top_level_category_id) || second.include?(p.second_level_category_id))

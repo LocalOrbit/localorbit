@@ -24,7 +24,7 @@ feature "Adding credit card to a market", :js, :vcr do
     fill_in "Card Number", with: "5105105105105100"
     fill_in "Security Code", with: "123"
     select "5", from: "expiration_month"
-    select "2020", from: "expiration_year"
+    select "2029", from: "expiration_year"
 
     expect(page).not_to have_content("EIN")
     expect(page).not_to have_content("Full Legal Name")
@@ -38,6 +38,6 @@ feature "Adding credit card to a market", :js, :vcr do
     expect(bank_account.name).to eq("John Doe")
     expect(bank_account.account_number).to eq("**** **** **** 5100")
     expect(bank_account.account_type).to eq("Credit Card")
-    expect(bank_account.expiration).to eq("Expires 05/2020")
+    expect(bank_account.expiration).to eq("Expires 05/2029")
   end
 end

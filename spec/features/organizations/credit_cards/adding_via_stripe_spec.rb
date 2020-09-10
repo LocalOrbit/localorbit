@@ -20,7 +20,7 @@ feature 'Adding a credit card to an organization', :js, :vcr do
       fill_in 'Card Number', with: '5105105105105100'
       fill_in 'Security Code', with: '123'
       select '5', from: 'expiration_month'
-      select '2020', from: 'expiration_year'
+      select '2029', from: 'expiration_year'
       fill_in 'Notes', with: 'primary'
 
       expect(page).not_to have_content('EIN')
@@ -35,7 +35,7 @@ feature 'Adding a credit card to an organization', :js, :vcr do
       expect(bank_account.name).to eq('John Doe')
       expect(bank_account.account_number).to eq('**** **** **** 5100')
       expect(bank_account.account_type).to eq('Credit Card')
-      expect(bank_account.expiration).to eq('Expires 05/2020')
+      expect(bank_account.expiration).to eq('Expires 05/2029')
       expect(bank_account.notes).to eq('primary')
     end
 
@@ -51,7 +51,7 @@ feature 'Adding a credit card to an organization', :js, :vcr do
       fill_in 'Card Number', with: '5105105105105'
       fill_in 'Security Code', with: '123'
       select '5', from: 'expiration_month'
-      select '2020', from: 'expiration_year'
+      select '2029', from: 'expiration_year'
 
       click_button 'Save'
 
@@ -61,14 +61,15 @@ feature 'Adding a credit card to an organization', :js, :vcr do
     end
 
     scenario 'duplicate credit card gives an error' do
-      create(:bank_account, :credit_card, name: 'John Doe', bank_name: 'MasterCard', account_type: 'card', last_four: '5100', bankable: org)
+      create(:bank_account, :credit_card, name: 'John Doe', bank_name: 'Visa', account_type: 'card', last_four: '4242', expiration_month: 5, expiration_year: 2029 ,bankable: org)
+
 
       select 'Credit Card', from: 'provider_account_type'
       fill_in 'Name', with: 'John Doe'
-      fill_in 'Card Number', with: '5105105105105100'
+      fill_in 'Card Number', with: '4242424242424242'
       fill_in 'Security Code', with: '123'
       select '5', from: 'expiration_month'
-      select '2020', from: 'expiration_year'
+      select '2029', from: 'expiration_year'
       click_button 'Save'
 
       expect(page).to have_content('Payment method card info already exists for this organization')
@@ -91,7 +92,7 @@ feature 'Adding a credit card to an organization', :js, :vcr do
       fill_in 'Card Number', with: '5105105105105100'
       fill_in 'Security Code', with: '123'
       select '5', from: 'expiration_month'
-      select '2020', from: 'expiration_year'
+      select '2029', from: 'expiration_year'
       fill_in 'Notes', with: 'primary'
 
       expect(page).not_to have_content('EIN')
@@ -106,7 +107,7 @@ feature 'Adding a credit card to an organization', :js, :vcr do
       expect(bank_account.name).to eq('John Doe')
       expect(bank_account.account_number).to eq('**** **** **** 5100')
       expect(bank_account.account_type).to eq('Credit Card')
-      expect(bank_account.expiration).to eq('Expires 05/2020')
+      expect(bank_account.expiration).to eq('Expires 05/2029')
       expect(bank_account.notes).to eq('primary')
     end
   end

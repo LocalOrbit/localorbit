@@ -160,7 +160,7 @@ module StripeSpecHelpers
     card_params = {
       number: "4012888888881881",
       exp_month: 5,
-      exp_year: 2020,
+      exp_year: 2029,
       cvc: "314"
     }.merge(opts)
 

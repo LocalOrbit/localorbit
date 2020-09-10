@@ -132,6 +132,8 @@ describe PackingLabels::OrderInfo do
   end
 
   describe ".make_order_infos" do
+    let(:market1) { create(:market) }
+    let!(:buyer2) { create(:organization, :buyer, name: "Small Timer", markets: [market1]) }
     let!(:buyer2) { create(:organization, :buyer, name: "Small Timer", markets: [market]) }
     let!(:product3) { create(:product, :sellable, name: "Flat Chikkens", organization: seller) }
     let!(:order_items2) do
@@ -141,7 +143,7 @@ describe PackingLabels::OrderInfo do
     end
 
     let(:order_number2) { "LO-ADA-0000002" }
-    let!(:order2) { create(:order, items: order_items2, organization: buyer2, market: market, delivery: delivery, order_number: order_number2, total_cost: order_items2.sum(&:gross_total)) }
+    let!(:order2) { create(:order, items: order_items2, organization: buyer2, market: market1, delivery: delivery, order_number: order_number2, total_cost: order_items2.sum(&:gross_total)) }
     let(:orders) { delivery.orders }
 
     it "generates a list of order_infos based on a list of Orders" do
