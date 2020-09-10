@@ -76,7 +76,7 @@ describe Credit do
       create(:order_item, order: order, product: random_product)
       order.reload
       credit.reload
-      credit.amount = order.total_cost
+      credit.amount = order.total_cost + 1
       expect(order).to be_valid
       credit.payer_type = Credit::ORGANIZATION
       expect(order).to be_valid
