@@ -473,6 +473,7 @@ GEM
       dragonfly
       newrelic_rpm
     newrelic_rpm (5.2.0.345)
+    nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     nokogiri-happymapper (0.5.9)
@@ -534,7 +535,8 @@ GEM
       pry (~> 0.9)
       slop (~> 3.0)
     public_suffix (4.0.3)
-    puma (3.12.6)
+    puma (4.3.8)
+      nio4r (~> 2.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     quiet_assets (1.0.3)
