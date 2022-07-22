@@ -728,7 +728,7 @@ GEM
     tty-which (0.3.0)
     turbolinks (2.5.3)
       coffee-rails
-    tzinfo (1.2.6)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
