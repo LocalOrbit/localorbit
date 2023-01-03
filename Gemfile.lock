@@ -391,8 +391,8 @@ GEM
       excon
       multi_json (>= 1.9.2)
     hike (1.2.3)
-    httparty (0.13.7)
-      json (~> 1.8)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
