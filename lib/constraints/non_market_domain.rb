@@ -1,7 +1,7 @@
 class NonMarketDomain
   def matches?(request)
-    subdomain = request.subdomains(Figaro.env.domain.count(".")).try(:first)
-    request.host != Figaro.env.domain && subdomain != "app" && !market_exists?(subdomain)
+    subdomain = request.subdomains(ENV.fetch('DOMAIN').count(".")).try(:first)
+    request.host != ENV.fetch('DOMAIN') && subdomain != "app" && !market_exists?(subdomain)
   end
 
   def market_exists?(subdomain)

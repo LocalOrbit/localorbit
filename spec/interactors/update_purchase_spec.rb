@@ -4,8 +4,6 @@ describe UpdatePurchase do
   context "with Stripe" do
     include_context "the mini market"
 
-    let(:payment_provider) { PaymentProvider::Stripe.id }
-
     before(:all) {
       VCR.turn_off!
       StripeMock.start
@@ -29,7 +27,7 @@ describe UpdatePurchase do
 
     before do
       order.update(
-        payment_provider: payment_provider,  # Make sure the order has Stripe payment provider
+        payment_provider: 'stripe',  # Make sure the order has Stripe payment provider
         payment_method: 'credit card' # be sure the payment method is set properly
       )
 
@@ -73,16 +71,16 @@ describe UpdatePurchase do
       end
 
       it 'sends the correct refund_charges to PaymentProvider' do
-        expect(PaymentProvider).to receive(:refund_charge).with(:stripe,
+        expect(PaymentProvider).to receive(:refund_charge).with('stripe',
           hash_including(order: order, amount: 10.0))
-        expect(PaymentProvider).to receive(:refund_charge).with(:stripe,
+        expect(PaymentProvider).to receive(:refund_charge).with('stripe',
           hash_including(order: order, amount: 2.5))
 
         # TODO: These two lines are redundant and to workaround a Stripe Mock issue where
         # the charge.application_fee is coming back as a int, not a Fee object.
-        expect(PaymentProvider).to receive(:create_refund_payment).with(:stripe,
+        expect(PaymentProvider).to receive(:create_refund_payment).with('stripe',
           hash_including(order: order, amount: -10.0))
-        expect(PaymentProvider).to receive(:create_refund_payment).with(:stripe,
+        expect(PaymentProvider).to receive(:create_refund_payment).with('stripe',
           hash_including(order: order, amount: -2.5))
 
         subject

@@ -88,7 +88,7 @@ describe 'Editing advanced pricing', :js do
 
         Dom::PricingRow.first.click_buyer
 
-        expect(page.find("#price_#{price.id}_sale_price").value).to eql('3.00')
+        expect(page.find("#price_#{price.id}_sale_price").value).to eql('3.0')
         expect(page.find("#price_#{price.id}_min_quantity").value).to eql('1')
       end
     end

@@ -30,12 +30,13 @@ class OrderDecorator < Draper::Decorator
   end
 
   def delivery_lat_long
-    address = organization.locations.default_shipping
-    if !address.nil? && !address.geocode.nil?
-      raw "#{address.geocode.latitude},#{address.geocode.longitude}"
-    else
-      ""
-    end
+    # address = organization.locations.default_shipping
+    # if !address.nil? && !address.geocode.nil?
+    #   raw "#{address.geocode.latitude},#{address.geocode.longitude}"
+    # else
+    #   ""
+    # end
+    ""
   end
 
   def display_market_street

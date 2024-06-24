@@ -413,9 +413,9 @@ describe "Managing Markets" do
       click_button "Update Fees"
 
       expect(page).to have_content("#{market.name} fees successfully updated")
-      expect(find_field("Local Orbit % paid by Supplier").value).to eq("2.000")
-      expect(find_field("Local Orbit % paid by market").value).to eq("4.000")
-      expect(find_field("Market % paid by Supplier").value).to eq("3.000")
+      expect(find_field("Local Orbit % paid by Supplier").value).to eq("2.0")
+      expect(find_field("Local Orbit % paid by market").value).to eq("4.0")
+      expect(find_field("Market % paid by Supplier").value).to eq("3.0")
       expect(find_field("PO Payment Terms").value).to eq("18")
     end
 
@@ -457,9 +457,9 @@ describe "Managing Markets" do
         click_button "Update Fees"
 
         expect(page).to have_content("#{market.name} fees successfully updated")
-        expect(find_field("Local Orbit % paid by Supplier").value).to eq("2.000")
-        expect(find_field("Local Orbit % paid by market").value).to eq("4.000")
-        expect(find_field("Market % paid by Supplier").value).to eq("3.000")
+        expect(find_field("Local Orbit % paid by Supplier").value).to eq("2.0")
+        expect(find_field("Local Orbit % paid by market").value).to eq("4.0")
+        expect(find_field("Market % paid by Supplier").value).to eq("3.0")
         expect(find_field("PO Payment Terms").value).to eq("18")
 
         current_payer = find_field(fee_payer_fname, checked: true)

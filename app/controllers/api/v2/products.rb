@@ -5,37 +5,37 @@ module API
 
 		## API routes to mount
 
-		class Products < Grape::API 
+		class Products < Grape::API
 			include API::V2::Defaults
-			include Imports 
+			include Imports
 
-			resource :products do 
+			resource :products do
 				## get requests
 				## comment out until we determine auth access
 
 				# desc "Return all products"
-				# get "", root: :products do 
+				# get "", root: :products do
 				# 	GeneralProduct.all # if you're actually looking for all products, this is what you want (TODO address issue: how should this GET deal with units?)
 				# end
 
 				# desc "Return a product"
-				# params do 
+				# params do
 				# 	requires :id, type: String, desc: "ID of the product"
 				# end
-				# get ":id", root: "product" do 
+				# get ":id", root: "product" do
 				# 	Product.where(id: permitted_params[:id]).first!
 				# end
 
 				# desc "Return a product by name"
-				# params do 
+				# params do
 				# 	requires :name, type: String, desc: "Name of the product"
 				# end
-				# get ":name", root: "product" do 
+				# get ":name", root: "product" do
 				# 	Product.where(name: permitted_params[:name]) # all that come up with that name search
 				# end
 
 				# desc "Return products by category"
-				# params do 
+				# params do
 				# 	requires :category, type: String, desc: "Name of category"
 				# end
 				# get ":category", root: "product" do # This one does not really work that well, eg category "carrots" gets all the cat "Vegetables", TODO examine priorities
@@ -62,7 +62,7 @@ module API
 					if permitted_params[:code]
 						product_code = permitted_params[:code]
 					end
-					
+
 					gp_id_or_false = ::Imports::ProductHelpers.identify_product_uniqueness(permitted_params)
 					if !gp_id_or_false
 						product = Product.create!(
@@ -104,20 +104,20 @@ module API
 					requires type: JSON # expects properly formatted JSON data
 				end
 				post '/add-products' do
-	
+
 					if params.class == Hashie::Mash # this should be the alternative case
 						prod_hashes = params
 					else
-						# this should be the 'normal' thing when you post a JSON /file/ as body per convention, Rails will put file in tempfile 
+						# this should be the 'normal' thing when you post a JSON /file/ as body per convention, Rails will put file in tempfile
 						prod_hashes = JSON.parse(File.read(params[:body][:tempfile]))
 					end
 
 					prod_hashes["products"].each do |p|
-						::Imports::ProductHelpers.create_product_from_hash(p,Figaro.env.api_admin_user_id.to_i) 
+						::Imports::ProductHelpers.create_product_from_hash(p,ENV.fetch('API_ADMIN_USER_ID').to_i)
 					end
 
-					{"result"=>"#{prod_hashes["products_total"]} products successfully created","errors"=>$row_errors} 
-				end 
+					{"result"=>"#{prod_hashes["products_total"]} products successfully created","errors"=>$row_errors}
+				end
 
 			end
 

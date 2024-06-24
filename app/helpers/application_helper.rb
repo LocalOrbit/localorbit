@@ -15,7 +15,7 @@ module ApplicationHelper
 
   def pdf_asset_url(asset)
     path = asset_path(asset)
-    "#{Figaro.env.pdf_asset_host}#{path}"
+    "#{ENV.fetch('PDF_ASSET_HOST')}#{path}"
   end
 
   # Used in navigation to get to the users organization(s)

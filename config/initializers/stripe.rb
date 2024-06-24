@@ -1,9 +1,9 @@
-Stripe.api_key = Figaro.env.stripe_secret_key
+Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
 Stripe.api_version = '2019-12-03'
 
 StripeEvent.signing_secrets = [
-  Figaro.env.stripe_account_signing_secret,
-  Figaro.env.stripe_connect_signing_secret
+  ENV.fetch('STRIPE_ACCOUNT_SIGNING_SECRET'),
+  ENV.fetch('STRIPE_CONNECT_SIGNING_SECRET')
 ]
 
 StripeEvent.configure do |events|

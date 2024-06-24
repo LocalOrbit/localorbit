@@ -10,12 +10,12 @@ class GenerateTableTentsOrPosters
       GenerateTableTentsOrPosters.get_pdf_size(type: type)
     )
     context[:pdf_result] = TemplatedPdfGenerator.generate_pdf(
-                             request: request, 
-                             template: template, 
-                             locals: { 
+                             request: request,
+                             template: template,
+                             locals: {
                                params: { # For some reason we packed all our data into a single local called 'params'
-                                 page_list: page_list, 
-                                 include_product_names: include_product_names, 
+                                 page_list: page_list,
+                                 include_product_names: include_product_names,
                                  market: order.market
                                }
                              },
@@ -38,12 +38,13 @@ class GenerateTableTentsOrPosters
   end
 
   def self.build_seller_map(seller)
-    seller_location = seller.shipping_location.geocode if seller.shipping_location
-    if seller_location
-      "http:" + google_static_map([seller_location], seller_location, 320, 200)
-    else
-      ""
-    end
+    # seller_location = seller.shipping_location.geocode if seller.shipping_location
+    # if seller_location
+    #   "http:" + google_static_map([seller_location], seller_location, 320, 200)
+    # else
+    #   ""
+    # end
+    ""
   end
 
   def self.get_template_from_type(type:)

@@ -5,9 +5,12 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.3.8'
+ruby '2.4.10'
 
-gem 'rails', '~> 4.1.11'
+# This needs to load before other gems
+gem 'dotenv-rails', require: 'dotenv/rails-now'
+
+gem 'rails', '~> 4.2.11.3'
 
 gem 'pg', '~> 0.21.0'
 
@@ -28,7 +31,6 @@ gem 'wysihtml5-rails'
 gem 'active_model_serializers'
 gem 'active_record_query_trace'
 gem 'active_record_union'
-gem 'acts_as_geocodable'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
 gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
@@ -36,28 +38,27 @@ gem 'color'
 gem 'countries'
 gem 'csv_builder'
 gem 'delayed_job_active_record'
-gem 'devise', '~> 3.5.10'
+gem 'devise'
 gem 'devise_invitable'
 gem 'devise_masquerade'
 gem 'dragonfly-s3_data_store'
 gem 'draper'
-gem 'figaro'
-gem 'font_assets'
-gem 'graticule'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
 gem 'interactor-rails', '< 3.0'
 gem 'interactor', '< 3.0' # We are not ready for 3 yet
 gem 'jbuilder'
 gem 'jwt'
-gem 'kaminari'                      # Paginator
+gem 'kaminari'
+gem 'mini_racer'
 gem 'pdfkit'
 gem 'periscope-activerecord'
 gem 'pg_search'
-gem 'postgres_ext'
 gem 'rack-canonical-host'
-gem 'ransack'
+gem 'ransack', '1.6.4'
 gem 'recaptcha'
+# RAILS42 TODO: gem 'responders', '~> 2.0'
 gem 'simpleidn'
+gem 'skylight'
 gem 'stripe', '5.14.0'
 gem 'stripe_event', '2.3.0'
 gem 'font-awesome-rails'
@@ -82,12 +83,15 @@ gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
 
-install_if -> { RUBY_PLATFORM =~ /darwin/ } do
-  gem 'wkhtmltopdf-binary', '0.12.5.1'
+install_if -> { ENV['ON_HEROKU'] != 'true' } do
+  # Maybe try 0.12.5.4 if run into issues
+  gem 'wkhtmltopdf-binary', '0.12.5.4'
 end
-install_if -> { ENV['ON_HEROKU'] == 'true' } do
-  gem 'wkhtmltopdf-heroku'
-end
+# install_if -> { ENV['ON_HEROKU'] == 'true' } do
+#   gem 'wkhtmltopdf-heroku'
+#   gem 'rails_12factor'
+#   gem 'platform-api'
+# end
 
 # Product import/export
 gem 'rubyXL', require: false # XLSX
@@ -99,6 +103,7 @@ gem 'grape' # API v2
 gem 'grape-active_model_serializers' # API v2
 gem 'rack-cors', :require => 'rack/cors' # API v2
 gem 'grape-swagger' # API V2, documentation
+gem 'puma'
 
 gem 'rollbar'
 
@@ -110,7 +115,15 @@ group :doc do
 end
 
 group :development do
+  gem 'aws_config'
   gem 'bullet'
+  gem 'capistrano'
+  gem 'capistrano-aws', require: false
+  gem 'capistrano-bundler'
+  gem 'capistrano-git_deploy', github: 'thermistor/capistrano-git_deploy', require: false
+  gem 'capistrano-passenger'
+  gem 'capistrano-rails'
+  gem 'capistrano-yarn'
   gem 'ultrahook'
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -121,7 +134,6 @@ group :development do
   gem 'rails_view_annotator'
   gem 'rubycritic', require: false
   gem 'mailcatcher'
-  gem 'unicorn'
 
   # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
   gem 'rack-mini-profiler'
@@ -130,7 +142,7 @@ group :development do
   gem 'stackprof'
 end
 
-group :development, :test do
+group :development, :test, :build do
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'
@@ -164,19 +176,9 @@ group :test do
   gem 'stripe-ruby-mock', '~> 2.5.8', :require => 'stripe_mock'
 end
 
-group :staging do
-  gem 'skylight'
-end
-
 group :production, :staging do
   gem 'newrelic_rpm'
   gem 'newrelic-dragonfly'
   #gem 'passenger'
-  gem 'rack-cache', require: 'rack/cache'
-  gem 'rails_12factor'
-  gem 'platform-api'
-end
-
-group :production, :staging, :development do
-  gem 'puma'
+  # gem 'rack-cache', require: 'rack/cache'
 end

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe QrCodeController do
-  include_context "the mini market" 
+  include_context "the mini market"
 
   let!(:product1) { create(:product, :sellable, organization: seller_organization) }
   let!(:order_item1) { create(:order_item, product: product1) }
   let!(:order) { create(:order, items: [order_item1], market: mini_market, organization: buyer_organization) }
 
-  let(:host) { "http://#{order.market.subdomain}.#{Figaro.env.domain}" }
+  let(:host) { "http://#{order.market.subdomain}.#{ENV.fetch('DOMAIN')}" }
 
   before do
     switch_to_subdomain mini_market.subdomain

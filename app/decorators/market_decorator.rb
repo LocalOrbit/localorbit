@@ -15,7 +15,7 @@ class MarketDecorator < Draper::Decorator
 
   def default_address
     default_addrs = addresses.visible.select{|addr| addr if addr.default? } # this should have only one in the array if any
-    unless default_addrs.empty? 
+    unless default_addrs.empty?
       default_addrs.first
     else
       addresses.visible.first # if an address can be properly default or billing via those attrs, it must also be visible (not soft-deleted)
@@ -25,7 +25,7 @@ class MarketDecorator < Draper::Decorator
   def billing_address
     billing_addrs = addresses.visible.select{|addr| addr if addr.billing? } # should be just one again
     unless billing_addrs.empty?
-      billing_addrs.first 
+      billing_addrs.first
     else
       addresses.visible.first
     end
@@ -39,11 +39,12 @@ class MarketDecorator < Draper::Decorator
   end
 
   def seller_locations_map(w=400, h=300)
-    addresses = organizations.selling.map do |seller|
-      seller.shipping_location.geocode if seller.shipping_location
-    end.compact
+    # addresses = organizations.selling.map do |seller|
+    #   seller.shipping_location.geocode if seller.shipping_location
+    # end.compact
 
-    google_static_map(addresses, default_address.try(:geocode), w, h)
+    # google_static_map(addresses, default_address.try(:geocode), w, h)
+    ""
   end
 
   def has_address?

@@ -1,6 +1,6 @@
 Hello! You have been invited to join <%= @organization.name %> by a member of your organization.
 
-Join <%= @organization.name %>: <%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %>
+Join <%= @organization.name %>: <%= root_url(host: (@market ? @market.domain : "app.#{ENV.fetch('DOMAIN')}")) %>
 
 If clicking the link doesn't work, right click it and copy the link.<br>
 After you've copied it, paste it into a new browser window.

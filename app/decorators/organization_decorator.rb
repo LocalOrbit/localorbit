@@ -9,11 +9,12 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def locations_map(w=340, h=300)
-    addresses = locations.visible.map do |location|
-      location.geocode if location
-    end.compact
+    # addresses = locations.visible.map do |location|
+    #   location.geocode if location
+    # end.compact
 
-    google_static_map(addresses, addresses.first, w, h, 11)
+    # google_static_map(addresses, addresses.first, w, h, 11)
+    ""
   end
 
   def ship_from_address
@@ -25,12 +26,13 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def ship_from_lat_long
-    address = shipping_location
-    if !address.nil? && !address.geocode.nil?
-      raw "#{address.geocode.latitude},#{address.geocode.longitude}"
-    else
-      ""
-    end
+    # address = shipping_location
+    # if !address.nil? && !address.geocode.nil?
+    #   raw "#{address.geocode.latitude},#{address.geocode.longitude}"
+    # else
+    #   ""
+    # end
+    ""
   end
 
   def delivery_schedules

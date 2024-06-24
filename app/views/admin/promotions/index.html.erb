@@ -18,10 +18,10 @@
   <table class="sortable">
     <thead class="stickable">
       <tr>
-        <th><%= sort_link(@q, :created_at, "Date") %></th>
-        <th><%= sort_link(@q, :name, "Name") %></th>
+        <th><%= sort_link(@q, :created_at, "Date", hide_indicator: true) %></th>
+        <th><%= sort_link(@q, :name, "Name", hide_indicator: true) %></th>
         <% if current_user.multi_market_membership? %>
-          <th><%= sort_link(@q, "market_name", "Market") %></th>
+          <th><%= sort_link(@q, "market_name", "Market", hide_indicator: true) %></th>
         <% end %>
         <th></th>
       </tr>

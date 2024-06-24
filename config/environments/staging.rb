@@ -16,11 +16,12 @@ Rails.application.configure do
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
-  # For large-scale production use, consider using a caching reverse proxy like nginx, varnish or squid.
-  config.action_dispatch.rack_cache = true
+  # For large-scale production use, consider using a caching reverse proxy like
+  # NGINX, varnish or squid.
+  # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = false
+  config.serve_static_files = false
   config.static_cache_control = "public, max-age=31536000"
 
   # Compress JavaScripts and CSS.
@@ -34,7 +35,7 @@ Rails.application.configure do
   config.assets.digest = true
 
   # Version of your assets, change this if you want to expire all your assets.
-  config.assets.version = '3.2'
+  config.assets.version = '3.3'
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
@@ -53,7 +54,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_controller.asset_host = Figaro.env.asset_host
+  config.action_controller.asset_host = ENV.fetch('ASSET_HOST')
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
@@ -82,11 +83,11 @@ Rails.application.configure do
   # SSL config
   config.force_ssl = true
 
-  config.action_mailer.default_url_options = {protocol: 'https', host: Figaro.env.domain}
+  config.action_mailer.default_url_options = {protocol: 'https', host: ENV.fetch('DOMAIN')}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name:      Figaro.env.mailtrap_username,
-    password:       Figaro.env.mailtrap_password,
+    user_name:      ENV.fetch('MAILTRAP_USERNAME'),
+    password:       ENV.fetch('MAILTRAP_PASSWORD'),
     address:        'smtp.mailtrap.io',
     domain:         'smtp.mailtrap.io',
     port:           '2525',

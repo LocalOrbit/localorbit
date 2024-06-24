@@ -1,6 +1,6 @@
 module SubdomainHelpers
   def switch_to_subdomain(subdomain)
-    hostname = [subdomain, Figaro.env.domain].compact.join(".")
+    hostname = [subdomain, ENV.fetch('DOMAIN')].compact.join(".")
     if @request
       @request.env["HTTP_HOST"] = hostname
     else

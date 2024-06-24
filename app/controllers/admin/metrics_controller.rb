@@ -16,13 +16,13 @@ class Admin::MetricsController < AdminController
   end
 
   def map
-    @mapbox_map_id = Figaro.env.mapbox_api_key
-    markets = Market.where.not(id: Metrics::Base::TEST_MARKET_IDS).all.
-               joins("LEFT JOIN market_addresses ON (market_addresses.market_id = markets.id) AND (market_addresses.id = (SELECT market_addresses.id FROM market_addresses WHERE market_addresses.market_id = markets.id AND market_addresses.deleted_at IS NULL ORDER BY created_at ASC LIMIT 1))").
-               joins("INNER JOIN geocodings ON geocodings.geocodable_type = 'MarketAddress' AND geocodings.geocodable_id = market_addresses.id").
-               includes({organization: :plan}, addresses: [:geocoding])
-    @map_data = ActiveModel::ArraySerializer.new(markets, each_serializer: MarketMapSerializer).to_json
-    @plans = plans_with_slugs
+    # @mapbox_map_id = ENV.fetch('MAPBOX_API_KEY')
+    # markets = Market.where.not(id: Metrics::Base::TEST_MARKET_IDS).all.
+    #            joins("LEFT JOIN market_addresses ON (market_addresses.market_id = markets.id) AND (market_addresses.id = (SELECT market_addresses.id FROM market_addresses WHERE market_addresses.market_id = markets.id AND market_addresses.deleted_at IS NULL ORDER BY created_at ASC LIMIT 1))").
+    #            joins("INNER JOIN geocodings ON geocodings.geocodable_type = 'MarketAddress' AND geocodings.geocodable_id = market_addresses.id").
+    #            includes({organization: :plan}, addresses: [:geocoding])
+    # @map_data = ActiveModel::ArraySerializer.new(markets, each_serializer: MarketMapSerializer).to_json
+    # @plans = plans_with_slugs
   end
 
   private

@@ -10,14 +10,14 @@
   <table class="sortable">
     <thead class="stickable">
       <tr>
-        <%= content_tag :th, sort_link(@q, :invoice_due_date, "Due Date") %>
-        <%= content_tag :th, sort_link(@q, :order_number, "Order Number") %>
-        <%= content_tag :th, sort_link(@q, :payment_note, "Purchase Order #") %>
-        <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
-        <%= content_tag :th, sort_link(@q, :delivery_buyer_deliver_on, "Delivery Date") %>
-        <%= content_tag :th, sort_link(@q, :delivery_status, "Delivery Status") %>
-        <%= content_tag :th, sort_link(@q, :payment_status, "Payment Status") %>
-        <%= content_tag :th, sort_link(@q, :total_cost, "Amount") %>
+        <%= content_tag :th, sort_link(@q, :invoice_due_date, "Due Date", hide_indicator: true) %>
+        <%= content_tag :th, sort_link(@q, :order_number, "Order Number", hide_indicator: true) %>
+        <%= content_tag :th, sort_link(@q, :payment_note, "Purchase Order #", hide_indicator: true) %>
+        <%= content_tag :th, sort_link(@q, :placed_at, "Order Date", hide_indicator: true) %>
+        <%= content_tag :th, sort_link(@q, :delivery_buyer_deliver_on, "Delivery Date", hide_indicator: true) %>
+        <%= content_tag :th, sort_link(@q, :delivery_status, "Delivery Status", hide_indicator: true) %>
+        <%= content_tag :th, sort_link(@q, :payment_status, "Payment Status", hide_indicator: true) %>
+        <%= content_tag :th, sort_link(@q, :total_cost, "Amount", hide_indicator: true) %>
       </tr>
     </thead>
     <tbody>

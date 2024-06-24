@@ -279,15 +279,15 @@ class Order < ActiveRecord::Base
   end
 
   def self.buyer_orders_arel(user)
-    arel_table[:organization_id].in(UserOrganization.where(user_id: user.id).select(:organization_id).arel)
+    arel_table[:organization_id].in(UserOrganization.where(user_id: [user.id]).select(:organization_id).arel)
   end
 
   def self.seller_orders_arel(user)
-    Product.arel_table[:organization_id].in(UserOrganization.where(user_id: user.id).select(:organization_id).arel)
+    Product.arel_table[:organization_id].in(UserOrganization.where(user_id: [user.id]).select(:organization_id).arel)
   end
 
   def self.manager_orders_arel(user)
-    arel_table[:market_id].in(ManagedMarket.where(user_id: user.id).select(:market_id).arel)
+    arel_table[:market_id].in(ManagedMarket.where(user_id: [user.id]).select(:market_id).arel)
   end
 
   def self.cross_sold_products_arel(user)

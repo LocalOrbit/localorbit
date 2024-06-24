@@ -449,7 +449,7 @@
       <%= yield %>
 
       <p class="lo_note">
-        <em>For customer service please reply to this email or call <%= !@market.nil? && @market.try(:pending) == false ? @market.contact_phone : Figaro.env.support_phone_number %></em>
+        <em>For customer service please reply to this email or call <%= !@market.nil? && @market.try(:pending) == false ? @market.contact_phone : ENV.fetch('SUPPORT_PHONE_NUMBER') %></em>
       </p>
 
     </div>

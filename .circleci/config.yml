@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 4
     docker:
-      - image: circleci/ruby:2.3.8-stretch-node-browsers
+      - image: circleci/ruby:2.4.10-stretch-node-browsers
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3

@@ -18,7 +18,7 @@ market = Market.find_or_create_by!(name: 'Fulton Market') {|m|
   m.closed = false
   m.active = true
   m.payment_provider = 'stripe'
-  m.stripe_account_id = Figaro.env.stripe_dev_market_account_id
+  m.stripe_account_id = ENV.fetch('STRIPE_DEV_MARKET_ACCOUNT_ID')
   m.organization = mkt_org
 }
 

@@ -47,7 +47,7 @@ feature "sending invoices" do
     expect(invoice.text).to include(delivery.buyer_deliver_on.strftime("%m/%d/%Y") || delivery.deliver_on.strftime("%m/%d/%Y"))
   end
 
-  scenario "sending an invoice", pdf:true, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
+  scenario "sending an invoice", js: true, pdf:true, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
     switch_to_subdomain(market1.subdomain)
     sign_in_as market_manager
     visit admin_financials_invoices_path
@@ -69,7 +69,7 @@ feature "sending invoices" do
     expect(attachment.content_type).to eq("application/pdf")
   end
 
-  scenario "sending an invoice to an organization with no users", pdf: true do
+  scenario "sending an invoice to an organization with no users", js: true, pdf: true do
     switch_to_subdomain(market1.subdomain)
     sign_in_as market_manager
     visit admin_financials_invoices_path

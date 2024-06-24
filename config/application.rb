@@ -27,10 +27,8 @@ module LocalOrbit
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
 
-    Figaro.load
-
-    config.action_mailer.asset_host = Figaro.env.asset_host
-    config.action_mailer.default_url_options = {host: Figaro.env.domain}
+    config.action_mailer.asset_host = ENV.fetch('ASSET_HOST')
+    config.action_mailer.default_url_options = {host: ENV.fetch('DOMAIN')}
 
     config.to_prepare do
       Devise::Mailer.layout "email"
@@ -39,20 +37,10 @@ module LocalOrbit
       DeviseController.skip_before_action :ensure_user_not_suspended
     end
 
-    config.font_assets.origin = "*"
-
     config.middleware.use PDFKit::Middleware, {}, only: [%r[/admin/invoices], %r[/admin/consignment_receipts], %r[/admin/labels]]
 
     config.browserify_rails.commandline_options = "--transform reactify --extension=\".jsx\""
 
-    # add material for Grape RESTful API
-    # config.middleware.use Rack::Cors do
-    #   allow do
-    #     origins "*"
-    #     resource "*", headers: :any, methods: [:get,
-    #         :post, :put, :delete, :options]
-    #   end
-    # end
-    # config.active_record.raise_in_transactional_callbacks = true
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
