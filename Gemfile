@@ -18,7 +18,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # The jQuery update is doing something weird
 # with data confirms and poltergeist
-gem 'jquery-rails', '~> 3.1.3'
+gem 'jquery-rails', '~> 3.1.5'
 gem 'jquery-ui-rails'
 gem 'accountingjs-rails'
 gem 'compass-rails'
